@@ -1,6 +1,8 @@
 package com.example.palomadeapps
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,9 +17,11 @@ import com.example.palomadeapps.ui.navigation.NavigationItem
 import com.example.palomadeapps.ui.navigation.Screen
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.*
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -68,8 +72,15 @@ private fun BottomBar(
     modifier: Modifier = Modifier
 ){
     NavigationBar (
-        modifier = modifier,
-//        containerColor = colorResource(id = R.color.black)
+        modifier = modifier
+            .graphicsLayer {
+                shape = RoundedCornerShape(
+                    topStart = 22.dp,
+                    topEnd = 22.dp
+                )
+                clip = true
+            }
+        //        containerColor = colorResource(id = R.color.black)
     ){
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -77,7 +88,7 @@ private fun BottomBar(
         val navigationItems = listOf(
             NavigationItem(
                 title = stringResource(R.string.menu_home),
-                icon = ImageVector.vectorResource(id = R.drawable.carbon_home),
+                icon = ImageVector.vectorResource(id = R.drawable.ic_gome),
                 screen = Screen.Home,
             ),
             NavigationItem(
@@ -87,7 +98,7 @@ private fun BottomBar(
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_profile),
-                icon = ImageVector.vectorResource(id = R.drawable.ph_user_circle),
+                icon = ImageVector.vectorResource(id = R.drawable.ic_account),
                 screen = Screen.Profile
             ),
         )
@@ -100,7 +111,8 @@ private fun BottomBar(
                         tint = colorResource(id = R.color.black)
                     )
                 },
-                label = { Text(item.title, color = colorResource(id = R.color.Yellow)) },
+
+                label = { Text(item.title, color = colorResource(id = R.color.black)) },
                 selected = currentRoute == item.screen.route,
                 onClick = {
                     navController.navigate(item.screen.route) {
