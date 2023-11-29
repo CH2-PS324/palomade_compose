@@ -2,7 +2,8 @@
     <string name="app_name">PalomadeApps</string>
     <string name="menu_home">Home</string>
     <string name="menu_cam">Scan</string>
-    <string name="login">Login</string>
+    <string name="login">Sign in</string>
     <string name="menu_profile">Profile</string>
     <string name="scroll_to_top">Scroll to Top</string>
+    <string name="titleLogin">Welcome back! Sign to continue</string>
 </resources>
