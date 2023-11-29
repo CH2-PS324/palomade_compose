@@ -88,7 +88,7 @@ private fun BottomBar(
         val navigationItems = listOf(
             NavigationItem(
                 title = stringResource(R.string.menu_home),
-                icon = ImageVector.vectorResource(id = R.drawable.carbon_home),
+                icon = ImageVector.vectorResource(id = R.drawable.ic_gome),
                 screen = Screen.Home,
             ),
             NavigationItem(
@@ -98,7 +98,7 @@ private fun BottomBar(
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_profile),
-                icon = ImageVector.vectorResource(id = R.drawable.ph_user_circle),
+                icon = ImageVector.vectorResource(id = R.drawable.ic_account),
                 screen = Screen.Profile
             ),
         )
