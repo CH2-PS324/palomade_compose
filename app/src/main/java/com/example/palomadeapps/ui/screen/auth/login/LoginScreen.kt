@@ -1,20 +1,24 @@
 package com.example.palomadeapps.ui.screen.auth.login
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -46,6 +50,9 @@ import com.example.palomadeapps.R
 import com.example.palomadeapps.ui.components.TxtItem
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
@@ -84,99 +91,142 @@ fun LoginScreen (
         }
     }
 
+
     Box (
-        contentAlignment = Alignment.Center,
         modifier = Modifier
+            .fillMaxHeight(1f)
     ){
+        Image(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ellipse2),
+            contentDescription = "ellipse",
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 20.dp)
+        )
+        Image(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ellipse1),
+            contentDescription = "ellipse",
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(bottom = 20.dp)
+        )
         Column ( modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight()
-            .background(
-                colorResource(id = R.color.white)
-            ),
-            verticalArrangement = Arrangement.Center,
+            .fillMaxHeight(),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             ){
+
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 30.dp),
+                horizontalArrangement = Arrangement.Center
+            ){
+                Image(
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .size(200.dp),
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = "LogoApp"
+                )
+
+            }
             TxtItem(
                 desc = stringResource(id = R.string.login),
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 45.sp,
+                fontSize = 40.sp,
             )
             TxtItem(
                 desc = stringResource(id = R.string.titleLogin),
                 fontSize = 12.sp,
             )
 
-            OutlinedTextField(
-                value = email,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "Email Icon"
-                    )
-                },
-
-                label = { Text(text = "Email") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                singleLine = true,
-                onValueChange = { newInput ->
-                    email = newInput
-                },
-                shape = RoundedCornerShape(size = 15.dp),
+            Row (
                 modifier = Modifier
-                    .padding(top = 20.dp)
-                    .background(
-                        color = colorResource(id = R.color.white),
-                        shape = RoundedCornerShape(15.dp)
-                    )
-                    .height(60.dp)
-                    .width(320.dp)
-                    .focusRequester(focusRequester)
-                    .onFocusChanged {
-                        isFocused = it.isFocused
+                    .fillMaxWidth(1f)
+                    .padding(),
+                    horizontalArrangement = Arrangement.Center
+            ){
+                OutlinedTextField(
+                    value = email,
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Email,
+                            contentDescription = "Email Icon"
+                        )
                     },
-            )
 
-            OutlinedTextField(
-                value = password,
-                onValueChange = { newPassword ->
-                    password = newPassword
-                },
+                    label = { Text(text = "Email") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    singleLine = true,
+                    onValueChange = { newInput ->
+                        email = newInput
+                    },
+                    shape = RoundedCornerShape(size = 15.dp),
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .background(
+                            color = colorResource(id = R.color.white),
+                            shape = RoundedCornerShape(15.dp)
+                        )
+                        .height(60.dp)
+                        .width(320.dp)
+                        .focusRequester(focusRequester)
+                        .onFocusChanged {
+                            isFocused = it.isFocused
+                        },
+                )
+            }
+
+            Row (
                 modifier = Modifier
-                    .padding(top = 20.dp)
-                    .background(
-                        color = colorResource(id = R.color.white),
-                        shape = RoundedCornerShape(15.dp)
-                    )
-                    .height(60.dp)
-                    .width(320.dp)
-                    .focusRequester(focusRequester)
-                    .onFocusChanged {
-                        isFocused = it.isFocused
+                    .fillMaxWidth(1f)
+                    .padding(),
+                horizontalArrangement = Arrangement.Center
+            ){
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { newPassword ->
+                        password = newPassword
                     },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Password Icon"
-                    )
-                },
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .background(
+                            color = colorResource(id = R.color.white),
+                            shape = RoundedCornerShape(15.dp)
+                        )
+                        .height(60.dp)
+                        .width(320.dp)
+                        .focusRequester(focusRequester)
+                        .onFocusChanged {
+                            isFocused = it.isFocused
+                        },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = "Password Icon"
+                        )
+                    },
 
-                label = {
-                    Text(
-                        text = "Password"
-                    )
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                singleLine = true,
+                    label = {
+                        Text(
+                            text = "Password"
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    singleLine = true,
 //                placeholder = {
 //                    Text(
 //                        text = "Masukan Email Anda",
 //                        fontSize = 12.sp,
 //                    )
 //                },
-                shape = RoundedCornerShape(15.dp),
-                maxLines = 1,
-            )
+                    shape = RoundedCornerShape(15.dp),
+                    maxLines = 1,
+                )
+            }
 
             Row (
                 modifier = Modifier

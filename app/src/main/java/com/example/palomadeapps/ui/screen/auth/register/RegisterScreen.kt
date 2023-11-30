@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,7 +13,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -48,7 +53,12 @@ fun RegisterScreen(
     var name by rememberSaveable {
         mutableStateOf("")
     }
-    var password by rememberSaveable {
+
+    var newEmail by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    var newPassword by rememberSaveable {
         mutableStateOf("")
     }
 
@@ -81,6 +91,12 @@ fun RegisterScreen(
             )
             OutlinedTextField(
                 value = name,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Email Icon"
+                    )
+                },
 //                leadingIcon = {
 //                    Icon(
 //                        imageVector = Icons.Default.Email,
@@ -89,7 +105,7 @@ fun RegisterScreen(
 //                },
 
                 label = { Text(text = "Full Name") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 singleLine = true,
                 onValueChange = { newInput ->
                     name = newInput
@@ -108,6 +124,85 @@ fun RegisterScreen(
                         isFocused = it.isFocused
                     },
             )
+
+            OutlinedTextField(
+                value = newEmail,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = "Email Icon"
+                    )
+                },
+
+                label = { Text(text = "Email") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                singleLine = true,
+                onValueChange = { newInput ->
+                    newEmail = newInput
+                },
+                shape = RoundedCornerShape(size = 15.dp),
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .background(
+                        color = colorResource(id = R.color.white),
+                        shape = RoundedCornerShape(15.dp)
+                    )
+                    .height(60.dp)
+                    .width(320.dp)
+                    .focusRequester(focusRequester)
+                    .onFocusChanged {
+                        isFocused = it.isFocused
+                    },
+            )
+            OutlinedTextField(
+                value = newPassword,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Email Icon"
+                    )
+                },
+
+                label = { Text(text = "Password") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                singleLine = true,
+                onValueChange = { newInput ->
+                    newPassword = newInput
+                },
+                shape = RoundedCornerShape(size = 15.dp),
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .background(
+                        color = colorResource(id = R.color.white),
+                        shape = RoundedCornerShape(15.dp)
+                    )
+                    .height(60.dp)
+                    .width(320.dp)
+                    .focusRequester(focusRequester)
+                    .onFocusChanged {
+                        isFocused = it.isFocused
+                    },
+            )
+
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 40.dp)
+            ){
+
+            }
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .height(40.dp)
+                    .padding(start = 40.dp, end = 40.dp),
+                onClick = { /*TODO*/ }
+
+            ) {
+                Text(
+                    text = "Register"
+                )
+            }
         }
     }
 }
