@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,12 +35,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,6 +70,8 @@ fun RegisterScreen(
         mutableStateOf("")
     }
 
+    var showPassword by remember { mutableStateOf(false) }
+
     val focusRequester = remember { FocusRequester() }
 
     var isFocused by remember { mutableStateOf(false) }
@@ -72,15 +79,27 @@ fun RegisterScreen(
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
+            .fillMaxHeight(1f)
     ) {
+        Image(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ellipse2),
+            contentDescription = "ellipse",
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 20.dp)
+        )
+        Image(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ellipse1),
+            contentDescription = "ellipse",
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(bottom = 20.dp)
+        )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight()
-                .background(
-                    colorResource(id = R.color.white)
-                ),
-            verticalArrangement = Arrangement.Center,
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
@@ -200,6 +219,33 @@ fun RegisterScreen(
                     .onFocusChanged {
                         isFocused = it.isFocused
                     },
+                visualTransformation = if (showPassword) {
+
+                    VisualTransformation.None
+
+                } else {
+
+                    PasswordVisualTransformation()
+
+                },
+                trailingIcon = {
+                    if (showPassword) {
+                        IconButton(onClick = { showPassword = false }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_visibility),
+                                contentDescription = "hide_password"
+                            )
+                        }
+                    } else {
+                        IconButton(
+                            onClick = { showPassword = true }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_visibility_off),
+                                contentDescription = "hide_password"
+                            )
+                        }
+                    }
+                },
             )
 
             Row (
