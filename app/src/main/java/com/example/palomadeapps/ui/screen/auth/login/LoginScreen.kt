@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,11 +51,14 @@ import com.example.palomadeapps.R
 import com.example.palomadeapps.ui.components.TxtItem
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 
@@ -117,7 +121,6 @@ fun LoginScreen (
             horizontalAlignment = Alignment.CenterHorizontally,
             ){
 
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth(1f)
@@ -145,8 +148,7 @@ fun LoginScreen (
 
             Row (
                 modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .padding(),
+                    .fillMaxWidth(1f),
                     horizontalArrangement = Arrangement.Center
             ){
                 OutlinedTextField(
@@ -167,10 +169,7 @@ fun LoginScreen (
                     shape = RoundedCornerShape(size = 15.dp),
                     modifier = Modifier
                         .padding(top = 20.dp)
-                        .background(
-                            color = colorResource(id = R.color.white),
-                            shape = RoundedCornerShape(15.dp)
-                        )
+
                         .height(60.dp)
                         .width(320.dp)
                         .focusRequester(focusRequester)
@@ -209,7 +208,33 @@ fun LoginScreen (
                             contentDescription = "Password Icon"
                         )
                     },
+                    visualTransformation = if (showPassword) {
 
+                        VisualTransformation.None
+
+                    } else {
+
+                        PasswordVisualTransformation()
+
+                    },
+                    trailingIcon = {
+                        if (showPassword) {
+                            IconButton(onClick = { showPassword = false }) {
+                                Icon(
+                                    painterResource(id = R.drawable.ic_visibility),
+                                    contentDescription = "hide_password"
+                                )
+                            }
+                        } else {
+                            IconButton(
+                                onClick = { showPassword = true }) {
+                                Icon(
+                                    painterResource(id = R.drawable.ic_visibility_off),
+                                    contentDescription = "hide_password"
+                                )
+                            }
+                        }
+                    },
                     label = {
                         Text(
                             text = "Password"
