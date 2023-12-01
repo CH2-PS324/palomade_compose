@@ -5,6 +5,8 @@
     <string name="login">Sign In</string>
     <string name="regis">Sign Up</string>
     <string name="menu_profile">Profile</string>
+    <string name="name">Alfian Ganteng</string>
+    <string name="role">Pengelola</string>
     <string name="scroll_to_top">Scroll to Top</string>
     <string name="titleLogin">Welcome back! Sign to continue</string>
     <string name="titleRegis">Create your account to start your journey</string>
