@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
@@ -57,7 +58,7 @@ fun PalomadeApp (
                 HomeScreen()
             }
             composable(Screen.Inventory.route) {
-                ProfileScreen()
+                CameraScreen()
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()

@@ -2,8 +2,13 @@
     <string name="app_name">PalomadeApps</string>
     <string name="menu_home">Home</string>
     <string name="menu_cam">Scan</string>
-    <string name="login">Sign in</string>
+    <string name="login">Sign In</string>
+    <string name="regis">Sign Up</string>
     <string name="menu_profile">Profile</string>
+    <string name="name">Alfian Ganteng</string>
+    <string name="titleWelcome">start your journey for recognize your ripeness of palm oil fruit</string>
+    <string name="role">Pengelola</string>
     <string name="scroll_to_top">Scroll to Top</string>
     <string name="titleLogin">Welcome back! Sign to continue</string>
+    <string name="titleRegis">Create your account to start your journey</string>
 </resources>
