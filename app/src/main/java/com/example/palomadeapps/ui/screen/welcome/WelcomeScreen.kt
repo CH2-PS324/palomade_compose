@@ -56,10 +56,13 @@ fun WelcomeScreen(
                     contentDescription = "ImageWelcome"
                 )
             }
+
             TxtItem(
                 desc = stringResource(id = R.string.titleWelcome),
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 30.sp,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .padding(start = 10.dp, end = 10.dp)
             )
 
             Row (
