@@ -1,5 +1,6 @@
 package com.example.palomadeapps.ui.screen.auth.register
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -43,10 +45,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -77,6 +83,16 @@ fun RegisterScreen(
     val focusRequester = remember { FocusRequester() }
 
     var isFocused by remember { mutableStateOf(false) }
+
+    val loginn = "Login"
+
+    val registerText = buildAnnotatedString {
+        append("Already have an account?  ")
+        withStyle(style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
+            pushStringAnnotation(tag = loginn, annotation = loginn )
+            append(loginn)
+        }
+    }
 
     Box(
         contentAlignment = Alignment.Center,
@@ -256,7 +272,20 @@ fun RegisterScreen(
 
             ) {
                 Text(
-                    text = "Register"
+                    text = "Login"
+                )
+            }
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 10.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                ClickableText(
+                    text = registerText ,
+                    onClick = {
+                        Toast.makeText(context, "Menuju Register", Toast.LENGTH_SHORT).show()
+                    }
                 )
             }
         }

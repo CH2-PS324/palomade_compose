@@ -88,6 +88,7 @@ fun LoginScreen (
     val wasFocused = remember { isFocused }
 
     val register = "Register"
+
     val registerText = buildAnnotatedString {
         append("Don't Have an Account  ")
         withStyle(style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
