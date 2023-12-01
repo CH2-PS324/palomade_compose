@@ -72,7 +72,7 @@ fun ProfileScreen(
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .padding(top = 40.dp),
+                    .padding(top = 42.dp),
                 horizontalArrangement = Arrangement.Center
             ){
                     Image(

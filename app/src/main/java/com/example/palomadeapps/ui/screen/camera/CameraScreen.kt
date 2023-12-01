@@ -44,7 +44,7 @@ fun CameraScreen (
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .padding(top = 40.dp),
+                    .padding(top = 0.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically,
 
@@ -71,8 +71,34 @@ fun CameraScreen (
                     )
                 }
             }
-            Button(onClick = { /*TODO*/ }) {
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 10.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically,
 
+                ){
+                val buttonColor = remember {
+                    mutableStateOf(Color.Blue)
+                }
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .padding(start = 40.dp, end = 40.dp)
+                        .width(320.dp)
+                        .height(76.dp)
+                        .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp),
+                    onClick = { buttonColor.value = Color.Gray },
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xff008857)
+                    )
+                ) {
+                    Text(
+                        text = "Brondolan"
+                    )
+                }
             }
         }
     }
