@@ -167,10 +167,9 @@ fun LoginScreen (
                     onValueChange = { newInput ->
                         email = newInput
                     },
-                    shape = RoundedCornerShape(size = 15.dp),
+                    shape = RoundedCornerShape(size = 12.dp),
                     modifier = Modifier
                         .padding(top = 20.dp)
-
                         .height(60.dp)
                         .width(320.dp)
                         .focusRequester(focusRequester)
@@ -192,11 +191,7 @@ fun LoginScreen (
                         password = newPassword
                     },
                     modifier = Modifier
-                        .padding(top = 20.dp)
-                        .background(
-                            color = colorResource(id = R.color.white),
-                            shape = RoundedCornerShape(15.dp)
-                        )
+                        .padding(top = 13.dp)
                         .height(60.dp)
                         .width(320.dp)
                         .focusRequester(focusRequester)
@@ -249,7 +244,7 @@ fun LoginScreen (
 //                        fontSize = 12.sp,
 //                    )
 //                },
-                    shape = RoundedCornerShape(15.dp),
+                    shape = RoundedCornerShape(12.dp),
                     maxLines = 1,
                 )
             }
@@ -257,7 +252,7 @@ fun LoginScreen (
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .padding(top = 20.dp)
+                    .padding(top = 22.dp)
             ){
                 Button(
                     modifier = Modifier

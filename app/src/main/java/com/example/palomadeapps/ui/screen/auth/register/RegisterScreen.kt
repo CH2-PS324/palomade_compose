@@ -151,10 +151,6 @@ fun RegisterScreen(
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .background(
-                        color = colorResource(id = R.color.white),
-                        shape = RoundedCornerShape(15.dp)
-                    )
                     .height(60.dp)
                     .width(320.dp)
                     .focusRequester(focusRequester)
@@ -181,10 +177,6 @@ fun RegisterScreen(
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .background(
-                        color = colorResource(id = R.color.white),
-                        shape = RoundedCornerShape(15.dp)
-                    )
                     .height(60.dp)
                     .width(320.dp)
                     .focusRequester(focusRequester)
@@ -210,10 +202,6 @@ fun RegisterScreen(
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .background(
-                        color = colorResource(id = R.color.white),
-                        shape = RoundedCornerShape(15.dp)
-                    )
                     .height(60.dp)
                     .width(320.dp)
                     .focusRequester(focusRequester)
