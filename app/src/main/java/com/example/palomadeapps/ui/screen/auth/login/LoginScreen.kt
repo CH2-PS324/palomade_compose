@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -256,15 +257,17 @@ fun LoginScreen (
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .padding(top = 40.dp)
+                    .padding(top = 20.dp)
             ){
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(1f)
                         .height(40.dp)
                         .padding(start = 40.dp, end = 40.dp),
-                    onClick = { /*TODO*/ }
-
+                    onClick = { /*TODO*/ },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xff008857)
+                    )
                 ) {
                     Text(
                         text = "Login"

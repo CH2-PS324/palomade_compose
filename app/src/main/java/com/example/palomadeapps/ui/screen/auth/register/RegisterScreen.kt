@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -35,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -115,7 +117,6 @@ fun RegisterScreen(
                     painter = painterResource(id = R.drawable.logo),
                     contentDescription = "LogoApp"
                 )
-
             }
             TxtItem(
                 desc = stringResource(id = R.string.regis),
@@ -251,7 +252,7 @@ fun RegisterScreen(
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .padding(top = 40.dp)
+                    .padding(top = 20.dp)
             ){
 
             }
@@ -260,7 +261,10 @@ fun RegisterScreen(
                     .fillMaxWidth(1f)
                     .height(40.dp)
                     .padding(start = 40.dp, end = 40.dp),
-                onClick = { /*TODO*/ }
+                onClick = { /*TODO*/ },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xff008857)
+                )
 
             ) {
                 Text(
