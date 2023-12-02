@@ -63,10 +63,17 @@ fun OnBoarding(
             OnBoardingItem(items = items[page])
         }
         BottomSection(size = items.size, index = pageState.currentPage) {
+
             if (pageState.currentPage + 1 < items.size) scope.launch {
                 pageState.scrollToPage(pageState.currentPage + 1)
+
+            } else{
+                onButtonClick()
             }
         }
+//            if (pageState.currentPage == items.size) scope.launch{
+//
+//            }
     }
 }
 
@@ -197,4 +204,11 @@ fun OnBoardingItem(items: OnBoardingItems) {
             letterSpacing = 1.sp,
         )
     }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Preview(showBackground = true)
+@Composable
+fun OnBoardingPreview(){
+    OnBoarding({})
 }

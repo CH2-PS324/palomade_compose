@@ -17,6 +17,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        isLocalVoiceInteractionSupported
         setContent {
             PalomadeAppsTheme {
                 // A surface container using the 'background' color from the theme

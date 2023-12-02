@@ -34,10 +34,12 @@ import com.example.palomadeapps.ui.screen.auth.login.LoginScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
+import com.example.palomadeapps.ui.screen.welcome.OnBoarding
 import com.example.palomadeapps.ui.screen.welcome.WelcomeScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
 fun PalomadeApp (
     modifier: Modifier = Modifier,
@@ -60,8 +62,8 @@ fun PalomadeApp (
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Onboarding.route){
-                WelcomeScreen(
-                    navigate = {navController.navigate(Screen.Login.route)}
+                OnBoarding(
+                    onButtonClick = {navController.navigate(Screen.Login.route)}
                 )
             }
             composable(Screen.Register.route){}
