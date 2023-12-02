@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun WelcomeScreen(
-    modifier: Modifier = Modifier
+    navigate: ()-> Unit
 ) {
     Box(contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -80,8 +80,7 @@ fun WelcomeScreen(
                         .height(40.dp)
                         .padding(start = 40.dp, end = 40.dp),
                     onClick = {
-                        snackbarCoroutineSCope.launch{
-                        }
+                        navigate()
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
@@ -126,5 +125,5 @@ fun WelcomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomePreview(){
-    WelcomeScreen()
+    WelcomeScreen(navigate ={})
 }

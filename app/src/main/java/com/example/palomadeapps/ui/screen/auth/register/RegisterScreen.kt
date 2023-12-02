@@ -56,13 +56,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.palomadeapps.R
 import com.example.palomadeapps.ui.components.TxtItem
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 
 @Composable
 fun RegisterScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
     val context = LocalContext.current
 
@@ -292,10 +294,10 @@ fun RegisterScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun RegisterScreenPreview() {
-    PalomadeAppsTheme {
-        RegisterScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun RegisterScreenPreview() {
+//    PalomadeAppsTheme {
+//        RegisterScreen()
+//    }
+//}

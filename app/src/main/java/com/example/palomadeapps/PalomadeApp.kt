@@ -1,5 +1,6 @@
 package com.example.palomadeapps
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +20,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,9 +29,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
+import com.example.palomadeapps.ui.screen.auth.login.LoginScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
+import com.example.palomadeapps.ui.screen.welcome.WelcomeScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,17 +48,27 @@ fun PalomadeApp (
 
     Scaffold(
         bottomBar =  {
-            if (currentRoute != Screen.DetailReward.route){
-                BottomBar(navController)
-            }
+//            if (currentRoute != Screen.DetailReward.route){
+//                BottomBar(navController)
+//            }
         },
         modifier = modifier
     ){ innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.Onboarding.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable(Screen.Onboarding.route){
+                WelcomeScreen(
+                    navigate = {navController.navigate(Screen.Login.route)}
+                )
+            }
+            composable(Screen.Register.route){}
+
+            composable(Screen.Login.route){
+                LoginScreen(navController = NavHostController(context = LocalContext.current))
+            }
             composable(Screen.Home.route){
                 HomeScreen()
             }
@@ -103,6 +118,7 @@ private fun BottomBar(
                 screen = Screen.Profile
             ),
         )
+
         navigationItems.map { item ->
             NavigationBarItem(
                 icon = {
