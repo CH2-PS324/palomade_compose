@@ -56,12 +56,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavHostController
+import com.example.palomadeapps.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen (
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navigate: NavHostController
 ){
     val scrollStateHorizontal = rememberScrollState()
     val scrollStateVertical = rememberScrollState()
@@ -91,7 +92,6 @@ fun LoginScreen (
             append(register)
         }
     }
-
 
     Box (
         modifier = Modifier
@@ -274,6 +274,7 @@ fun LoginScreen (
                 ClickableText(
                     text = registerText ,
                     onClick = {
+                        (navigate.navigate(Screen.Register.route))
                         Toast.makeText(context, "Menuju Register", Toast.LENGTH_SHORT).show()
                     }
                 )

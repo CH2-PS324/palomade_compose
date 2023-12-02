@@ -1,18 +1,13 @@
 package com.example.palomadeapps
 
-import android.content.Context
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.palomadeapps.ui.navigation.NavigationItem
 import com.example.palomadeapps.ui.navigation.Screen
@@ -20,7 +15,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,13 +23,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.example.palomadeapps.ui.screen.auth.login.LoginScreen
+import com.example.palomadeapps.ui.screen.auth.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
 import com.example.palomadeapps.ui.screen.welcome.OnBoarding
-import com.example.palomadeapps.ui.screen.welcome.WelcomeScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -50,9 +43,14 @@ fun PalomadeApp (
 
     Scaffold(
         bottomBar =  {
-//            if (currentRoute != Screen.DetailReward.route){
-//                BottomBar(navController)
-//            }
+            if (
+                currentRoute != Screen.DetailReward.route &&
+                currentRoute != Screen.Onboarding.route &&
+                currentRoute != Screen.Login.route &&
+                currentRoute != Screen.Register.route
+                ){
+                BottomBar(navController)
+            }
         },
         modifier = modifier
     ){ innerPadding ->
@@ -66,10 +64,12 @@ fun PalomadeApp (
                     onButtonClick = {navController.navigate(Screen.Login.route)}
                 )
             }
-            composable(Screen.Register.route){}
+            composable(Screen.Register.route){
+                RegisterScreen(navigate = navController)
+            }
 
             composable(Screen.Login.route){
-                LoginScreen(navController = NavHostController(context = LocalContext.current))
+                LoginScreen(navigate = navController)
             }
             composable(Screen.Home.route){
                 HomeScreen()

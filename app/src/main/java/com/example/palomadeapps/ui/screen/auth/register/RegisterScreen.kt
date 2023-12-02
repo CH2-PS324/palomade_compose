@@ -2,7 +2,6 @@ package com.example.palomadeapps.ui.screen.auth.register
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -41,7 +39,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -59,12 +56,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.palomadeapps.R
 import com.example.palomadeapps.ui.components.TxtItem
+import com.example.palomadeapps.ui.navigation.Screen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navigate: NavHostController
 ) {
     val context = LocalContext.current
 
@@ -286,6 +284,7 @@ fun RegisterScreen(
                 ClickableText(
                     text = registerText ,
                     onClick = {
+                        navigate.navigate(Screen.Login.route)
                         Toast.makeText(context, "Menuju Register", Toast.LENGTH_SHORT).show()
                     }
                 )
