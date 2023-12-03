@@ -1,5 +1,6 @@
 package com.example.palomadeapps.ui.screen.profile
 
+import android.widget.Space
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -112,7 +113,7 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth(1f)
                     .padding(top = 40.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
+                horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically,
 
             ){
@@ -122,29 +123,39 @@ fun ProfileScreen(
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(1f)
-                        .padding(start = 40.dp, end = 40.dp)
                         .width(320.dp)
                         .height(56.dp)
-
-                        .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp),
+                        .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
                     onClick = { buttonColor.value = Color.Gray },
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
                     )
                 ) {
-                    Column (
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ){
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_settings),
-                            contentDescription = "Email Icon"
-                        )
-                    }
-                    Text(
-                        text = "Settings"
-                    )
+                        Row (
+                            horizontalArrangement = Arrangement.Start
+                        ){
+                            Column (
+                                verticalArrangement = Arrangement.Top,
+                                horizontalAlignment = Alignment.Start,
+                                modifier = Modifier
+                                    .padding(start = 0.dp)
+
+                            ){
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_settings),
+                                    contentDescription = "Email Icon"
+                                )
+                            }
+                        }
+                        Row (
+                            modifier = Modifier
+                                .padding(start = 3.dp)
+                        ){
+                            Text(
+                                text = "Settings"
+                            )
+                        }
                 }
             }
             Row (
@@ -161,29 +172,40 @@ fun ProfileScreen(
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(1f)
-                        .padding(start = 40.dp, end = 40.dp)
                         .width(320.dp)
                         .height(56.dp)
 
-                        .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp),
+                        .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
                     onClick = { buttonColor.value = Color.Gray },
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
                     )
                 ) {
-                    Column (
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                    Row (
+                        horizontalArrangement = Arrangement.Start
                     ){
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_logout),
-                            contentDescription = "Email Icon"
+                        Column (
+                            verticalArrangement = Arrangement.Top,
+                            horizontalAlignment = Alignment.Start,
+                            modifier = Modifier
+                                .padding(start = 0.dp)
+
+                        ){
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_logout),
+                                contentDescription = "Email Icon"
+                            )
+                        }
+                    }
+                    Row (
+                        modifier = Modifier
+                            .padding(start = 3.dp)
+                    ){
+                        Text(
+                            text = "Logout"
                         )
                     }
-                    Text(
-                        text = "Logout"
-                    )
                 }
             }
         }

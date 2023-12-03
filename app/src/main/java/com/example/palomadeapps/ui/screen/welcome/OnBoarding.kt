@@ -57,10 +57,10 @@ fun OnBoarding(
             count = items.size,
             state = pageState,
             modifier = Modifier
-                .fillMaxHeight(0.9f)
+                .fillMaxHeight(0.8f)
                 .fillMaxWidth()
         ) { page ->
-            OnBoardingItem(items = items[page], size= items.size, index = pageState.currentPage)
+            OnBoardingItem(items = items[page])
         }
         BottomSection(size = items.size, index = pageState.currentPage) {
 
@@ -71,9 +71,6 @@ fun OnBoarding(
                 onButtonClick()
             }
         }
-//            if (pageState.currentPage == items.size) scope.launch{
-//
-//            }
     }
 }
 
@@ -103,20 +100,21 @@ fun TopSection(onBackClick: () -> Unit, onSkipClick: () -> Unit = {}) {
 
 @Composable
 fun BottomSection(size: Int, index: Int, onButtonClick: () -> Unit = {}) {
-    Row (
-        modifier = Modifier
-            .fillMaxWidth(1f),
-        horizontalArrangement = Arrangement.Center
-    ){
-        Box(){
-            Indicators(size, index)
-        }
-    }
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
+
     ) {
+        Row (
+            modifier = Modifier
+                .fillMaxWidth(1f),
+            horizontalArrangement = Arrangement.Center
+        ){
+            Box{
+                Indicators(size, index)
+            }
+        }
+
 //         FloatingActionButton(
 //             onClick = onButtonClick,
 //
@@ -128,10 +126,11 @@ fun BottomSection(size: Int, index: Int, onButtonClick: () -> Unit = {}) {
 
         FloatingActionButton(
             onClick = onButtonClick,
-            containerColor = Color.Black,
+            containerColor = Color(0xff008857),
             modifier = Modifier
-                .padding(top = 6.dp)
+                .padding(top = 40.dp, bottom = 30.dp)
                 .align(Alignment.Center)
+                .fillMaxWidth(0.5f)
                 .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
         ) {
             Icon(Icons.Outlined.KeyboardArrowRight,
@@ -166,7 +165,7 @@ fun Indicator(isSelected: Boolean) {
             .width(width.value)
             .clip(CircleShape)
             .background(
-                color = if (isSelected) MaterialTheme.colorScheme.primary else Color(0XFFF8E2E7)
+                color = if (isSelected) Color(0XFFF3B624) else Color(0XFFF8E2E7)
             )
     ) {
 
@@ -174,11 +173,10 @@ fun Indicator(isSelected: Boolean) {
 }
 
 @Composable
-fun OnBoardingItem(items: OnBoardingItems, size: Int, index: Int) {
+fun OnBoardingItem(items: OnBoardingItems) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()
         ) {
             Image(
                 painter = painterResource(id = items.image),
