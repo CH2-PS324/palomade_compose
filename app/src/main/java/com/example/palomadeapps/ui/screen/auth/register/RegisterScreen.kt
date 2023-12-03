@@ -285,7 +285,7 @@ fun RegisterScreen(
                     text = registerText ,
                     onClick = {
                         navigate.navigate(Screen.Login.route)
-                        Toast.makeText(context, "Menuju Register", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Menuju Login", Toast.LENGTH_SHORT).show()
                     }
                 )
             }

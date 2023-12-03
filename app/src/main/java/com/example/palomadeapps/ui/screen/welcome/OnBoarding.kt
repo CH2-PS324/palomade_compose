@@ -60,7 +60,7 @@ fun OnBoarding(
                 .fillMaxHeight(0.9f)
                 .fillMaxWidth()
         ) { page ->
-            OnBoardingItem(items = items[page])
+            OnBoardingItem(items = items[page], size= items.size, index = pageState.currentPage)
         }
         BottomSection(size = items.size, index = pageState.currentPage) {
 
@@ -103,15 +103,20 @@ fun TopSection(onBackClick: () -> Unit, onSkipClick: () -> Unit = {}) {
 
 @Composable
 fun BottomSection(size: Int, index: Int, onButtonClick: () -> Unit = {}) {
+    Row (
+        modifier = Modifier
+            .fillMaxWidth(1f),
+        horizontalArrangement = Arrangement.Center
+    ){
+        Box(){
+            Indicators(size, index)
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(10.dp)
     ) {
-        // Indicators
-        Indicators(size, index)
-
-
 //         FloatingActionButton(
 //             onClick = onButtonClick,
 //
@@ -125,7 +130,8 @@ fun BottomSection(size: Int, index: Int, onButtonClick: () -> Unit = {}) {
             onClick = onButtonClick,
             containerColor = Color.Black,
             modifier = Modifier
-                .align(Alignment.CenterEnd)
+                .padding(top = 6.dp)
+                .align(Alignment.Center)
                 .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
         ) {
             Icon(Icons.Outlined.KeyboardArrowRight,
@@ -139,7 +145,7 @@ fun BottomSection(size: Int, index: Int, onButtonClick: () -> Unit = {}) {
 fun BoxScope.Indicators(size: Int, index: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.align(Alignment.CenterStart)
     ) {
         repeat(size) {
@@ -154,7 +160,6 @@ fun Indicator(isSelected: Boolean) {
         targetValue = if (isSelected) 25.dp else 10.dp,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
     )
-
     Box(
         modifier = Modifier
             .height(10.dp)
@@ -169,41 +174,41 @@ fun Indicator(isSelected: Boolean) {
 }
 
 @Composable
-fun OnBoardingItem(items: OnBoardingItems) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Image(
-            painter = painterResource(id = items.image),
-            contentDescription = "Image1",
-            modifier = Modifier.padding(start = 50.dp, end = 50.dp)
-        )
+fun OnBoardingItem(items: OnBoardingItems, size: Int, index: Int) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Image(
+                painter = painterResource(id = items.image),
+                contentDescription = "Image1",
+                modifier = Modifier.padding(start = 50.dp, end = 50.dp)
+            )
 
-        Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
-        Text(
-            text = stringResource(id = items.title),
-            style = MaterialTheme.typography.headlineMedium,
-            // fontSize = 24.sp,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            letterSpacing = 1.sp,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(id = items.title),
+                style = MaterialTheme.typography.headlineMedium,
+                fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                letterSpacing = 1.sp,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
 
-        Text(
-            text = stringResource(id = items.desc),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Light,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(10.dp),
-            letterSpacing = 1.sp,
-        )
-    }
+            Text(
+                text = stringResource(id = items.desc),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Light,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp),
+                letterSpacing = 1.sp,
+            )
+        }
 }
 
 @OptIn(ExperimentalPagerApi::class)
