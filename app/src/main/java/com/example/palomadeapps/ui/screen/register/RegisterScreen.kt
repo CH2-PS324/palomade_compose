@@ -192,7 +192,7 @@ fun RegisterScreen(
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
-                    .padding(top = 20.dp)
+                    .padding(top = 8.dp)
                     .height(60.dp)
                     .width(320.dp)
                     .focusRequester(focusRequester)
@@ -217,7 +217,59 @@ fun RegisterScreen(
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
-                    .padding(top = 20.dp)
+                    .padding(top = 8.dp)
+                    .height(60.dp)
+                    .width(320.dp)
+                    .focusRequester(focusRequester)
+                    .onFocusChanged {
+                        isFocused = it.isFocused
+                    },
+                visualTransformation = if (showPassword) {
+
+                    VisualTransformation.None
+
+                } else {
+
+                    PasswordVisualTransformation()
+
+                },
+                trailingIcon = {
+                    if (showPassword) {
+                        IconButton(onClick = { showPassword = false }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_visibility),
+                                contentDescription = "hide_password"
+                            )
+                        }
+                    } else {
+                        IconButton(
+                            onClick = { showPassword = true }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_visibility_off),
+                                contentDescription = "hide_password"
+                            )
+                        }
+                    }
+                },
+            )
+            OutlinedTextField(
+                value = newPassword,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Email Icon"
+                    )
+                },
+
+                label = { Text(text = "Password") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                singleLine = true,
+                onValueChange = { newInput ->
+                    newPassword = newInput
+                },
+                shape = RoundedCornerShape(size = 15.dp),
+                modifier = Modifier
+                    .padding(top = 8.dp)
                     .height(60.dp)
                     .width(320.dp)
                     .focusRequester(focusRequester)
