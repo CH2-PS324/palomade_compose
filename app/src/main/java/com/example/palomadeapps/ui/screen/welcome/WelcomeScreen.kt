@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,10 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.palomadeapps.R
 import com.example.palomadeapps.ui.components.TxtItem
+import kotlinx.coroutines.launch
 
 @Composable
 fun WelcomeScreen(
-    modifier: Modifier = Modifier
+    navigate: ()-> Unit
 ) {
     Box(contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -42,6 +44,8 @@ fun WelcomeScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
+            val snackbarCoroutineSCope = rememberCoroutineScope()
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth(1f)
@@ -56,10 +60,13 @@ fun WelcomeScreen(
                     contentDescription = "ImageWelcome"
                 )
             }
+
             TxtItem(
                 desc = stringResource(id = R.string.titleWelcome),
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 30.sp,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .padding(start = 10.dp, end = 10.dp)
             )
 
             Row (
@@ -72,7 +79,9 @@ fun WelcomeScreen(
                         .fillMaxWidth(1f)
                         .height(40.dp)
                         .padding(start = 40.dp, end = 40.dp),
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        navigate()
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
                     )
@@ -116,5 +125,5 @@ fun WelcomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomePreview(){
-    WelcomeScreen()
+    WelcomeScreen(navigate ={})
 }

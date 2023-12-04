@@ -1,7 +1,7 @@
-package com.example.palomadeapps.ui.screen.auth.register
+package com.example.palomadeapps.ui.screen.register
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -39,24 +39,30 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.palomadeapps.R
 import com.example.palomadeapps.ui.components.TxtItem
+import com.example.palomadeapps.ui.navigation.Screen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 
 @Composable
 fun RegisterScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigate: NavHostController
 ) {
     val context = LocalContext.current
 
@@ -77,6 +83,16 @@ fun RegisterScreen(
     val focusRequester = remember { FocusRequester() }
 
     var isFocused by remember { mutableStateOf(false) }
+
+    val loginn = "Login"
+
+    val registerText = buildAnnotatedString {
+        append("Already have an account?  ")
+        withStyle(style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
+            pushStringAnnotation(tag = loginn, annotation = loginn )
+            append(loginn)
+        }
+    }
 
     Box(
         contentAlignment = Alignment.Center,
@@ -176,7 +192,7 @@ fun RegisterScreen(
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
-                    .padding(top = 20.dp)
+                    .padding(top = 8.dp)
                     .height(60.dp)
                     .width(320.dp)
                     .focusRequester(focusRequester)
@@ -201,7 +217,59 @@ fun RegisterScreen(
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
-                    .padding(top = 20.dp)
+                    .padding(top = 8.dp)
+                    .height(60.dp)
+                    .width(320.dp)
+                    .focusRequester(focusRequester)
+                    .onFocusChanged {
+                        isFocused = it.isFocused
+                    },
+                visualTransformation = if (showPassword) {
+
+                    VisualTransformation.None
+
+                } else {
+
+                    PasswordVisualTransformation()
+
+                },
+                trailingIcon = {
+                    if (showPassword) {
+                        IconButton(onClick = { showPassword = false }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_visibility),
+                                contentDescription = "hide_password"
+                            )
+                        }
+                    } else {
+                        IconButton(
+                            onClick = { showPassword = true }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_visibility_off),
+                                contentDescription = "hide_password"
+                            )
+                        }
+                    }
+                },
+            )
+            OutlinedTextField(
+                value = newPassword,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Email Icon"
+                    )
+                },
+
+                label = { Text(text = "Password") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                singleLine = true,
+                onValueChange = { newInput ->
+                    newPassword = newInput
+                },
+                shape = RoundedCornerShape(size = 15.dp),
+                modifier = Modifier
+                    .padding(top = 8.dp)
                     .height(60.dp)
                     .width(320.dp)
                     .focusRequester(focusRequester)
@@ -256,17 +324,31 @@ fun RegisterScreen(
 
             ) {
                 Text(
-                    text = "Register"
+                    text = "Login"
+                )
+            }
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 10.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                ClickableText(
+                    text = registerText ,
+                    onClick = {
+                        navigate.navigate(Screen.Login.route)
+                        Toast.makeText(context, "Menuju Login", Toast.LENGTH_SHORT).show()
+                    }
                 )
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun RegisterScreenPreview() {
-    PalomadeAppsTheme {
-        RegisterScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun RegisterScreenPreview() {
+//    PalomadeAppsTheme {
+//        RegisterScreen()
+//    }
+//}

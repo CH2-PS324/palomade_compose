@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.palomadeapps.R
-import com.example.palomadeapps.di.Injection
+import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.components.Card1
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
