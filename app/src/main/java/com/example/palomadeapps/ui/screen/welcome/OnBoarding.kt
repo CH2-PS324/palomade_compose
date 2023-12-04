@@ -63,10 +63,8 @@ fun OnBoarding(
             OnBoardingItem(items = items[page])
         }
         BottomSection(size = items.size, index = pageState.currentPage) {
-
             if (pageState.currentPage + 1 < items.size) scope.launch {
                 pageState.scrollToPage(pageState.currentPage + 1)
-
             } else{
                 onButtonClick()
             }

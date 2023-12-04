@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.palomadeapps.R
-import com.example.palomadeapps.ui.screen.auth.register.RegisterScreen
+import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 
 @Composable

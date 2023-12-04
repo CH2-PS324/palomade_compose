@@ -23,8 +23,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.palomadeapps.ui.screen.auth.login.LoginScreen
-import com.example.palomadeapps.ui.screen.auth.register.RegisterScreen
+import com.example.palomadeapps.ui.screen.login.LoginScreen
+import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen

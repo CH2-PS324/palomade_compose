@@ -9,6 +9,8 @@
     <string name="titleWelcome">start your journey for recognize your ripeness of palm oil fruit</string>
     <string name="role">Pengelola</string>
     <string name="scroll_to_top">Scroll to Top</string>
+    <string name="titleOnboard1">Palm sorting is faster and precise</string>
     <string name="titleLogin">Welcome back! Sign to continue</string>
     <string name="titleRegis">Create your account to start your journey</string>
+
 </resources>

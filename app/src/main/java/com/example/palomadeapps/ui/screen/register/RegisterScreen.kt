@@ -1,4 +1,4 @@
-package com.example.palomadeapps.ui.screen.auth.register
+package com.example.palomadeapps.ui.screen.register
 
 import android.widget.Toast
 import androidx.compose.foundation.Image

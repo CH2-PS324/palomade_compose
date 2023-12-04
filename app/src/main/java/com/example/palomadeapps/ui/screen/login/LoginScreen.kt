@@ -1,4 +1,4 @@
-package com.example.palomadeapps.ui.screen.auth.login
+package com.example.palomadeapps.ui.screen.login
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -86,7 +86,7 @@ fun LoginScreen (
     val register = "Register"
 
     val registerText = buildAnnotatedString {
-        append("Don't Have an Account  ")
+        append("Don't Have an Account?  ")
         withStyle(style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = register, annotation = register )
             append(register)

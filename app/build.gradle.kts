@@ -54,6 +54,9 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     implementation("com.google.accompanist:accompanist-pager:0.24.13-rc")
+    implementation("com.google.mlkit:vision-common:17.3.0")
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0")
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
 
     // CameraX
     val cameraxVersion = "1.3.0-rc01"
