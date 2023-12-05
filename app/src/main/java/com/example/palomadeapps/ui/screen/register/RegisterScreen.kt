@@ -151,12 +151,6 @@ fun RegisterScreen(
                         contentDescription = "Email Icon"
                     )
                 },
-//                leadingIcon = {
-//                    Icon(
-//                        imageVector = Icons.Default.Email,
-//                        contentDescription = "Email Icon"
-//                    )
-//                },
 
                 label = { Text(text = "Full Name") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -253,19 +247,19 @@ fun RegisterScreen(
                 },
             )
             OutlinedTextField(
-                value = newPassword,
+                value = newEmail,
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Lock,
+                        imageVector = Icons.Default.Email,
                         contentDescription = "Email Icon"
                     )
                 },
 
-                label = { Text(text = "Password") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                label = { Text(text = "Email") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 singleLine = true,
                 onValueChange = { newInput ->
-                    newPassword = newInput
+                    newEmail = newInput
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
@@ -276,33 +270,6 @@ fun RegisterScreen(
                     .onFocusChanged {
                         isFocused = it.isFocused
                     },
-                visualTransformation = if (showPassword) {
-
-                    VisualTransformation.None
-
-                } else {
-
-                    PasswordVisualTransformation()
-
-                },
-                trailingIcon = {
-                    if (showPassword) {
-                        IconButton(onClick = { showPassword = false }) {
-                            Icon(
-                                painterResource(id = R.drawable.ic_visibility),
-                                contentDescription = "hide_password"
-                            )
-                        }
-                    } else {
-                        IconButton(
-                            onClick = { showPassword = true }) {
-                            Icon(
-                                painterResource(id = R.drawable.ic_visibility_off),
-                                contentDescription = "hide_password"
-                            )
-                        }
-                    }
-                },
             )
 
             Row (

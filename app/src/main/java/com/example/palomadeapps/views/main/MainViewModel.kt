@@ -1,4 +1,4 @@
-package com.example.palomadeapps.ui.screen.home
+package com.example.palomadeapps.views.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -7,8 +7,7 @@ import com.example.palomadeapps.data.PaloRepository
 import com.example.palomadeapps.data.pref.UserModel
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: PaloRepository): ViewModel() {
-
+class MainViewModel(private val repository: PaloRepository) : ViewModel() {
 //    fun getSession(): LiveData<UserModel> {
 //        return repository.getSession().asLiveData()
 //    }

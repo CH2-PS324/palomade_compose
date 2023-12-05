@@ -55,13 +55,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.palomadeapps.ui.navigation.Screen
+import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen (
-    modifier: Modifier = Modifier,
     navigate: NavHostController
 ){
     val scrollStateHorizontal = rememberScrollState()

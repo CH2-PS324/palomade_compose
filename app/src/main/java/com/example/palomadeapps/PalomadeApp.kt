@@ -28,7 +28,7 @@ import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
-import com.example.palomadeapps.ui.screen.welcome.OnBoarding
+import com.example.palomadeapps.ui.screen.welcome.OnBoardingScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -60,7 +60,7 @@ fun PalomadeApp (
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Onboarding.route){
-                OnBoarding(
+                OnBoardingScreen(
                     onButtonClick = {navController.navigate(Screen.Login.route)}
                 )
             }
