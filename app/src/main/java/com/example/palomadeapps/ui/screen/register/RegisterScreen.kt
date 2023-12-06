@@ -21,6 +21,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -73,6 +74,7 @@ import com.example.palomadeapps.ui.components.TxtItem
 import com.example.palomadeapps.ui.navigation.Screen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 
+//@Preview(showBackground = true)
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
@@ -174,12 +176,12 @@ fun RegisterScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .padding(top = 30.dp),
+                    .padding(top = 10.dp),
                 horizontalArrangement = Arrangement.Center
             ){
                 Image(
                     modifier = Modifier
-                        .padding(15.dp)
+                        .padding(top = 8.dp)
                         .size(200.dp),
                     painter = painterResource(id = R.drawable.logo),
                     contentDescription = "LogoApp"
@@ -303,7 +305,7 @@ fun RegisterScreen(
                 value = viewModel.role,
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Email,
+                        imageVector = Icons.Default.People,
                         contentDescription = "Email Icon"
                     )
                 },
@@ -325,78 +327,88 @@ fun RegisterScreen(
                     },
             )
 
-            ElevatedButton(
-                onClick = {
-                    if (viewModel.password.length < 8) {
-                        Toast.makeText(context,"Password kurang dari 8", Toast.LENGTH_SHORT).show()
-                        return@ElevatedButton
-                    }
-                    // Set showDialog to true when the button is clicked
-                    viewModel.uploadData(
-                        viewModel.name,
-                        viewModel.email,
-                        viewModel.password,
-                        viewModel.role,
-                    )
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 22.dp)
+            ){
+                ElevatedButton(
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .height(40.dp)
+                        .padding(start = 40.dp, end = 40.dp),
+                    onClick = {
+                        if (viewModel.password.length < 8) {
+                            Toast.makeText(context,"Password kurang dari 8", Toast.LENGTH_SHORT).show()
+                            return@ElevatedButton
+                        }
+                        // Set showDialog to true when the button is clicked
+                        viewModel.uploadData(
+                            viewModel.name,
+                            viewModel.email,
+                            viewModel.password,
+                            viewModel.role,
+                        )
 
-                },
-                colors = ButtonDefaults.elevatedButtonColors(
-                    containerColor = colorResource(id = R.color.Yellow)
-                ),
-                enabled = !isLoading,
-            ) {
-                if (isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = Color.White
-                    )
-                } else {
-                    Text("REGISTER")
+                    },
+                    colors = ButtonDefaults.elevatedButtonColors(
+                        containerColor = colorResource(id = R.color.Warna_button)
+                    ),
+                    enabled = !isLoading,
+                ) {
+                    if (isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = Color.White
+                        )
+                    } else {
+                        Text("REGISTER", color = Color.White)
+                    }
                 }
-            }
 
-            if (showDialog) {
-                AlertDialog(
-                    onDismissRequest = {
-                        // Handle dialog dismissal if needed
-                        showDialog = false
-                    },
-                    title = {
-                        Text("Register Succesfull")
-                    },
-                    text = {
-                        Text("Are you sure you want to proceed?")
-                    },
-                    confirmButton = {
-                        Button(
-                            onClick = {
-                                showDialog = false
-                                val intent = Intent(context, MainActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                context.startActivity(intent)
-                                (context as? ComponentActivity)?.finish()
-                            },
-                            colors = ButtonDefaults.elevatedButtonColors(
-                                containerColor = colorResource(id = R.color.Yellow)
-                            )
-                        ) {
-                            Text("Yes")
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = {
+                            // Handle dialog dismissal if needed
+                            showDialog = false
+                        },
+                        title = {
+                            Text("Register Succesfull")
+                        },
+                        text = {
+                            Text("Are you sure you want to proceed?")
+                        },
+                        confirmButton = {
+                            Button(
+                                onClick = {
+                                    showDialog = false
+                                    val intent = Intent(context, MainActivity::class.java)
+                                    intent.flags =
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    context.startActivity(intent)
+                                    (context as? ComponentActivity)?.finish()
+                                },
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = colorResource(id = R.color.Yellow)
+                                )
+                            ) {
+                                Text("Yes")
+                            }
+                        },
+                        dismissButton = {
+                            Button(
+                                onClick = {
+                                    showDialog = false
+                                },
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = Color.Black
+                                )
+                            ) {
+                                Text("No")
+                            }
                         }
-                    },
-                    dismissButton = {
-                        Button(
-                            onClick = {
-                                showDialog = false
-                            },
-                            colors = ButtonDefaults.elevatedButtonColors(
-                                containerColor = Color.Black
-                            )
-                        ) {
-                            Text("No")
-                        }
-                    }
-                )
+                    )
+                }
             }
 
 //            Button(

@@ -323,8 +323,8 @@ fun LoginScreen (
 
                         viewModel.login(viewModel.email, viewModel.password)
                     },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xff008857)
+                    colors = ButtonDefaults.elevatedButtonColors(
+                        containerColor = colorResource(id = R.color.Warna_button)
                     )
                 ) {
                     if (showLoading) {
@@ -333,7 +333,7 @@ fun LoginScreen (
                             color = Color.Gray
                         )
                     } else {
-                        Text("LOGIN")
+                        Text("LOGIN", color = Color.White)
                     }
                 }
                 if (showDialog) {

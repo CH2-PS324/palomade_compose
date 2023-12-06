@@ -187,9 +187,6 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically,
 
                 ){
-                val buttonColor = remember {
-                    mutableStateOf(Color.Blue)
-                }
                 ElevatedButton(
                     modifier = Modifier
                         .fillMaxWidth(1f)
@@ -252,12 +249,24 @@ fun ProfileScreen(
                                     (context as? ComponentActivity)?.finish()
                                 },
                                 colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = colorResource(id = R.color.Yellow)
+                                    containerColor = colorResource(id = R.color.Red)
                                 )
                             ) {
-                                Text("Yes")
+                                Text("Yes", color = Color.White)
                             }
                         },
+                        dismissButton = {
+                            Button(
+                                onClick = {
+                                    showDialog = false
+                                },
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = Color.Gray
+                                )
+                            ) {
+                                Text("No")
+                            }
+                        }
                     )
                 }
             }
