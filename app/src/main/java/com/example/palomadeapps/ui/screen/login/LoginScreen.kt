@@ -1,7 +1,9 @@
 package com.example.palomadeapps.ui.screen.login
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,8 +23,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -50,6 +55,7 @@ import com.example.palomadeapps.R
 import com.example.palomadeapps.ui.components.TxtItem
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
@@ -61,6 +67,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.palomadeapps.MainActivity
 import com.example.palomadeapps.ViewModelFactory
 import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.data.pref.UserModel
@@ -107,6 +114,7 @@ fun LoginScreen (
         is UiState.Loading -> {
             showLoading = true
         }
+
         is UiState.Success -> {
             showDialog = true
         }
@@ -201,7 +209,7 @@ fun LoginScreen (
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     singleLine = true,
                     onValueChange = { newInput ->
-                        email = newInput
+                        viewModel.email = newInput
                     },
                     shape = RoundedCornerShape(size = 12.dp),
                     modifier = Modifier
@@ -222,9 +230,9 @@ fun LoginScreen (
                 horizontalArrangement = Arrangement.Center
             ){
                 OutlinedTextField(
-                    value = password,
+                    value = viewModel.password,
                     onValueChange = { newPassword ->
-                        password = newPassword
+                        viewModel.password = newPassword
                     },
                     modifier = Modifier
                         .padding(top = 13.dp)
@@ -288,18 +296,61 @@ fun LoginScreen (
                     .fillMaxWidth(1f)
                     .padding(top = 22.dp)
             ){
-                Button(
+                ElevatedButton(
                     modifier = Modifier
                         .fillMaxWidth(1f)
                         .height(40.dp)
                         .padding(start = 40.dp, end = 40.dp),
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        if (viewModel.password.length < 8) {
+                            Toast.makeText(context, "Password kurang dari 8", Toast.LENGTH_SHORT).show()
+                            return@ElevatedButton
+                        }
+
+                        viewModel.login(viewModel.email, viewModel.password)
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
                     )
                 ) {
-                    Text(
-                        text = "Login"
+                    if (showLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = Color.Gray
+                        )
+                    } else {
+                        Text("LOGIN")
+                    }
+                }
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = {
+                            // Handle dialog dismissal if needed
+                            showDialog = false
+                        },
+                        title = {
+                            Text("Login Berhasil")
+                        },
+                        text = {
+                            Text("Yuk lanjutin ke halaman selanjutnya")
+                        },
+                        confirmButton = {
+                            Button(
+                                onClick = {
+                                    showDialog = false
+                                    val intent = Intent(context, MainActivity::class.java)
+                                    intent.flags =
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    context.startActivity(intent)
+                                    (context as? ComponentActivity)?.finish()
+                                },
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = colorResource(id = R.color.Yellow)
+                                )
+                            ) {
+                                Text("Yes")
+                            }
+                        },
                     )
                 }
             }

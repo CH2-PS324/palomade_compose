@@ -3,6 +3,7 @@ package com.example.palomadeapps
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -39,6 +40,7 @@ class MainActivity : ComponentActivity() {
         }
 
         viewModel.getSession().observe(this) { user ->
+            Log.d("ISLOGIN", "onCreate: ${user.isLogin}")
             if (!user.isLogin) {
                 startActivity(Intent(this, SplashActivity::class.java))
                 finish()

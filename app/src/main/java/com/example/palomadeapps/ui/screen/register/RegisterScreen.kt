@@ -245,6 +245,7 @@ fun RegisterScreen(
                         isFocused = it.isFocused
                     },
             )
+
             OutlinedTextField(
                 value = viewModel.password,
                 leadingIcon = {
