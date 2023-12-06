@@ -1,8 +1,10 @@
 package com.example.palomadeapps
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.palomadeapps.data.PaloRepository
+import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.screen.home.HomeViewModel
 import com.example.palomadeapps.ui.screen.login.LoginViewModel
 import com.example.palomadeapps.ui.screen.register.RegisterViewModel
@@ -41,6 +43,25 @@ class ViewModelFactory(private val repository: PaloRepository) : ViewModelProvid
 //            }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
+        }
+    }
+//    companion object{
+//        fun getInstance(context: Context): ViewModelFactory = synchronized(this) {
+//            ViewModelFactory(Injection.provideRepository(context))
+//        }
+//    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: ViewModelFactory? = null
+        @JvmStatic
+        fun getInstance(context: Context): ViewModelFactory {
+            if (INSTANCE == null) {
+                synchronized(ViewModelFactory::class.java) {
+                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
+                }
+            }
+            return INSTANCE as ViewModelFactory
         }
     }
 }

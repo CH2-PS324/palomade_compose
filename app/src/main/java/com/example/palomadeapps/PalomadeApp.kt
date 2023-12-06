@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.example.palomadeapps.ui.screen.login.LoginScreen
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
@@ -56,21 +57,9 @@ fun PalomadeApp (
     ){ innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Onboarding.route,
+            startDestination = Screen.Login.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Onboarding.route){
-                OnBoardingScreen(
-                    onButtonClick = {navController.navigate(Screen.Login.route)}
-                )
-            }
-            composable(Screen.Register.route){
-                RegisterScreen(navigate = navController)
-            }
-
-            composable(Screen.Login.route){
-                LoginScreen(navigate = navController)
-            }
             composable(Screen.Home.route){
                 HomeScreen()
             }

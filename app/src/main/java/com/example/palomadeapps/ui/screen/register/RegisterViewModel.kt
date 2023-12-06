@@ -11,7 +11,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.palomadeapps.data.PaloRepository
 import com.example.palomadeapps.response.auth.RegisterResponse
 import com.example.palomadeapps.ui.common.UiState
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(private val repository: PaloRepository): ViewModel() {

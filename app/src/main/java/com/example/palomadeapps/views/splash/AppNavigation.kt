@@ -7,7 +7,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.palomadeapps.ui.navigation.Screen
 import com.example.palomadeapps.ui.screen.login.LoginScreen
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
+import com.example.palomadeapps.ui.screen.welcome.OnBoardingScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -15,6 +18,12 @@ fun AppNavigation() {
         navController = navController,
         startDestination = Screen.Onboarding.route,
     ) {
+        composable(Screen.Onboarding.route){
+            OnBoardingScreen(
+                onButtonClick = {navController.navigate(Screen.Login.route)}
+            )
+        }
+
         composable(Screen.Login.route) {
             // Your main composable function
             LoginScreen(navigate = navController)

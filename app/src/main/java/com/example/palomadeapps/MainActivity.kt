@@ -1,9 +1,11 @@
 package com.example.palomadeapps
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,8 +17,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.example.palomadeapps.views.main.MainViewModel
+import com.example.palomadeapps.views.splash.SplashActivity
+
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -27,14 +37,22 @@ class MainActivity : ComponentActivity() {
                 this, CAMERAX_PERMISSIONS, 0
             )
         }
-        setContent {
-            PalomadeAppsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    PalomadeApp()
+
+        viewModel.getSession().observe(this) { user ->
+            if (!user.isLogin) {
+                startActivity(Intent(this, SplashActivity::class.java))
+                finish()
+            }else{
+                setContent {
+                    PalomadeAppsTheme {
+                        // A surface container using the 'background' color from the theme
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colorScheme.background
+                        ) {
+                            PalomadeApp()
+                        }
+                    }
                 }
             }
         }
