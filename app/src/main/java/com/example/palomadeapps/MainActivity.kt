@@ -38,26 +38,27 @@ class MainActivity : ComponentActivity() {
                 this, CAMERAX_PERMISSIONS, 0
             )
         }
-
-        viewModel.getSession().observe(this) { user ->
-            Log.d("ISLOGIN", "onCreate: ${user.isLogin}")
-            if (!user.isLogin) {
-                startActivity(Intent(this, SplashActivity::class.java))
-                finish()
-            }else{
-                setContent {
-                    PalomadeAppsTheme {
-                        // A surface container using the 'background' color from the theme
-                        Surface(
-                            modifier = Modifier.fillMaxSize(),
-                            color = MaterialTheme.colorScheme.background
-                        ) {
-                            PalomadeApp()
-                        }
-                    }
+        setContent {
+            PalomadeAppsTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    PalomadeApp()
                 }
             }
         }
+
+
+//            Log.d("ISLOGIN", "onCreate: ${user.isLogin}")
+//            if (!user.isLogin) {
+//                startActivity(Intent(this, SplashActivity::class.java))
+//                finish()
+//            }else{}
+
+
+
     }
     private fun hasRequiredPermissions(): Boolean{
         return CAMERAX_PERMISSIONS.all{

@@ -1,8 +1,8 @@
 package com.example.palomadeapps.data.pref
 
 data class UserModel(
-    val username : String,
-    val token : String,
+    val id : String,
     val name : String,
+    val token : String,
     val isLogin : Boolean = false
 )

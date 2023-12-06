@@ -2,6 +2,7 @@ package com.example.palomadeapps.ui.screen.login
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
@@ -75,6 +76,8 @@ import com.example.palomadeapps.ui.common.UiState
 import com.example.palomadeapps.ui.navigation.Screen
 import com.example.palomadeapps.ui.screen.register.RegisterViewModel
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.google.gson.Gson
+import kotlin.math.log
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -110,6 +113,8 @@ fun LoginScreen (
 
     val wasFocused = remember { isFocused }
 
+    val gson: Gson = Gson()
+
     when (val uiState = uploadState) {
         is UiState.Loading -> {
             showLoading = true
@@ -117,6 +122,15 @@ fun LoginScreen (
 
         is UiState.Success -> {
             showDialog = true
+            var user = UserModel(
+                id = uiState.data.id.toString(),
+                name = uiState.data.name.toString(),
+                token = uiState.data.accessToken.toString(),
+                isLogin = true
+            )
+            viewModel.saveSession(
+                user
+            )
         }
             is UiState.Error -> {
                 showLoading = false
@@ -354,6 +368,7 @@ fun LoginScreen (
                     )
                 }
             }
+
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)

@@ -7,6 +7,7 @@ import com.example.palomadeapps.data.PaloRepository
 import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.screen.home.HomeViewModel
 import com.example.palomadeapps.ui.screen.login.LoginViewModel
+import com.example.palomadeapps.ui.screen.profile.ProfileViewModel
 import com.example.palomadeapps.ui.screen.register.RegisterViewModel
 import com.example.palomadeapps.views.main.MainViewModel
 
@@ -28,6 +29,9 @@ class ViewModelFactory(private val repository: PaloRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(repository) as T
             }
 //            modelClass.isAssignableFrom(AddViewModel::class.java) -> {
 //                AddViewModel(repository) as T

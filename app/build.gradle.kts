@@ -87,6 +87,7 @@ dependencies {
 
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
 
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.30.1")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

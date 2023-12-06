@@ -1,5 +1,6 @@
 package com.example.palomadeapps
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
@@ -13,24 +14,31 @@ import com.example.palomadeapps.ui.navigation.NavigationItem
 import com.example.palomadeapps.ui.navigation.Screen
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.*
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.screen.login.LoginScreen
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
+import com.example.palomadeapps.ui.screen.login.LoginViewModel
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
 import com.example.palomadeapps.ui.screen.welcome.OnBoardingScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.example.palomadeapps.views.main.MainViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
@@ -38,9 +46,13 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 fun PalomadeApp (
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
+    viewModel: MainViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository(LocalContext.current))
+    )
 ){
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
 
     Scaffold(
         bottomBar =  {
@@ -55,11 +67,31 @@ fun PalomadeApp (
         },
         modifier = modifier
     ){ innerPadding ->
+
+        val uiLoginState by viewModel.uiLoginState.collectAsState()
+
+        val startDestination = remember {
+            if (uiLoginState?.token?.isNotBlank()  == true){
+                Screen.Home.route
+            }else {
+                Screen.Onboarding.route
+            }
+        }
+
         NavHost(
             navController = navController,
-            startDestination = Screen.Login.route,
+            startDestination = startDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable(Screen.Login.route){
+                LoginScreen(navigate = navController)
+            }
+            
+            composable(Screen.Onboarding.route){
+                OnBoardingScreen(
+                    onButtonClick = {navController.navigate(Screen.Login.route)}
+                )
+            }
             composable(Screen.Home.route){
                 HomeScreen()
             }
