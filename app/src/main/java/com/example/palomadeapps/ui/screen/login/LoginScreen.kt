@@ -378,7 +378,7 @@ fun LoginScreen (
                 ClickableText(
                     text = registerText ,
                     onClick = {
-                        (navigate.navigate(Screen.Register.route))
+                        navigate.navigate(Screen.Register.route)
                         Toast.makeText(context, "Menuju Register", Toast.LENGTH_SHORT).show()
                     }
                 )

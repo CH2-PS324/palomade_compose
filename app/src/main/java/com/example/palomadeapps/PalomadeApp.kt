@@ -92,6 +92,12 @@ fun PalomadeApp (
                     onButtonClick = {navController.navigate(Screen.Login.route)}
                 )
             }
+
+            composable(Screen.Register.route) {
+            // Composable function for registration screen
+            RegisterScreen(navigate = navController)
+
+        }
             composable(Screen.Home.route){
                 HomeScreen()
             }
