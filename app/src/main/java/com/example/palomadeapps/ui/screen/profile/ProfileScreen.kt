@@ -59,6 +59,7 @@ import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.register.RegisterViewModel
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.example.palomadeapps.ui.theme.poppinsFontFamily
 
 @Composable
 fun ProfileScreen(

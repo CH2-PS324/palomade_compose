@@ -73,6 +73,7 @@ import com.example.palomadeapps.ui.common.UiState
 import com.example.palomadeapps.ui.components.TxtItem
 import com.example.palomadeapps.ui.navigation.Screen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.example.palomadeapps.ui.theme.poppinsFontFamily
 
 //@Preview(showBackground = true)
 @Composable
@@ -112,7 +113,12 @@ fun RegisterScreen(
 
     val registerText = buildAnnotatedString {
         append("Already have an account?  ")
-        withStyle(style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = Color(0xFF008857),
+            textDecoration = TextDecoration.None,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = poppinsFontFamily)
+        ) {
             pushStringAnnotation(tag = loginn, annotation = loginn )
             append(loginn)
         }

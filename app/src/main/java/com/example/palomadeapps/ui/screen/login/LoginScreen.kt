@@ -76,6 +76,7 @@ import com.example.palomadeapps.ui.common.UiState
 import com.example.palomadeapps.ui.navigation.Screen
 import com.example.palomadeapps.ui.screen.register.RegisterViewModel
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.example.palomadeapps.ui.theme.poppinsFontFamily
 import com.google.gson.Gson
 import kotlin.math.log
 
@@ -113,8 +114,6 @@ fun LoginScreen (
 
     val wasFocused = remember { isFocused }
 
-    val gson: Gson = Gson()
-
     when (val uiState = uploadState) {
         is UiState.Loading -> {
             showLoading = true
@@ -149,7 +148,14 @@ fun LoginScreen (
     val register = "Register"
     val registerText = buildAnnotatedString {
         append("Don't Have an Account?  ")
-        withStyle(style = SpanStyle(color = Color.Black, textDecoration = TextDecoration.None, fontSize = 12.sp, fontWeight = FontWeight.Bold)) {
+        withStyle(style = SpanStyle(
+
+            color = Color(0xFF008857),
+            textDecoration = TextDecoration.None,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = poppinsFontFamily)
+        ) {
             pushStringAnnotation(tag = register, annotation = register )
             append(register)
         }

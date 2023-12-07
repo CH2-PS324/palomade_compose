@@ -34,6 +34,8 @@ val Typography = Typography(
     )
     */
 )
-//val poppinsFontFamily = FontFamily(
-//    Font(R.font.)
-//)
+val poppinsFontFamily = FontFamily(
+    Font(R.font.poppins_regular),
+    Font(R.font.poppins_bold),
+    Font(R.font.poppins_black)
+)

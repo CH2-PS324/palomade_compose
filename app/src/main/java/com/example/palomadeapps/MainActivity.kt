@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.example.palomadeapps.views.main.MainViewModel
-import com.example.palomadeapps.views.splash.SplashActivity
 
 
 class MainActivity : ComponentActivity() {
