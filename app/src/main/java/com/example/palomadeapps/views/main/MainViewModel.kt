@@ -1,5 +1,6 @@
 package com.example.palomadeapps.views.main
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -23,9 +24,16 @@ class MainViewModel(private val repository: PaloRepository) : ViewModel() {
             repository.saveSession(user)
         }
     }
+    private val _bitmaps = MutableStateFlow<List<Bitmap>>(emptyList())
+    val bitmaps = _bitmaps.asStateFlow()
+
+    fun onTakePhoto(bitmap: Bitmap) {
+        _bitmaps.value += bitmap
+    }
     init {
        getSession()
     }
+
     fun getSession(){
 //        return repository.getSession().collect()
         viewModelScope.launch {

@@ -1,6 +1,5 @@
 package com.example.palomadeapps
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
@@ -28,14 +27,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.example.palomadeapps.data.di.Injection
+import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.login.LoginScreen
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
-import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
-import com.example.palomadeapps.ui.screen.login.LoginViewModel
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
+import com.example.palomadeapps.ui.screen.scan.ScanScreen
 import com.example.palomadeapps.ui.screen.welcome.OnBoardingScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.example.palomadeapps.views.main.MainViewModel
@@ -53,21 +51,20 @@ fun PalomadeApp (
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-
     Scaffold(
         bottomBar =  {
             if (
                 currentRoute != Screen.DetailReward.route &&
                 currentRoute != Screen.Onboarding.route &&
                 currentRoute != Screen.Login.route &&
-                currentRoute != Screen.Register.route
+                currentRoute != Screen.Register.route &&
+                currentRoute != Screen.Camera.route
                 ){
                 BottomBar(navController)
             }
         },
         modifier = modifier
     ){ innerPadding ->
-
         val uiLoginState by viewModel.uiLoginState.collectAsState()
 
         val startDestination = remember {
@@ -92,17 +89,20 @@ fun PalomadeApp (
                     onButtonClick = {navController.navigate(Screen.Login.route)}
                 )
             }
-
             composable(Screen.Register.route) {
             // Composable function for registration screen
             RegisterScreen(navigate = navController)
+            }
 
-        }
+            composable(Screen.Scan.route){
+                ScanScreen(navigate = navController)
+            }
+
             composable(Screen.Home.route){
                 HomeScreen()
             }
-            composable(Screen.Inventory.route) {
-                CameraScreen()
+            composable(Screen.Camera.route) {
+                CameraScreen(navigate = navController)
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()
@@ -139,7 +139,7 @@ private fun BottomBar(
             NavigationItem(
                 title = stringResource(R.string.menu_cam),
                 icon = ImageVector.vectorResource(id = R.drawable.ic_cameraa),
-                screen = Screen.Inventory
+                screen = Screen.Scan
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_profile),

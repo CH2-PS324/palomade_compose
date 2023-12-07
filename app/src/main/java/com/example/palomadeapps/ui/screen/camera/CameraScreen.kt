@@ -1,115 +1,218 @@
 package com.example.palomadeapps.ui.screen.camera
 
-import androidx.compose.foundation.layout.Arrangement
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Matrix
+import android.util.Log
+import androidx.annotation.OptIn
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ExperimentalGetImage
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
+import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.window.Dialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
+import com.example.palomadeapps.CameraPreview
+import com.example.palomadeapps.MainActivity
 import com.example.palomadeapps.R
-import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import java.util.concurrent.Executors
 
-@Composable
-fun CameraScreen (
-    modifier: Modifier = Modifier
-){
-    Box (
+@OptIn(ExperimentalGetImage::class) @Composable
+fun CameraScreen(
+    navigate: NavHostController
 
-    ){
-        Column (
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+) {
+    val context = LocalContext.current
+    fun hasRequiredPermissions(): Boolean{
+        return MainActivity.CAMERAX_PERMISSIONS.all{
+            ContextCompat.checkSelfPermission(
+                context,
+                it
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
 
-        ){
-            Row (
+    val previewView: PreviewView = remember { PreviewView(context) }
+    val cameraController = remember { LifecycleCameraController(context) }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    cameraController.bindToLifecycle(lifecycleOwner)
+    cameraController.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+    previewView.controller = cameraController
+
+    val executor = remember { Executors.newSingleThreadExecutor() }
+    val textRecognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
+
+    var text by rememberSaveable {
+        mutableStateOf("")
+    }
+    var isLoading by remember { mutableStateOf(false) }
+
+//    val scope = rememberCoroutineScope()
+//                val scaffoldState = rememberBottomSheetScaffoldState()
+//                val controller = remember {
+//                    LifecycleCameraController(applicationContext).apply {
+//                        setEnabledUseCases(
+//                            CameraController.IMAGE_CAPTURE or
+//                                    CameraController.VIDEO_CAPTURE
+//                        )
+//                    }
+//                }
+//    val viewModel = viewModel
+//                val bitmaps by viewModel.bitmaps.collectAsState()
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        AndroidView(factory = { previewView }, modifier = Modifier.fillMaxSize())
+
+        // Show loading indicator when isLoading is true
+        if (isLoading) {
+            CircularProgressIndicator(
                 modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .padding(top = 0.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-                verticalAlignment = Alignment.CenterVertically,
-
-                ){
-                val buttonColor = remember {
-                    mutableStateOf(Color.Blue)
-                }
-                Button(
+                    .size(50.dp)
+                    .align(Alignment.Center)
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                .fillMaxSize()
+            ){
+                CameraPreview(
+                    controller = cameraController,
                     modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(start = 40.dp, end = 40.dp)
-                        .width(320.dp)
-                        .height(76.dp)
-                        .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp),
-                    onClick = { buttonColor.value = Color.Gray },
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xff008857)
-                    )
+                        .fillMaxSize()
+                )
+                IconButton(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(16.dp),
+                    onClick = {
+                        isLoading = true
+                        cameraController.setImageAnalysisAnalyzer(executor) { imageProxy ->
+                            imageProxy.image?.let { image ->
+                                val img = InputImage.fromMediaImage(
+                                    image,
+                                    imageProxy.imageInfo.rotationDegrees
+                                )
+
+                                textRecognizer.process(img).addOnCompleteListener { task ->
+                                    isLoading = false
+                                    text = if (!task.isSuccessful) task.exception!!.localizedMessage?.toString()
+                                        .toString()
+                                    else task.result.text
+
+                                    cameraController.clearImageAnalysisAnalyzer()
+                                    imageProxy.close()
+                                }
+                            }
+                        }
+                    }
                 ) {
-                    Text(
-                        text = "Bongkahan",
-                        modifier
+                    Icon(
+
+                        painter = painterResource(id = R.drawable.ic_camera),
+                        contentDescription = "camera",
+                        tint = MaterialTheme.colorScheme.background,
+                        modifier = Modifier.size(54.dp)
                     )
                 }
             }
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .padding(top = 10.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-                verticalAlignment = Alignment.CenterVertically,
+        }
+    }
 
-                ){
-                val buttonColor = remember {
-                    mutableStateOf(Color.Blue)
-                }
-                Button(
+    if (text.isNotEmpty()) {
+        Dialog(onDismissRequest = { text = "" }) {
+            Card(modifier = Modifier.fillMaxWidth(0.8f)) {
+                Text(
+                    text = text,
                     modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(start = 40.dp, end = 40.dp)
-                        .width(320.dp)
-                        .height(76.dp)
-                        .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp),
-                    onClick = { buttonColor.value = Color.Gray },
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xff008857)
-                    )
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Button(
+                    onClick = { text = "" },
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(horizontal = 16.dp, vertical = 16.dp)
                 ) {
-                    Text(
-                        text = "Brondolan"
-                    )
+                    Text(text = "Done")
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CameraScreenPreview() {
-    PalomadeAppsTheme {
-        CameraScreen()
-    }
-}
+//private fun takePhoto(
+//    controller: LifecycleCameraController,
+//    onPhotoTaken: (Bitmap) -> Unit
+//) {
+//    controller.takePicture(
+//        ContextCompat.getMainExecutor(applicationContext),
+//        object : ImageCapture.OnImageCapturedCallback() {
+//            override fun onCaptureSuccess(image: ImageProxy) {
+//                super.onCaptureSuccess(image)
+//
+//                val matrix = Matrix().apply {
+//                    postRotate(image.imageInfo.rotationDegrees.toFloat())
+//                }
+//                val rotatedBitmap = Bitmap.createBitmap(
+//                    image.toBitmap(),
+//                    0,
+//                    0,
+//                    image.width,
+//                    image.height,
+//                    matrix,
+//                    true
+//                )
+//
+//                onPhotoTaken(rotatedBitmap)
+//            }
+//
+//            override fun onError(exception: ImageCaptureException) {
+//                super.onError(exception)
+//                Log.e("Camera", "Couldn't take photo: ", exception)
+//            }
+//        }
+//    )
+//}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun LoginScreenPreview() {
+//    PalomadeAppsTheme {
+//        ScanScreen()
+//    }
+//}
