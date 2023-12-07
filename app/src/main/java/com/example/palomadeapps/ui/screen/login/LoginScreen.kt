@@ -145,11 +145,11 @@ fun LoginScreen (
         }
     }
 
+    //navigate to register page
     val register = "Register"
-
     val registerText = buildAnnotatedString {
         append("Don't Have an Account?  ")
-        withStyle(style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = Color.Black, textDecoration = TextDecoration.None, fontSize = 12.sp, fontWeight = FontWeight.Bold)) {
             pushStringAnnotation(tag = register, annotation = register )
             append(register)
         }
