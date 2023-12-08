@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
@@ -39,7 +40,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Objects
-
+import androidx.activity.result.PickVisualMediaRequest
 
 @Composable
 fun CameraScreen2(
@@ -51,10 +52,19 @@ fun CameraScreen2(
         Objects.requireNonNull(context),
         context.packageName + ".provider", file
     )
+    var selectedImageUri by remember {
+        mutableStateOf<Uri>(Uri.EMPTY)
+    }
 
     var capturedImageUri by remember {
         mutableStateOf<Uri>(Uri.EMPTY)
     }
+
+     val pickerLauncher =
+         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()){
+            selectedImageUri = uri
+    }
+
 
     val cameraLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()){
@@ -83,27 +93,38 @@ fun CameraScreen2(
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
-            ElevatedButton(onClick = {
-                val permissionCheckResult =
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+            Row {
+                ElevatedButton(
+                    modifier = Modifier
+                        .width(190.dp),
+                    onClick = {
+                        val permissionCheckResult =
+                            ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
 
-                if (permissionCheckResult == PackageManager.PERMISSION_GRANTED)
-                {
-                    cameraLauncher.launch(uri)
+                        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED)
+                        {
+                            cameraLauncher.launch(uri)
+                        }
+                        else
+                        {
+                            permissionLauncher.launch(Manifest.permission.CAMERA)
+                        }
+                    }) {
+                    Text(text = "take from the camera")
                 }
-                else
-                {
-                    permissionLauncher.launch(Manifest.permission.CAMERA)
+                ElevatedButton(
+                    modifier = Modifier
+                        .width(190.dp),
+                    onClick = {
+                        pickerLauncher.launch(())
+                    }
+                ) {
+                    Text(text = "select from Gallery")
                 }
-            }) {
-                Text(text = "take from the camera")
-            }
-            ElevatedButton(onClick = { /*TODO*/ }) {
-                Text(text = "select from Gallery")
             }
         }
     }
@@ -121,12 +142,12 @@ fun CameraScreen2(
     }
     else
     {
-        Image(
-            modifier = Modifier
-                .padding(16.dp, 8.dp),
-            painter = painterResource(id = R.drawable.ic_gallery),
-            contentDescription = null
-        )
+//        Image(
+//            modifier = Modifier
+//                .padding(16.dp, 8.dp),
+//            painter = painterResource(id = R.drawable.ic_gallery),
+//            contentDescription = null
+//        )
     }
 }
 

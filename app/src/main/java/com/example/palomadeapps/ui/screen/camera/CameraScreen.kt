@@ -55,7 +55,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
-import com.example.palomadeapps.CameraPreview
 import com.example.palomadeapps.MainActivity
 import com.example.palomadeapps.R
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
