@@ -29,6 +29,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
+import com.example.palomadeapps.ui.screen.camera.CameraScreen2
 import com.example.palomadeapps.ui.screen.login.LoginScreen
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
@@ -92,6 +93,9 @@ fun PalomadeApp (
             composable(Screen.Register.route) {
             // Composable function for registration screen
             RegisterScreen(navigate = navController)
+            }
+            composable(Screen.Camera2.route){
+                CameraScreen2(navigate = navController)
             }
 
             composable(Screen.Scan.route){

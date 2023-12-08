@@ -71,6 +71,7 @@ fun ScanScreen (
                     )
                 }
             }
+
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
@@ -89,7 +90,7 @@ fun ScanScreen (
                         .width(320.dp)
                         .height(76.dp)
                         .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp),
-                    onClick = { buttonColor.value = Color.Gray },
+                    onClick = { navigate.navigate(Screen.Camera2.route) },
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)

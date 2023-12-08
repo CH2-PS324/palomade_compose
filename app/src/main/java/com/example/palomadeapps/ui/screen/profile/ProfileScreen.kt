@@ -84,14 +84,6 @@ fun ProfileScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
-//            val rainbowColorsBrush = remember {
-//                Brush.sweepGradient(
-//                    listOf(
-//                        Color(0xFF9575CD),
-//                        Color(0xFFBA68C8)
-//                    )
-//                )
-//            }
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)

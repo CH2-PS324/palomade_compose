@@ -1,4 +1,4 @@
-package com.example.palomadeapps.data.pref
+package com.example.palomadeapps.model
 
 data class UserModel(
     val id : String,

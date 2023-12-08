@@ -55,105 +55,10 @@ class MainActivity : ComponentActivity() {
         ViewModelFactory.getInstance(this)
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            if (!hasRequiredPermissions()){
-                ActivityCompat.requestPermissions(
-                    this, MainActivity.CAMERAX_PERMISSIONS, 0
-                )
-            }
-
             PalomadeAppsTheme {
-
-
-                val scope = rememberCoroutineScope()
-                val scaffoldState = rememberBottomSheetScaffoldState()
-                val controller = remember {
-                    LifecycleCameraController(applicationContext).apply {
-                        setEnabledUseCases(
-                            CameraController.IMAGE_CAPTURE or
-                                    CameraController.VIDEO_CAPTURE
-                        )
-                    }
-                }
-                val viewModel = viewModel
-                val bitmaps by viewModel.bitmaps.collectAsState()
-
-                BottomSheetScaffold(
-                    scaffoldState = scaffoldState,
-                    sheetPeekHeight = 0.dp,
-                    sheetContent = {
-                        PhotoBottomSheetContent(
-                            bitmaps = bitmaps,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        )
-                    }
-                ) { padding ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding)
-                    ) {
-                        CameraPreview(
-                            controller = controller,
-                            modifier = Modifier
-                                .fillMaxSize()
-                        )
-
-                        IconButton(
-                            onClick = {
-                                controller.cameraSelector =
-                                    if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
-                                        CameraSelector.DEFAULT_FRONT_CAMERA
-                                    } else CameraSelector.DEFAULT_BACK_CAMERA
-                            },
-                            modifier = Modifier
-                                .offset(16.dp, 16.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Cameraswitch,
-                                contentDescription = "Switch camera"
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.BottomCenter)
-                                .padding(16.dp),
-                            horizontalArrangement = Arrangement.SpaceAround
-                        ) {
-                            IconButton(
-                                onClick = {
-                                    scope.launch {
-                                        scaffoldState.bottomSheetState.expand()
-                                    }
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Photo,
-                                    contentDescription = "Open gallery"
-                                )
-                            }
-                            IconButton(
-                                onClick = {
-                                    takePhoto(
-                                        controller = controller,
-                                        onPhotoTaken = viewModel::onTakePhoto
-                                    )
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.PhotoCamera,
-                                    contentDescription = "Take photo"
-                                )
-                            }
-                        }
-                    }
-                }
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -164,54 +69,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-    }
-    private fun takePhoto(
-        controller: LifecycleCameraController,
-        onPhotoTaken: (Bitmap) -> Unit
-    ) {
-        controller.takePicture(
-            ContextCompat.getMainExecutor(applicationContext),
-            object : ImageCapture.OnImageCapturedCallback() {
-                override fun onCaptureSuccess(image: ImageProxy) {
-                    super.onCaptureSuccess(image)
-
-                    val matrix = Matrix().apply {
-                        postRotate(image.imageInfo.rotationDegrees.toFloat())
-                    }
-                    val rotatedBitmap = Bitmap.createBitmap(
-                        image.toBitmap(),
-                        0,
-                        0,
-                        image.width,
-                        image.height,
-                        matrix,
-                        true
-                    )
-
-                    onPhotoTaken(rotatedBitmap)
-                }
-
-                override fun onError(exception: ImageCaptureException) {
-                    super.onError(exception)
-                    Log.e("Camera", "Couldn't take photo: ", exception)
-                }
-            }
-        )
-    }
-    fun hasRequiredPermissions(): Boolean{
-        return MainActivity.CAMERAX_PERMISSIONS.all{
-            ContextCompat.checkSelfPermission(
-                applicationContext,
-                it
-            ) == PackageManager.PERMISSION_GRANTED
-        }
-    }
-
-    companion object {
-        val CAMERAX_PERMISSIONS = arrayOf(
-            android.Manifest.permission.CAMERA,
-            android.Manifest.permission.RECORD_AUDIO,
-        )
     }
 }
 

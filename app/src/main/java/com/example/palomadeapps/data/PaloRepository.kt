@@ -1,8 +1,7 @@
 package com.example.palomadeapps.data
-import android.net.http.HttpException
 import androidx.lifecycle.liveData
 import com.example.palomadeapps.api.ApiService
-import com.example.palomadeapps.data.pref.UserModel
+import com.example.palomadeapps.model.UserModel
 import com.example.palomadeapps.data.pref.UserPref
 import com.example.palomadeapps.response.auth.LoginResponse
 import com.example.palomadeapps.response.auth.RegisterResponse

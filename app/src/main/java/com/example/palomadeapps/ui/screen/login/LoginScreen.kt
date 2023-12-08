@@ -2,7 +2,6 @@ package com.example.palomadeapps.ui.screen.login
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
@@ -65,20 +64,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.palomadeapps.MainActivity
 import com.example.palomadeapps.ViewModelFactory
 import com.example.palomadeapps.data.di.Injection
-import com.example.palomadeapps.data.pref.UserModel
+import com.example.palomadeapps.model.UserModel
 import com.example.palomadeapps.ui.common.UiState
 import com.example.palomadeapps.ui.navigation.Screen
-import com.example.palomadeapps.ui.screen.register.RegisterViewModel
-import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.example.palomadeapps.ui.theme.poppinsFontFamily
-import com.google.gson.Gson
-import kotlin.math.log
 
 
 @OptIn(ExperimentalMaterial3Api::class)

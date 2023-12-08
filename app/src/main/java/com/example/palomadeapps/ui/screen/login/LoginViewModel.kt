@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.example.palomadeapps.data.PaloRepository
-import com.example.palomadeapps.data.pref.UserModel
+import com.example.palomadeapps.model.UserModel
 import com.example.palomadeapps.response.auth.LoginResponse
 import com.example.palomadeapps.ui.common.UiState
 import kotlinx.coroutines.launch

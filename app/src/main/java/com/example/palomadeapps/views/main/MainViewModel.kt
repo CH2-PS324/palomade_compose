@@ -1,12 +1,10 @@
 package com.example.palomadeapps.views.main
 
 import android.graphics.Bitmap
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.palomadeapps.data.PaloRepository
-import com.example.palomadeapps.data.pref.UserModel
+import com.example.palomadeapps.model.UserModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
