@@ -90,18 +90,16 @@ fun HomeContent(
             Row (
                 Modifier
                     .padding(start = 20.dp)
-                    .height(21.dp),
+                    .height(31.dp),
                 horizontalArrangement = Arrangement.Start
             ){
-                Text(
-                    text = "John Doe",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF000000)
+                sessionData?.let {
+                    Text(
+                        it.name,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 17.sp,
                     )
-                )
+                }
             }
             Row (
                 Modifier
@@ -109,15 +107,12 @@ fun HomeContent(
                     .height(21.dp),
                 horizontalArrangement = Arrangement.Start
             ){
-                Text(
-                    text = "Pengelola",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF000000)
+                sessionData?.let {
+                    Text(text = it.role,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 17.sp,
                     )
-                )
+                }
             }
         }
 
@@ -176,21 +171,20 @@ fun HomeContent(
                         .fillMaxHeight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                        Text(
-                            modifier = Modifier.padding(top = 10.dp),
+                    Text(
+                        modifier = Modifier.padding(top = 10.dp),
 
-                            text = "30",
-                            style = TextStyle(
-                                fontSize = 58.sp,
-                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF000000)
-                            )
+                        text = "30",
+                        style = TextStyle(
+                            fontSize = 58.sp,
+                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF000000)
                         )
+                    )
                 }
             }
         }
-
     }
 }
 

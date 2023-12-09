@@ -119,6 +119,7 @@ fun LoginScreen (
                 id = uiState.data.id.toString(),
                 name = uiState.data.name.toString(),
                 token = uiState.data.accessToken.toString(),
+                role = uiState.data.role.toString(),
                 isLogin = true
             )
             viewModel.saveSession(

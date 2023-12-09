@@ -9,6 +9,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Gallery
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -177,7 +178,7 @@ fun CameraScreen2(
     }
 
     var capturedImageUri by remember {
-        mutableStateOf<Uri>(Uri.EMPTY)
+        mutableStateOf<Uri?>(null)
     }
 
     val Gallerylauncher = rememberLauncherForActivityResult(contract =
@@ -222,53 +223,53 @@ fun CameraScreen2(
         }
 
         ElevatedButton(
-                    modifier = Modifier
-                        .width(190.dp),
-                    onClick = {
-                        val permissionCheckResult =
-                            ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+            modifier = Modifier
+                .width(190.dp),
+            onClick = {
+                val permissionCheckResult =
+                    ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
 
-                        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED)
-                        {
-                            cameraLauncher.launch(uri)
-                        }
-                        else
-                        {
-                            permissionLauncher.launch(Manifest.permission.CAMERA)
-                        }
-                    }
+                if (permissionCheckResult == PackageManager.PERMISSION_GRANTED)
+                {
+                    cameraLauncher.launch(uri)
+                }
+                else
+                {
+                    permissionLauncher.launch(Manifest.permission.CAMERA)
+                }
+            }
         ) {
             Text(text = "take from the camera")
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-            GalleryImageUri?.let {
-                if (Build.VERSION.SDK_INT < 28) {
-                    bitmap.value = MediaStore.Images
-                        .Media.getBitmap(context.contentResolver,it)
+        GalleryImageUri?.let {
+            if (Build.VERSION.SDK_INT < 28) {
+                bitmap.value = MediaStore.Images
+                    .Media.getBitmap(context.contentResolver,it)
 
-                } else {
-                    val source = ImageDecoder
-                        .createSource(context.contentResolver,it)
-                    bitmap.value = ImageDecoder.decodeBitmap(source)
-                }
-
-                bitmap.value?.let {  btm ->
-                    Image(bitmap = btm.asImageBitmap(),
-                        contentDescription =null,
-                        modifier = Modifier.size(400.dp))
-                }
+            } else {
+                val source = ImageDecoder
+                    .createSource(context.contentResolver,it)
+                bitmap.value = ImageDecoder.decodeBitmap(source)
             }
 
-        capturedImageUri.let {
+            bitmap.value?.let {  btm ->
+                Image(bitmap = btm.asImageBitmap(),
+                    contentDescription =null,
+                    modifier = Modifier.size(400.dp))
+            }
+        }
 
+        capturedImageUri.let {
+            Log.d("URIIIIII", "CameraScreen2: $it")
             Image(
                 modifier = Modifier
                     .padding(top = 0.dp, start = 10.dp, end = 10.dp)
                     .fillMaxWidth(1f)
                     .fillMaxHeight(1f),
-                painter = rememberImagePainter(capturedImageUri),
+                painter = rememberImagePainter(it),
                 contentDescription = null
             )
         }
