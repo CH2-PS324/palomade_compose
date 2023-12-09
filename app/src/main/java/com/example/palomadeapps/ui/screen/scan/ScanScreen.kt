@@ -26,7 +26,6 @@ import com.example.palomadeapps.ui.navigation.Screen
 
 @Composable
 fun ScanScreen (
-
     navigate: NavHostController,
     modifier: Modifier = Modifier
 ){
