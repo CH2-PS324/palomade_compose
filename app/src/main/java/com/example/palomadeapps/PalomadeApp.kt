@@ -1,5 +1,6 @@
 package com.example.palomadeapps
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
@@ -14,7 +15,10 @@ import com.example.palomadeapps.ui.navigation.Screen
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.*
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -35,10 +39,13 @@ import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
 import com.example.palomadeapps.ui.screen.scan.ScanScreen
+import com.example.palomadeapps.ui.screen.track.TrackScreen
 import com.example.palomadeapps.ui.screen.welcome.OnBoardingScreen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.example.palomadeapps.views.main.MainViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
+import androidx.compose.material3.BadgedBox
+
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
@@ -105,6 +112,11 @@ fun PalomadeApp (
             composable(Screen.Home.route){
                 HomeScreen()
             }
+
+            composable(Screen.Track.route){
+                TrackScreen()
+            }
+
             composable(Screen.Camera.route) {
                 CameraScreen(navigate = navController)
             }
@@ -115,6 +127,7 @@ fun PalomadeApp (
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BottomBar(
     navController: NavHostController,
@@ -137,34 +150,54 @@ private fun BottomBar(
         val navigationItems = listOf(
             NavigationItem(
                 title = stringResource(R.string.menu_home),
-                icon = ImageVector.vectorResource(id = R.drawable.ic_gome),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_gome),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_gome),
+                hasNews = true,
                 screen = Screen.Home,
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_cam),
-                icon = ImageVector.vectorResource(id = R.drawable.ic_cameraa),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_cameraa),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_cameraa),
+                hasNews = true,
                 screen = Screen.Scan
             ),
             NavigationItem(
+                title = stringResource(R.string.track),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.shipping),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.shipping),
+                hasNews = true,
+                screen = Screen.Track
+            ),
+            NavigationItem(
                 title = stringResource(R.string.menu_profile),
-                icon = ImageVector.vectorResource(id = R.drawable.ic_account),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_account),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_account),
+                hasNews = true,
                 screen = Screen.Profile
             ),
         )
+        var selectedItemIndex by rememberSaveable {
+            mutableStateOf(0)
+        }
 
-        navigationItems.map { item ->
+        navigationItems.forEachIndexed { index, item ->
             NavigationBarItem(
                 icon = {
                     Icon(
-                        imageVector = item.icon,
-                        contentDescription = item.title,
-                        tint = colorResource(id = R.color.black)
+                        imageVector = if (index == selectedItemIndex) {
+                            item.selectedIcon
+                        } else item.unselectedIcon,
+                        contentDescription = item.title
                     )
                 },
+                selected = selectedItemIndex == index,
 
+                alwaysShowLabel = false,
                 label = { Text(item.title, color = colorResource(id = R.color.black)) },
-                selected = currentRoute == item.screen.route,
+//                selected = currentRoute == item.screen.route,
                 onClick = {
+                    selectedItemIndex = index
                     navController.navigate(item.screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true

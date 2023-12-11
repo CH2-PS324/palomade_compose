@@ -10,18 +10,17 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Gallery
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
@@ -30,24 +29,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Objects
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.navigation.NavHostController
-import coil.compose.rememberImagePainter
 
 
 //@Composable
@@ -168,7 +161,6 @@ fun CameraScreen2(
     navigate: NavHostController
 ) {
 
-
     var GalleryImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -215,7 +207,7 @@ fun CameraScreen2(
     }
 
     Column() {
-        
+
         ElevatedButton(onClick = {
             Gallerylauncher.launch("image/*")
         }) {
@@ -229,12 +221,9 @@ fun CameraScreen2(
                 val permissionCheckResult =
                     ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
 
-                if (permissionCheckResult == PackageManager.PERMISSION_GRANTED)
-                {
+                if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
                     cameraLauncher.launch(uri)
-                }
-                else
-                {
+                } else {
                     permissionLauncher.launch(Manifest.permission.CAMERA)
                 }
             }
@@ -247,18 +236,20 @@ fun CameraScreen2(
         GalleryImageUri?.let {
             if (Build.VERSION.SDK_INT < 28) {
                 bitmap.value = MediaStore.Images
-                    .Media.getBitmap(context.contentResolver,it)
+                    .Media.getBitmap(context.contentResolver, it)
 
             } else {
                 val source = ImageDecoder
-                    .createSource(context.contentResolver,it)
+                    .createSource(context.contentResolver, it)
                 bitmap.value = ImageDecoder.decodeBitmap(source)
             }
 
-            bitmap.value?.let {  btm ->
-                Image(bitmap = btm.asImageBitmap(),
-                    contentDescription =null,
-                    modifier = Modifier.size(400.dp))
+            bitmap.value?.let { btm ->
+                Image(
+                    bitmap = btm.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier.size(400.dp)
+                )
             }
         }
 
@@ -273,33 +264,8 @@ fun CameraScreen2(
                 contentDescription = null
             )
         }
-
-
-
-//            {
-//                Image(
-//                    modifier = Modifier
-//                        .padding(top = 0.dp, start = 10.dp, end = 10.dp)
-//                        .fillMaxWidth(1f)
-//                        .fillMaxHeight(1f),
-//                    painter = rememberImagePainter(capturedImageUri),
-//                    contentDescription = null
-//                )
-//            }
     }
-//    if (capturedImageUri.path?.isNotEmpty() == true)
-//    {
-//        Image(
-//            modifier = Modifier
-//                .padding(top = 0.dp, start = 10.dp, end = 10.dp)
-//                .fillMaxWidth(1f)
-//                .fillMaxHeight(1f),
-//            painter = rememberImagePainter(capturedImageUri),
-//            contentDescription = null
-//        )
-//    }
 }
-
 
 @SuppressLint("SimpleDateFormat")
 fun Context.createImageFile(): File {

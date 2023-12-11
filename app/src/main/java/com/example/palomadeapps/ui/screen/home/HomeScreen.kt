@@ -90,7 +90,7 @@ fun HomeContent(
             Row (
                 Modifier
                     .padding(start = 20.dp)
-                    .height(31.dp),
+                    .height(26.dp),
                 horizontalArrangement = Arrangement.Start
             ){
                 sessionData?.let {
@@ -155,7 +155,7 @@ fun HomeContent(
                         horizontalArrangement = Arrangement.Start
                     ){
                         Text(
-                            text = "Jumlah Scan Hari ini",
+                            text = "Sisah Scan 68",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),

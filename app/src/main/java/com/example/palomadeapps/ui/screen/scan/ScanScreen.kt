@@ -65,8 +65,7 @@ fun ScanScreen (
                     )
                 ) {
                     Text(
-                        text = "Bongkahan",
-                        modifier
+                        text = "Bongkahan"
                     )
                 }
             }

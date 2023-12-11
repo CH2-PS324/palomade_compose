@@ -1,8 +1,8 @@
-package com.example.palomadeapps.response.PredicyResponse
+package com.example.palomadeapps.response.Prediction
 
 import com.google.gson.annotations.SerializedName
 
-data class Response(
+data class PredictResponse(
 
 	@field:SerializedName("status")
 	val status: Status? = null
@@ -13,8 +13,8 @@ data class Data(
 	@field:SerializedName("precentase")
 	val precentase: Int? = null,
 
-	@field:SerializedName("class")
-	val jsonMemberClass: String? = null
+	@field:SerializedName("classType")
+	val classType: String? = null
 )
 
 data class Status(

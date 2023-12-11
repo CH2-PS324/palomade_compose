@@ -22,5 +22,10 @@ interface ApiService {
         @Field("password") password: String,
     ) : LoginResponse
 
-
+//    @FormUrlEncoded
+//    @POST("palomade-ml-api-cc5ff2qgca-uc.a.run.app/predict")
+//    suspend fun predict(
+//        @Field("classType") classType: String,
+//        @Field("presentace") presentace: String
+//    ): PredictResponse
 }
