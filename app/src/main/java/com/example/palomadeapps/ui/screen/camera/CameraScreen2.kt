@@ -39,6 +39,8 @@ import androidx.core.content.FileProvider
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -163,23 +165,20 @@ fun CameraScreen2(
     navigate: NavHostController
 ) {
 
-    var GalleryImageUri by remember {
+    var currentImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
+
     val context = LocalContext.current
     val bitmap =  remember {
         mutableStateOf<Bitmap?>(null)
     }
 
-    var capturedImageUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
-
     val Gallerylauncher = rememberLauncherForActivityResult(contract =
 
     ActivityResultContracts.GetContent()) { uri: Uri? ->
-        if (capturedImageUri != Uri.EMPTY) capturedImageUri = Uri.EMPTY
-        GalleryImageUri = uri
+        if (currentImageUri != Uri.EMPTY) currentImageUri = Uri.EMPTY
+        currentImageUri = uri
     }
 
     val file = context.createImageFile()
@@ -190,8 +189,8 @@ fun CameraScreen2(
 
     val cameraLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()){
-            if (GalleryImageUri != null) GalleryImageUri = null
-            capturedImageUri = uri
+            if (currentImageUri != null) currentImageUri = null
+            currentImageUri = uri
         }
 
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -233,45 +232,63 @@ fun CameraScreen2(
             Text(text = "take from the camera")
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
-        GalleryImageUri?.let {
-            if (Build.VERSION.SDK_INT < 28) {
-                bitmap.value = MediaStore.Images
-                    .Media.getBitmap(context.contentResolver, it)
+        if (currentImageUri?.path?.isNotEmpty() == false)
+        {
+            currentImageUri?.let {
+                if (Build.VERSION.SDK_INT < 28) {
+                    bitmap.value = MediaStore.Images
+                        .Media.getBitmap(context.contentResolver, it)
 
-            } else {
-                val source = ImageDecoder
-                    .createSource(context.contentResolver, it)
-                bitmap.value = ImageDecoder.decodeBitmap(source)
-            }
+                } else {
+                    val source = ImageDecoder
+                        .createSource(context.contentResolver, it)
+                    bitmap.value = ImageDecoder.decodeBitmap(source)
+                }
 
-            bitmap.value?.let { btm ->
-                Image(
-                    bitmap = btm.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier.size(400.dp)
-                )
+                bitmap.value?.let { btm ->
+                    Image(
+                        bitmap = btm.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier.size(400.dp)
+                    )
+                }
             }
         }
 
-        LaunchedEffect(key1 = capturedImageUri){
-
-        }
-        capturedImageUri.let {
-            Log.d("URIIIIII", "CameraScreen2: $it")
+        if (currentImageUri?.path?.isNotEmpty() == true)
+        {
             Image(
                 modifier = Modifier
                     .padding(top = 0.dp, start = 10.dp, end = 10.dp)
                     .fillMaxWidth(1f)
                     .fillMaxHeight(1f),
-                painter = rememberImagePainter(it),
+                painter = rememberImagePainter(currentImageUri),
                 contentDescription = null
             )
         }
     }
 }
+private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
+private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(Date())
 
+fun uriToFile(imageUri: Uri, context: Context): File {
+    val file = createCustomTempFile(context)
+    val inputStream = context.contentResolver.openInputStream(imageUri) as InputStream
+    val outputStream = FileOutputStream(file)
+    val buffer = ByteArray(1024)
+    var length: Int
+    while (inputStream.read(buffer).also { length = it } > 0) outputStream.write(buffer, 0, length)
+    outputStream.close()
+    inputStream.close()
+    return file
+}
+
+fun createCustomTempFile(context: Context): File {
+    val filesDir = context.externalCacheDir
+    return File.createTempFile(timeStamp, ".jpg", filesDir)
+}
 
 fun Context.createImageFile(): File {
     val timeStamp = SimpleDateFormat("yyyy_MM_dd_HH:mm:ss", Locale.getDefault()).format(Date())
