@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import android.provider.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -66,6 +66,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository(LocalContext.current))
     ),
+    activity: ComponentActivity,
 
     modifier: Modifier = Modifier
 ){
@@ -140,7 +141,12 @@ fun ProfileScreen(
                         .width(320.dp)
                         .height(56.dp)
                         .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
-                    onClick = { buttonColor.value = Color.Gray },
+
+                    onClick = {
+                        val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                        context.startActivity(intent)
+                              },
+
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
@@ -167,7 +173,7 @@ fun ProfileScreen(
                                 .padding(start = 3.dp)
                         ){
                             Text(
-                                text = "Settings"
+                                text = stringResource(R.string.btn_settings)
                             )
                         }
                 }
@@ -185,7 +191,6 @@ fun ProfileScreen(
                         .fillMaxWidth(1f)
                         .width(320.dp)
                         .height(56.dp)
-
                         .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
                     onClick = { showDialog = !showDialog },
                     shape = RoundedCornerShape(10.dp),
@@ -214,7 +219,7 @@ fun ProfileScreen(
                             .padding(start = 3.dp)
                     ){
                         Text(
-                            text = "Logout"
+                            text = stringResource(R.string.btn_logout)
                         )
                     }
                 }
@@ -267,10 +272,10 @@ fun ProfileScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-    PalomadeAppsTheme {
-        ProfileScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ProfileScreenPreview() {
+//    PalomadeAppsTheme {
+//        ProfileScreen()
+//    }
+//}

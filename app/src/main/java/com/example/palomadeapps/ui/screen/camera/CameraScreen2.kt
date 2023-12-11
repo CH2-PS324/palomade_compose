@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +41,7 @@ import coil.compose.rememberImagePainter
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import java.util.Objects
 
 
@@ -253,6 +255,9 @@ fun CameraScreen2(
             }
         }
 
+        LaunchedEffect(key1 = capturedImageUri){
+
+        }
         capturedImageUri.let {
             Log.d("URIIIIII", "CameraScreen2: $it")
             Image(
@@ -267,9 +272,9 @@ fun CameraScreen2(
     }
 }
 
-@SuppressLint("SimpleDateFormat")
+
 fun Context.createImageFile(): File {
-    val timeStamp = SimpleDateFormat("yyyy_MM_dd_HH:mm:ss").format(Date())
+    val timeStamp = SimpleDateFormat("yyyy_MM_dd_HH:mm:ss", Locale.getDefault()).format(Date())
     val imageFileName = "JPEG_" + timeStamp + "_"
     val image = File.createTempFile(
         imageFileName,

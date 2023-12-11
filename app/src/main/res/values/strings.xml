@@ -14,4 +14,7 @@
     <string name="titleLogin">Welcome back! Sign to continue</string>
     <string name="titleRegis">Create your account to start your journey</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="btn_settings">Settings</string>
+    <string name="btn_logout">Logout</string>
+    <string name="txt_baner">Welcome, </string>
 </resources>

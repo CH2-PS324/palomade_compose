@@ -67,7 +67,7 @@ fun TrackContent(
                     .padding(top = 10.dp, start = 20.dp),
                 text = "Track Perjalanan",
                 style = TextStyle(
-                    fontSize = 14.sp,
+                    fontSize = 17.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontWeight = FontWeight(600),
                     color = Color(0xFF000000)
@@ -135,7 +135,7 @@ fun TrackContent(
                     fontSize = 22.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontWeight = FontWeight(400),
-                    color = Color(0xFF0000000),
+                    color = Color(0xFF000000),
 
                 ))
 //                Text(

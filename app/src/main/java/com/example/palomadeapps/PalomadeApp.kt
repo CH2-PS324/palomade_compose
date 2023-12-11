@@ -1,5 +1,6 @@
 package com.example.palomadeapps
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,6 +51,7 @@ import androidx.compose.material3.BadgedBox
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
 fun PalomadeApp (
+    activity: ComponentActivity,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     viewModel: MainViewModel = viewModel(
@@ -121,7 +123,7 @@ fun PalomadeApp (
                 CameraScreen(navigate = navController)
             }
             composable(Screen.Profile.route) {
-                ProfileScreen()
+                ProfileScreen(activity = MainActivity())
             }
         }
     }
@@ -211,10 +213,10 @@ private fun BottomBar(
 
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun JetHeroesAppPreview() {
-    PalomadeAppsTheme {
-        PalomadeApp()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun JetHeroesAppPreview() {
+//    PalomadeAppsTheme {
+//        PalomadeApp()
+//    }
+//}
