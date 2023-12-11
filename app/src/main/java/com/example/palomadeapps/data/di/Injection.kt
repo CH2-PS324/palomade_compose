@@ -13,8 +13,8 @@ import kotlinx.coroutines.runBlocking
 object Injection {
     fun provideRepository(context: Context): PaloRepository {
         val pref = UserPref.getInstance(context.dataStore)
-//        val user = runBlocking { pref.getSession().first() }
-        val apiService = ApiConfig.getApiService()
+        val user = runBlocking { pref.getSession().first() }
+        val apiService = ApiConfig.getApiService(user.token)
         return PaloRepository.getInstance(pref,apiService)
     }
 }

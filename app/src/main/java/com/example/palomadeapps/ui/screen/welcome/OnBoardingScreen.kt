@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
 @Composable
-fun OnBoarding(
+fun OnBoardingScreen(
     onButtonClick: () -> Unit
 ) {
     val items = OnBoardingItems.getData()
@@ -163,7 +163,7 @@ fun Indicator(isSelected: Boolean) {
             .width(width.value)
             .clip(CircleShape)
             .background(
-                color = if (isSelected) Color(0XFFF3B624) else Color(0XFFF8E2E7)
+                color = if (isSelected) Color(0XFF008857) else Color(0XFFF8E2E7)
             )
     ) {
 
@@ -211,5 +211,5 @@ fun OnBoardingItem(items: OnBoardingItems) {
 @Preview(showBackground = true)
 @Composable
 fun OnBoardingPreview(){
-    OnBoarding({})
+    OnBoardingScreen({})
 }

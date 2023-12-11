@@ -10,4 +10,6 @@
     <color name="black40">#3B3B3C</color>
     <color name="lavender">#D9D9D9</color>
     <color name="Yellow">#FFCA0E</color>
+    <color name="Red">#BA0000</color>
+    <color name="Warna_button">#FF008857</color>
 </resources>

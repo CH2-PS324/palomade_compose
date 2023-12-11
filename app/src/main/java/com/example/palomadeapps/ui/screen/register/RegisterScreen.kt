@@ -1,6 +1,9 @@
 package com.example.palomadeapps.ui.screen.register
 
+import android.content.Context
+import android.content.Intent
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,15 +21,21 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -39,6 +48,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -53,15 +63,28 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.palomadeapps.MainActivity
 import com.example.palomadeapps.R
+import com.example.palomadeapps.ViewModelFactory
+import com.example.palomadeapps.data.di.Injection
+import com.example.palomadeapps.ui.common.UiState
 import com.example.palomadeapps.ui.components.TxtItem
 import com.example.palomadeapps.ui.navigation.Screen
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
+import com.example.palomadeapps.ui.theme.poppinsFontFamily
 
+//@Preview(showBackground = true)
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
+
+    context: Context = LocalContext.current,
+    viewModel: RegisterViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository(context))
+    ),
+
     navigate: NavHostController
 ) {
     val context = LocalContext.current
@@ -78,6 +101,8 @@ fun RegisterScreen(
         mutableStateOf("")
     }
 
+    var showDialog by remember { mutableStateOf(false) }
+
     var showPassword by remember { mutableStateOf(false) }
 
     val focusRequester = remember { FocusRequester() }
@@ -88,9 +113,43 @@ fun RegisterScreen(
 
     val registerText = buildAnnotatedString {
         append("Already have an account?  ")
-        withStyle(style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = Color(0xFF008857),
+            textDecoration = TextDecoration.None,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = poppinsFontFamily)
+        ) {
             pushStringAnnotation(tag = loginn, annotation = loginn )
             append(loginn)
+        }
+    }
+    val isLoading by viewModel.isLoading.observeAsState(initial = false)
+
+    val uploadState by viewModel.upload.observeAsState()
+
+    val wasFocused = remember { isFocused }
+    when (val uiState = uploadState) {
+        is UiState.Loading -> {
+
+        }
+        is UiState.Success -> {
+
+            showDialog = true
+
+        }
+        is UiState.Error -> {
+
+            showDialog = false
+
+        }
+
+        else -> {}
+    }
+
+
+    LaunchedEffect(true) {
+        if (wasFocused) {
+            focusRequester.requestFocus()
         }
     }
 
@@ -123,12 +182,12 @@ fun RegisterScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .padding(top = 30.dp),
+                    .padding(top = 10.dp),
                 horizontalArrangement = Arrangement.Center
             ){
                 Image(
                     modifier = Modifier
-                        .padding(15.dp)
+                        .padding(top = 8.dp)
                         .size(200.dp),
                     painter = painterResource(id = R.drawable.logo),
                     contentDescription = "LogoApp"
@@ -144,25 +203,19 @@ fun RegisterScreen(
                 fontSize = 14.sp,
             )
             OutlinedTextField(
-                value = name,
+                value = viewModel.name,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = "Email Icon"
                     )
                 },
-//                leadingIcon = {
-//                    Icon(
-//                        imageVector = Icons.Default.Email,
-//                        contentDescription = "Email Icon"
-//                    )
-//                },
 
                 label = { Text(text = "Full Name") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 singleLine = true,
                 onValueChange = { newInput ->
-                    name = newInput
+                    viewModel.name = newInput
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
@@ -176,7 +229,7 @@ fun RegisterScreen(
             )
 
             OutlinedTextField(
-                value = newEmail,
+                value = viewModel.email,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Email,
@@ -188,7 +241,7 @@ fun RegisterScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 singleLine = true,
                 onValueChange = { newInput ->
-                    newEmail = newInput
+                    viewModel.email = newInput
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
@@ -200,8 +253,9 @@ fun RegisterScreen(
                         isFocused = it.isFocused
                     },
             )
+
             OutlinedTextField(
-                value = newPassword,
+                value = viewModel.password,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Lock,
@@ -213,7 +267,7 @@ fun RegisterScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 singleLine = true,
                 onValueChange = { newInput ->
-                    newPassword = newInput
+                    viewModel.password = newInput
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
@@ -252,20 +306,21 @@ fun RegisterScreen(
                     }
                 },
             )
+
             OutlinedTextField(
-                value = newPassword,
+                value = viewModel.role,
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Lock,
+                        imageVector = Icons.Default.People,
                         contentDescription = "Email Icon"
                     )
                 },
 
-                label = { Text(text = "Password") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                label = { Text(text = "Role") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 singleLine = true,
                 onValueChange = { newInput ->
-                    newPassword = newInput
+                    viewModel.role = newInput
                 },
                 shape = RoundedCornerShape(size = 15.dp),
                 modifier = Modifier
@@ -276,57 +331,113 @@ fun RegisterScreen(
                     .onFocusChanged {
                         isFocused = it.isFocused
                     },
-                visualTransformation = if (showPassword) {
-
-                    VisualTransformation.None
-
-                } else {
-
-                    PasswordVisualTransformation()
-
-                },
-                trailingIcon = {
-                    if (showPassword) {
-                        IconButton(onClick = { showPassword = false }) {
-                            Icon(
-                                painterResource(id = R.drawable.ic_visibility),
-                                contentDescription = "hide_password"
-                            )
-                        }
-                    } else {
-                        IconButton(
-                            onClick = { showPassword = true }) {
-                            Icon(
-                                painterResource(id = R.drawable.ic_visibility_off),
-                                contentDescription = "hide_password"
-                            )
-                        }
-                    }
-                },
             )
 
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .padding(top = 20.dp)
+                    .padding(top = 22.dp)
             ){
+                ElevatedButton(
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .height(40.dp)
+                        .padding(start = 40.dp, end = 40.dp),
+                    onClick = {
+                        if (viewModel.password.length < 8) {
+                            Toast.makeText(context,"Password kurang dari 8", Toast.LENGTH_SHORT).show()
+                            return@ElevatedButton
+                        }
+                        // Set showDialog to true when the button is clicked
+                        viewModel.uploadData(
+                            viewModel.name,
+                            viewModel.email,
+                            viewModel.password,
+                            viewModel.role,
+                        )
 
-            }
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .height(40.dp)
-                    .padding(start = 40.dp, end = 40.dp),
-                onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xff008857)
-                )
+                    },
+                    colors = ButtonDefaults.elevatedButtonColors(
+                        containerColor = colorResource(id = R.color.Warna_button)
+                    ),
+                    enabled = !isLoading,
+                ) {
+                    if (isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = Color.White
+                        )
+                    } else {
+                        Text("REGISTER", color = Color.White)
+                    }
+                }
 
-            ) {
-                Text(
-                    text = "Login"
-                )
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = {
+                            // Handle dialog dismissal if needed
+                            showDialog = false
+                        },
+                        title = {
+                            Text("Register Succesfull")
+                        },
+                        text = {
+                            Text("Are you sure you want to proceed?")
+                        },
+                        confirmButton = {
+                            Button(
+                                onClick = {
+                                    showDialog = false
+                                    val intent = Intent(context, MainActivity::class.java)
+                                    intent.flags =
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    context.startActivity(intent)
+                                    (context as? ComponentActivity)?.finish()
+                                },
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = colorResource(id = R.color.Yellow)
+                                )
+                            ) {
+                                Text("Yes")
+                            }
+                        },
+                        dismissButton = {
+                            Button(
+                                onClick = {
+                                    showDialog = false
+                                },
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = Color.Black
+                                )
+                            ) {
+                                Text("No")
+                            }
+                        }
+                    )
+                }
             }
+
+//            Button(
+//                modifier = Modifier
+//                    .fillMaxWidth(1f)
+//                    .height(40.dp)
+//                    .padding(start = 40.dp, end = 40.dp, top = 0.dp),
+//                onClick = {
+//                          showDialog = false
+//                            val intent = Intent(context, MainActivity::class.java)
+//                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//                            context.startActivity(intent)
+//                            (context as? ComponentActivity)?.finish()
+//                          },
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = Color(0xff008857)
+//                )
+//
+//            ) {
+//                Text(
+//                    text = "Register"
+//                )
+//            }
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
