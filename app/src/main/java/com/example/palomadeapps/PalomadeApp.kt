@@ -1,7 +1,6 @@
 package com.example.palomadeapps
 
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
@@ -24,7 +23,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -42,10 +40,8 @@ import com.example.palomadeapps.ui.screen.profile.ProfileScreen
 import com.example.palomadeapps.ui.screen.scan.ScanScreen
 import com.example.palomadeapps.ui.screen.track.TrackScreen
 import com.example.palomadeapps.ui.screen.welcome.OnBoardingScreen
-import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.example.palomadeapps.views.main.MainViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
-import androidx.compose.material3.BadgedBox
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
@@ -159,8 +155,8 @@ private fun BottomBar(
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_cam),
-                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_cameraa),
-                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_cameraa),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_scan),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_scan),
                 hasNews = true,
                 screen = Screen.Scan
             ),

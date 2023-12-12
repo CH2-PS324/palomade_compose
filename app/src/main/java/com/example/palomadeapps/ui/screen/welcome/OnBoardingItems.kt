@@ -12,7 +12,7 @@ class OnBoardingItems(
             return listOf(
                 OnBoardingItems(R.drawable.baner1, R.string.titleOnboard1, R.string.titleLogin),
                 OnBoardingItems(R.drawable.baner2, R.string.titleLogin, R.string.titleLogin),
-                OnBoardingItems(R.drawable.ic_cameraa, R.string.titleLogin, R.string.titleLogin)
+                OnBoardingItems(R.drawable.ic_scan, R.string.titleLogin, R.string.titleLogin)
             )
         }
     }

@@ -58,6 +58,6 @@ fun RewardItem(
 @Preview(showBackground = true)
 fun RewardItemPreview() {
     PalomadeAppsTheme {
-        RewardItem(R.drawable.baner1, "Jaket Hoodie Dicoding", 4000)
+        RewardItem(R.drawable.baner1, "Artikel", 4000)
     }
 }
