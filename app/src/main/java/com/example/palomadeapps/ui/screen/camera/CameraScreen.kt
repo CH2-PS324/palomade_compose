@@ -141,6 +141,7 @@ fun CameraScreen(
             }
         }
     }
+
     Column {
         Spacer(modifier = Modifier.height(150.dp))
 

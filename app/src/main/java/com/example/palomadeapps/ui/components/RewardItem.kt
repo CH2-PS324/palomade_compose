@@ -2,7 +2,13 @@ package com.example.palomadeapps.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
@@ -24,33 +30,53 @@ import com.example.palomadeapps.ui.theme.Shapes
 fun RewardItem(
     image: Int,
     title: String,
-    requiredPoint: Int,
+    description: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
+            .fillMaxWidth(1f)
+            .padding(bottom = 13.dp)
     ) {
-        Image(
-            painter = painterResource(image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+        Row (
             modifier = Modifier
-                .size(170.dp)
-                .clip(Shapes.medium)
-        )
-        Text(
-            text = title,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.ExtraBold
+                .fillMaxWidth(1f)
+                .padding(start = 8.dp)
+//                .size(170.dp)
+//                .clip(Shapes.medium)
+        ){
+            Image(
+                painter = painterResource(image),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .height(110.dp)
+                    .width(110.dp)
+                    .clip(RoundedCornerShape(25.dp))
             )
-        )
-        Text(
-            text = stringResource(R.string.name, requiredPoint),
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.secondary
-        )
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(start = 8.dp)
+                    .padding(start = 0.dp)
+            ){
+                Text(
+                    text = title,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.ExtraBold
+                    ),
+                    modifier = Modifier
+                        .padding(bottom = 10.dp, top = 10.dp)
+                )
+                Text(
+                    text = stringResource(R.string.titleWelcome, description),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        }
     }
 }
 
@@ -58,6 +84,6 @@ fun RewardItem(
 @Preview(showBackground = true)
 fun RewardItemPreview() {
     PalomadeAppsTheme {
-        RewardItem(R.drawable.baner1, "Artikel", 4000)
+        RewardItem(R.drawable.articel3, "Artikel", "Artikel")
     }
 }

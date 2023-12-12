@@ -1,7 +1,11 @@
 package com.example.palomadeapps
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
@@ -19,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -108,7 +113,9 @@ fun PalomadeApp (
             }
 
             composable(Screen.Home.route){
-                HomeScreen()
+                HomeScreen(navigateToDetail = { rewardId ->
+                    navController.navigate(Screen.DetailReward.createRoute(rewardId))
+                })
             }
 
             composable(Screen.Track.route){
@@ -139,8 +146,8 @@ private fun BottomBar(
                     topEnd = 22.dp
                 )
                 clip = true
-            }
-        //        containerColor = colorResource(id = R.color.black)
+            },
+            containerColor = colorResource(id = R.color.Gray)
     ){
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -189,11 +196,10 @@ private fun BottomBar(
                         contentDescription = item.title
                     )
                 },
-                selected = selectedItemIndex == index,
 
                 alwaysShowLabel = false,
-                label = { Text(item.title, color = colorResource(id = R.color.black)) },
-//                selected = currentRoute == item.screen.route,
+                label = { Text(item.title) },
+                selected = currentRoute == item.screen.route,
                 onClick = {
                     selectedItemIndex = index
                     navController.navigate(item.screen.route) {
@@ -203,7 +209,8 @@ private fun BottomBar(
                         restoreState = true
                         launchSingleTop = true
                     }
-                }
+                },
+
             )
         }
 

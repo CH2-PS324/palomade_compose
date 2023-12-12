@@ -1,8 +1,10 @@
 package com.example.palomadeapps.data
 import androidx.lifecycle.liveData
 import com.example.palomadeapps.api.ApiService
+import com.example.palomadeapps.data.dummy.ArticelData
 import com.example.palomadeapps.model.UserModel
 import com.example.palomadeapps.data.pref.UserPref
+import com.example.palomadeapps.model.ArticelModel
 import com.example.palomadeapps.response.auth.LoginResponse
 import com.example.palomadeapps.response.auth.RegisterResponse
 import com.example.palomadeapps.ui.common.UiState
@@ -20,6 +22,10 @@ class PaloRepository (
 
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
+    }
+
+    fun getArticel(): List<ArticelModel> {
+        return ArticelData.dummyArticel
     }
 
     suspend fun logout() {
