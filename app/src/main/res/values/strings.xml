@@ -17,4 +17,6 @@
     <string name="btn_settings">Settings</string>
     <string name="btn_logout">Logout</string>
     <string name="txt_baner">Welcome, </string>
+    <string name="back">Back</string>
+    <string name="required_point">Rp %d</string>
 </resources>

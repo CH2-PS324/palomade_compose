@@ -5,17 +5,21 @@ import com.example.palomadeapps.data.dummy.ArticelData
 import com.example.palomadeapps.model.UserModel
 import com.example.palomadeapps.data.pref.UserPref
 import com.example.palomadeapps.model.ArticelModel
+import com.example.palomadeapps.model.OrderReward
 import com.example.palomadeapps.response.auth.LoginResponse
 import com.example.palomadeapps.response.auth.RegisterResponse
 import com.example.palomadeapps.ui.common.UiState
 import com.google.gson.Gson
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class PaloRepository (
     private val userPreference: UserPref,
     private val apiService: ApiService
 ){
+
+    private val orderRewards = mutableListOf<OrderReward>()
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
@@ -24,10 +28,18 @@ class PaloRepository (
         return userPreference.getSession()
     }
 
-    fun getArticel(): List<ArticelModel> {
+    fun getHeroes(): List<ArticelModel> {
         return ArticelData.dummyArticel
     }
+    fun getAllRewards(): Flow<List<OrderReward>> {
+        return flowOf(orderRewards)
+    }
 
+    fun getOrderRewardById(rewardId: Long): ArticelModel {
+        return ArticelData.dummyArticel.first {
+            it.id == rewardId
+        }
+    }
     suspend fun logout() {
         userPreference.logout()
     }
