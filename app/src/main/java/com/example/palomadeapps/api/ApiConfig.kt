@@ -8,13 +8,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    var base_url = "http://35.184.208.123:2002/api/"
+    var base_url = "https://palomade-test-mmsmf3nctq-uc.a.run.app/api/"
     fun getApiService(token : String): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         val authInterceptor = Interceptor { chain ->
             val req = chain.request()
             val requestHeaders = req.newBuilder()
-                .addHeader("x-access-token", "$token")
+                .addHeader("Authorization", "Bearer $token")
+//                .addHeader("x-access-token", "$token")
                 .build()
             chain.proceed(requestHeaders)
         }

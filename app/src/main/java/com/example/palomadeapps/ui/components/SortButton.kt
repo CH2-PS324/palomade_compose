@@ -18,10 +18,10 @@ modifier: Modifier = Modifier
         Text(text = "sort")
     }
 }
-@Composable
-@Preview(showBackground = true)
-fun SortBtn() {
-    PalomadeAppsTheme {
-        SortButton()
-    }
-}
+//@Composable
+//@Preview(showBackground = true)
+//fun SortBtn() {
+//    PalomadeAppsTheme {
+//        SortButton()
+//    }
+//}

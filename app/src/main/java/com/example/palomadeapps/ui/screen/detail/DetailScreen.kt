@@ -158,16 +158,16 @@ fun DetailContent(
     }
 }
 
-@Preview(showBackground = true, device = Devices.PIXEL_4)
-@Composable
-fun DetailContentPreview() {
-    PalomadeAppsTheme {
-        DetailContent(
-            R.drawable.baner1,
-            "Jaket Hoodie Dicoding",
-            "Color",
-            onBackClick = {},
-
-        )
-    }
-}
+//@Preview(showBackground = true, device = Devices.PIXEL_4)
+//@Composable
+//fun DetailContentPreview() {
+//    PalomadeAppsTheme {
+//        DetailContent(
+//            R.drawable.baner1,
+//            "Jaket Hoodie Dicoding",
+//            "Color",
+//            onBackClick = {},
+//
+//        )
+//    }
+//}

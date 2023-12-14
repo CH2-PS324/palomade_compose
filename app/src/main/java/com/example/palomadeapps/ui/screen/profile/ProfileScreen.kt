@@ -143,6 +143,7 @@ fun ProfileScreen(
                             horizontalArrangement = Arrangement.Start
                         ){
                             Column (
+
                                 verticalArrangement = Arrangement.Top,
                                 horizontalAlignment = Alignment.Start,
                                 modifier = Modifier

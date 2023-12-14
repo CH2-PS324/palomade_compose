@@ -61,7 +61,6 @@ fun HomeScreen(
     val groupedHeroes by viewModel.groupedHeroes.collectAsState()
     val sessionData by viewModel.getSession().observeAsState()
 
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,7 +82,6 @@ fun HomeScreen(
                         .width(350.dp)
                         .padding(top = 25.dp),
                     elevation = CardDefaults.cardElevation(10.dp),
-                    //                colors =
                 ) {
                     Row (
                         Modifier
@@ -225,7 +223,6 @@ fun HomeScreen(
                 }
             }
         }
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)

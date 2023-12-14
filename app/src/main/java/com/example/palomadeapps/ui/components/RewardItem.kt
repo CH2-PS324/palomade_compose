@@ -3,6 +3,7 @@ package com.example.palomadeapps.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -41,7 +42,8 @@ fun RewardItem(
         Row (
             modifier = Modifier
                 .fillMaxWidth(1f)
-                .padding(start = 8.dp)
+                .fillMaxHeight(1f)
+                .padding(start = 26.dp, end = 26.dp)
 //                .size(170.dp)
 //                .clip(Shapes.medium)
         ){
@@ -80,10 +82,10 @@ fun RewardItem(
     }
 }
 
-@Composable
-@Preview(showBackground = true)
-fun RewardItemPreview() {
-    PalomadeAppsTheme {
-        RewardItem(R.drawable.articel3, "Artikel", "Artikel")
-    }
-}
+//@Composable
+//@Preview(showBackground = true)
+//fun RewardItemPreview() {
+//    PalomadeAppsTheme {
+//        RewardItem(R.drawable.articel3, "Artikel", "Artikel")
+//    }
+//}
