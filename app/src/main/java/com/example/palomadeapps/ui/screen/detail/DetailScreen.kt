@@ -32,6 +32,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -116,45 +118,23 @@ fun DetailContent(
             ) {
                 Text(
                     text = title,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.ExtraBold
-                    ), fontSize = 26.sp
+                    ),
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular))
                 )
                 Text(
                     text = description,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Justify,
-                    fontSize = 14.sp
+                    fontSize = 15.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular))
                 )
             }
         }
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(4.dp)
-            .background(Color.LightGray))
-//        Column(
-//            modifier = Modifier.padding(16.dp)
-//        ) {
-//            ProductCounter(
-//                1,
-//                orderCount,
-//                onProductIncreased = { orderCount++ },
-//                onProductDecreased = { if (orderCount > 0) orderCount-- },
-//                modifier = Modifier
-//                    .align(Alignment.CenterHorizontally)
-//                    .padding(bottom = 16.dp)
-//            )
-//            totalPoint = basePoint * orderCount
-//            OrderButton(
-//                text = stringResource(R.string.add_to_cart, totalPoint),
-//                enabled = orderCount > 0,
-//                onClick = {
-//                    onAddToCart(orderCount)
-//                }
-//            )
-//        }
     }
 }
 

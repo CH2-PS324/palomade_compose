@@ -124,14 +124,14 @@ fun CameraScreen2(
             shape = RoundedCornerShape(10.dp),
 
             ) {
-            Image(
-                modifier = Modifier
-                    .padding()
-                    .width(25.dp)
-                    .height(25.dp),
-                painter = painterResource(id = R.drawable.ic_camera),
-                contentDescription = null
-            )
+//            Image(
+//                modifier = Modifier
+//                    .padding()
+//                    .width(25.dp)
+//                    .height(25.dp),
+//                painter = painterResource(id = R.drawable.ic_scan),
+//                contentDescription = null
+//            )
             Text(text = "Prediction")
         }
 
@@ -165,7 +165,7 @@ fun CameraScreen2(
             Spacer(modifier = Modifier.width(10.dp))
             ElevatedButton(
                 modifier = Modifier
-                    .width(130.dp)
+                    .width(135.dp)
                     .height(44.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xff008857)
@@ -186,8 +186,7 @@ fun CameraScreen2(
                 Image(
                     modifier = Modifier
                         .padding()
-                        .width(25.dp)
-                        .height(25.dp),
+                        .size(35.dp),
                     painter = painterResource(id = R.drawable.ic_camera),
                     contentDescription = null
                 )
@@ -195,8 +194,9 @@ fun CameraScreen2(
             }
         }
     }
+
     Column {
-        Spacer(modifier = Modifier.height(150.dp))
+        Spacer(modifier = Modifier.height(120.dp))
 
         if (currentImageUri?.path?.isNotEmpty() == false){
             currentImageUri?.let {
@@ -242,8 +242,7 @@ fun CameraScreen2(
                 Image(
                     modifier = Modifier
                         .padding()
-                        .width(150.dp)
-                        .height(150.dp),
+                        .size(150.dp),
                     painter = painterResource(id = R.drawable.ic_baner_galer),
                     contentDescription = null
                 )

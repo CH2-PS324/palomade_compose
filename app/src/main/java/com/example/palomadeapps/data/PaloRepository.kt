@@ -6,6 +6,7 @@ import com.example.palomadeapps.model.UserModel
 import com.example.palomadeapps.data.pref.UserPref
 import com.example.palomadeapps.model.ArticelModel
 import com.example.palomadeapps.model.OrderReward
+import com.example.palomadeapps.response.Prediction.PredictResponse
 import com.example.palomadeapps.response.auth.LoginResponse
 import com.example.palomadeapps.response.auth.RegisterResponse
 import com.example.palomadeapps.ui.common.UiState
@@ -70,7 +71,20 @@ class PaloRepository (
         } catch (e: Exception) {
             emit(UiState.Error("Error : ${e.message.toString()}"))
         }
+    }
 
+    suspend fun prediction(classType: String, presentace: String) = liveData{
+        emit(UiState.Loading)
+        try {
+            val successResponse = apiService.predict(classType,presentace)
+            emit(UiState.Success(successResponse))
+        }  catch (e: retrofit2.HttpException){
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, PredictResponse::class.java)
+            emit(UiState.Error(errorResponse.toString()))
+        } catch (e: Exception) {
+            emit(UiState.Error("Error : ${e.message.toString()}"))
+        }
     }
 
 //    fun getSession(): Flow<UserModel> {

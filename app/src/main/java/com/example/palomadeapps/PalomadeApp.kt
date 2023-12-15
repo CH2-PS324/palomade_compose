@@ -67,7 +67,8 @@ fun PalomadeApp (
                 currentRoute != Screen.Onboarding.route &&
                 currentRoute != Screen.Login.route &&
                 currentRoute != Screen.Register.route &&
-                currentRoute != Screen.Camera.route
+                currentRoute != Screen.Camera.route &&
+                currentRoute != Screen.Camera2.route
                 ){
                 BottomBar(navController)
             }
@@ -226,6 +227,7 @@ private fun BottomBar(
 
     }
 }
+
 //@Preview(showBackground = true)
 //@Composable
 //fun JetHeroesAppPreview() {
