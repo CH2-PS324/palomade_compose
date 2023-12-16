@@ -1,12 +1,8 @@
 package com.example.palomadeapps.ui.screen.profile
 
 import android.content.Intent
-import android.widget.Space
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,59 +15,59 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import android.provider.Settings
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.palomadeapps.MainActivity
 import com.example.palomadeapps.R
 import com.example.palomadeapps.ViewModelFactory
 import com.example.palomadeapps.data.di.Injection
-import com.example.palomadeapps.ui.screen.register.RegisterScreen
-import com.example.palomadeapps.ui.screen.register.RegisterViewModel
-import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
-import com.example.palomadeapps.ui.theme.poppinsFontFamily
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository(LocalContext.current))
     ),
-
+    activity: ComponentActivity,
+    navigate: NavHostController,
     modifier: Modifier = Modifier
 ){
     var showDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
+    val sessionData by viewModel.getSession().observeAsState()
 
     Box(contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -106,22 +102,34 @@ fun ProfileScreen(
                     .padding(top = 20.dp),
                 horizontalArrangement = Arrangement.Center
             ){
-                Text(
-                    text = stringResource(R.string.name),
-                    style = TextStyle(
+//                Text(
+//                    text = stringResource(R.string.name),
+//                    style = TextStyle(
+//                        fontSize = 24.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        fontStyle = FontStyle.Italic,
+//                        textAlign = TextAlign.Center,
+//                    ),
+//                )
+                sessionData?.let {
+                    Text(
+                        it.name,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
-                        fontStyle = FontStyle.Italic,
+                        fontStyle = FontStyle.Normal,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         textAlign = TextAlign.Center,
-                    ),
+                    )
+                }
+            }
+
+            sessionData?.let {
+                Text(text = it.role,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular))
                 )
             }
-            Text(
-                text = stringResource(R.string.role),
-                style = TextStyle(
-                    fontSize = 16.sp,
-                )
-            )
 
             Row (
                 modifier = Modifier
@@ -134,44 +142,98 @@ fun ProfileScreen(
                 val buttonColor = remember {
                     mutableStateOf(Color.Blue)
                 }
-                Button(
+                ElevatedButton(
                     modifier = Modifier
                         .fillMaxWidth(1f)
                         .width(320.dp)
                         .height(56.dp)
                         .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
-                    onClick = { buttonColor.value = Color.Gray },
+
+                    onClick = {
+                        val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                        context.startActivity(intent)
+                              },
+
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
                     )
-                ) {
-                        Row (
-                            horizontalArrangement = Arrangement.Start
-                        ){
-                            Column (
-                                verticalArrangement = Arrangement.Top,
-                                horizontalAlignment = Alignment.Start,
-                                modifier = Modifier
-                                    .padding(start = 0.dp)
 
-                            ){
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_settings),
-                                    contentDescription = "Email Icon"
-                                )
-                            }
-                        }
-                        Row (
-                            modifier = Modifier
-                                .padding(start = 3.dp)
-                        ){
-                            Text(
-                                text = "Settings"
-                            )
-                        }
+                ) {
+
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_language),
+                    contentDescription = "Language Icon",
+                    Modifier
+                        .size(24.dp)
+                )
+                Row (
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                ){
+                    Text(
+                        text = stringResource(R.string.btn_settings),
+                        color = Color(0xFFFFFFFF)
+                    )
+                }
+
                 }
             }
+
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 0.dp),
+                horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically,
+
+                ){
+                ElevatedButton(
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .width(320.dp)
+                        .height(56.dp)
+                        .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
+
+                    onClick = {
+                        navigate.navigate("FAQ")
+                    },
+
+                    shape = RoundedCornerShape(10.dp),
+
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xff008857)
+                    )
+                ) {
+
+                    Column (
+
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier
+                            .padding(start = 0.dp)
+
+                    ){
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_faq),
+                            contentDescription = "Email Icon",
+                            Modifier
+                                .size(24.dp)
+                        )
+                    }
+
+                    Row (
+                        modifier = Modifier
+                            .padding(start = 5.dp)
+                    ){
+                        Text(
+                            text = stringResource(R.string.btn_FAQ)
+                        )
+                    }
+                }
+            }
+
+
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)
@@ -185,7 +247,6 @@ fun ProfileScreen(
                         .fillMaxWidth(1f)
                         .width(320.dp)
                         .height(56.dp)
-
                         .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
                     onClick = { showDialog = !showDialog },
                     shape = RoundedCornerShape(10.dp),
@@ -214,7 +275,7 @@ fun ProfileScreen(
                             .padding(start = 3.dp)
                     ){
                         Text(
-                            text = "Logout"
+                            text = stringResource(R.string.btn_logout)
                         )
                     }
                 }
@@ -224,11 +285,18 @@ fun ProfileScreen(
                             // Handle dialog dismissal if needed
                             showDialog = false
                         },
-                        title = {
-                            Text("Login Berhasil")
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Dangerous,
+                                contentDescription = "Dangerous",
+                                modifier = Modifier.size(24.dp)
+                            )
                         },
+//                        title = {
+//                            Text(text = stringResource(R.string.yakin))
+//                        },
                         text = {
-                            Text("Yuk lanjutin ke halaman selanjutnya")
+                            Text(text = stringResource(R.string.yakin))
                         },
                         confirmButton = {
                             Button(
@@ -242,7 +310,7 @@ fun ProfileScreen(
                                     (context as? ComponentActivity)?.finish()
                                 },
                                 colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = colorResource(id = R.color.Red)
+                                    containerColor = colorResource(id = R.color.Warna_button)
                                 )
                             ) {
                                 Text("Yes", color = Color.White)
@@ -254,10 +322,10 @@ fun ProfileScreen(
                                     showDialog = false
                                 },
                                 colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = Color.Gray
+                                    containerColor = colorResource(id = R.color.Gray)
                                 )
                             ) {
-                                Text("No")
+                                Text("No", color = Color.White)
                             }
                         }
                     )
@@ -267,10 +335,10 @@ fun ProfileScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-    PalomadeAppsTheme {
-        ProfileScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ProfileScreenPreview() {
+//    PalomadeAppsTheme {
+//        ProfileScreen()
+//    }
+//}

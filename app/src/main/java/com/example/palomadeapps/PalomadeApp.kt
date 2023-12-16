@@ -1,6 +1,6 @@
 package com.example.palomadeapps
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
@@ -23,17 +23,20 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.palomadeapps.data.di.Injection
+import com.example.palomadeapps.ui.screen.FAQ.FAQScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen2
+import com.example.palomadeapps.ui.screen.detail.DetailScreen
 import com.example.palomadeapps.ui.screen.login.LoginScreen
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
@@ -41,15 +44,14 @@ import com.example.palomadeapps.ui.screen.profile.ProfileScreen
 import com.example.palomadeapps.ui.screen.scan.ScanScreen
 import com.example.palomadeapps.ui.screen.track.TrackScreen
 import com.example.palomadeapps.ui.screen.welcome.OnBoardingScreen
-import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.example.palomadeapps.views.main.MainViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
-import androidx.compose.material3.BadgedBox
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
 fun PalomadeApp (
+    activity: ComponentActivity,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     viewModel: MainViewModel = viewModel(
@@ -66,7 +68,9 @@ fun PalomadeApp (
                 currentRoute != Screen.Onboarding.route &&
                 currentRoute != Screen.Login.route &&
                 currentRoute != Screen.Register.route &&
-                currentRoute != Screen.Camera.route
+                currentRoute != Screen.Camera.route &&
+                currentRoute != Screen.Camera2.route &&
+                currentRoute != Screen.FAQ.route
                 ){
                 BottomBar(navController)
             }
@@ -101,6 +105,11 @@ fun PalomadeApp (
             // Composable function for registration screen
             RegisterScreen(navigate = navController)
             }
+
+            composable(Screen.FAQ.route){
+                FAQScreen(navigate = navController)
+            }
+
             composable(Screen.Camera2.route){
                 CameraScreen2(navigate = navController)
             }
@@ -110,18 +119,33 @@ fun PalomadeApp (
             }
 
             composable(Screen.Home.route){
-                HomeScreen()
+                HomeScreen(navigateToDetail = { rewardId ->
+                    navController.navigate(Screen.DetailReward.createRoute(rewardId))
+                })
             }
 
             composable(Screen.Track.route){
                 TrackScreen()
             }
 
+
             composable(Screen.Camera.route) {
                 CameraScreen(navigate = navController)
             }
             composable(Screen.Profile.route) {
-                ProfileScreen()
+                ProfileScreen(activity = MainActivity(), navigate = navController)
+            }
+            composable(
+                route = Screen.DetailReward.route,
+                arguments = listOf(navArgument("rewardId") { type = NavType.LongType }),
+            ) {
+                val id = it.arguments?.getLong("rewardId") ?: -1L
+                DetailScreen(
+                    rewardId = id,
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
+                )
             }
         }
     }
@@ -141,8 +165,8 @@ private fun BottomBar(
                     topEnd = 22.dp
                 )
                 clip = true
-            }
-        //        containerColor = colorResource(id = R.color.black)
+            },
+            containerColor = colorResource(id = R.color.btm_nav)
     ){
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -150,15 +174,15 @@ private fun BottomBar(
         val navigationItems = listOf(
             NavigationItem(
                 title = stringResource(R.string.menu_home),
-                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_gome),
-                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_gome),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_home),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_home),
                 hasNews = true,
                 screen = Screen.Home,
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_cam),
-                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_cameraa),
-                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_cameraa),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_scan),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_scan),
                 hasNews = true,
                 screen = Screen.Scan
             ),
@@ -171,8 +195,8 @@ private fun BottomBar(
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_profile),
-                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_account),
-                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_account),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_profile),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_profile),
                 hasNews = true,
                 screen = Screen.Profile
             ),
@@ -191,11 +215,10 @@ private fun BottomBar(
                         contentDescription = item.title
                     )
                 },
-                selected = selectedItemIndex == index,
 
                 alwaysShowLabel = false,
-                label = { Text(item.title, color = colorResource(id = R.color.black)) },
-//                selected = currentRoute == item.screen.route,
+                label = { Text(item.title) },
+                selected = currentRoute == item.screen.route,
                 onClick = {
                     selectedItemIndex = index
                     navController.navigate(item.screen.route) {
@@ -205,16 +228,18 @@ private fun BottomBar(
                         restoreState = true
                         launchSingleTop = true
                     }
-                }
+                },
+
             )
         }
 
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun JetHeroesAppPreview() {
-    PalomadeAppsTheme {
-        PalomadeApp()
-    }
-}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun JetHeroesAppPreview() {
+//    PalomadeAppsTheme {
+//        PalomadeApp()
+//    }
+//}

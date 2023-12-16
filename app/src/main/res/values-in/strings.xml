@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PalomadeApps</string>
+    <string name="menu_home">Beranda</string>
+    <string name="menu_cam">Pindai</string>
+    <string name="login">Masuk</string>
+    <string name="regis">Daftar</string>
+    <string name="menu_profile">Profil</string>
+    <string name="track">Lacak</string>
+    <string name="name">Alfian Ganteng</string>
+    <string name="titleWelcome">mulai perjalananmu untuk mengenali kematangan buah kelapa sawit</string>
+    <string name="role">Pengelola</string>
+    <string name="scroll_to_top">Gulir ke Atas</string>
+    <string name="titleOnboard1">Pengurutan kelapa sawit lebih cepat dan akurat</string>
+    <string name="titleLogin">Selamat datang kembali! Masuk untuk melanjutkan</string>
+    <string name="titleRegis">Buat akunmu untuk memulai perjalananmu</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="btn_settings">Bahasa</string>
+    <string name="btn_logout">Keluar</string>
+    <string name="txt_baner">Selamat Datan, </string>
+    <string name="bongkahan">Bongkahan</string>
+    <string name="brondolan">Brondolan</string>
+    <string name="back">Kembali</string>
+</resources>

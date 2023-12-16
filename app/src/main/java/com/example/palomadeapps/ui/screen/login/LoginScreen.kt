@@ -112,7 +112,6 @@ fun LoginScreen (
         is UiState.Loading -> {
             showLoading = true
         }
-
         is UiState.Success -> {
             showDialog = true
             var user = UserModel(
@@ -126,10 +125,10 @@ fun LoginScreen (
                 user
             )
         }
-            is UiState.Error -> {
-                showLoading = false
-                Toast.makeText(context, "Password atau Email salah", Toast.LENGTH_SHORT).show()
-            }
+        is UiState.Error -> {
+            showLoading = false
+            Toast.makeText(context, "Password atau Email salah", Toast.LENGTH_SHORT).show()
+        }
         else -> {}
     }
 
@@ -144,7 +143,6 @@ fun LoginScreen (
     val registerText = buildAnnotatedString {
         append("Don't Have an Account?  ")
         withStyle(style = SpanStyle(
-
             color = Color(0xFF008857),
             textDecoration = TextDecoration.None,
             fontSize = 14.sp,
@@ -360,7 +358,7 @@ fun LoginScreen (
                                     (context as? ComponentActivity)?.finish()
                                 },
                                 colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = colorResource(id = R.color.Yellow)
+                                    containerColor = colorResource(id = R.color.Warna_button)
                                 )
                             ) {
                                 Text("Yes")

@@ -60,7 +60,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -72,7 +71,6 @@ import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.common.UiState
 import com.example.palomadeapps.ui.components.TxtItem
 import com.example.palomadeapps.ui.navigation.Screen
-import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 import com.example.palomadeapps.ui.theme.poppinsFontFamily
 
 //@Preview(showBackground = true)

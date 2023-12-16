@@ -28,7 +28,10 @@ class LoginViewModel(private val repository: PaloRepository) : ViewModel() {
         }
     }
 
-    fun login(email: String, password: String,) {
+    fun login(
+        email: String,
+        password: String
+    ) {
         viewModelScope.launch {
             repository.login(email, password).asFlow().collect{
                 _upload.value = it

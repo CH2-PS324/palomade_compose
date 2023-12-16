@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.palomadeapps.data.PaloRepository
 import com.example.palomadeapps.data.di.Injection
+import com.example.palomadeapps.ui.screen.camera.CameraViewModel
+import com.example.palomadeapps.ui.screen.detail.DetailViewModel
 import com.example.palomadeapps.ui.screen.home.HomeViewModel
 import com.example.palomadeapps.ui.screen.login.LoginViewModel
 import com.example.palomadeapps.ui.screen.profile.ProfileViewModel
@@ -20,6 +22,9 @@ class ViewModelFactory(private val repository: PaloRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(CameraViewModel::class.java) -> {
+                CameraViewModel(repository) as T
             }
 //            modelClass.isAssignableFrom(InventoryViewModel::class.java) -> {
 //                InventoryViewModel(repository) as T
@@ -39,9 +44,9 @@ class ViewModelFactory(private val repository: PaloRepository) : ViewModelProvid
 //            modelClass.isAssignableFrom(AccountViewModel::class.java) -> {
 //                AccountViewModel(repository) as T
 //            }
-//            modelClass.isAssignableFrom(InvDetailViewModel::class.java) -> {
-//                InvDetailViewModel(repository) as T
-//            }
+            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
+                DetailViewModel(repository) as T
+            }
 //            modelClass.isAssignableFrom(TransactionsViewModel::class.java) -> {
 //                TransactionsViewModel(repository) as T
 //            }
