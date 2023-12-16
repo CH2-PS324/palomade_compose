@@ -117,6 +117,7 @@ fun HomeScreen(
                             )
                         }
                     }
+
                     Row (
                         Modifier
                             .padding(start = 20.dp)
@@ -188,12 +189,12 @@ fun HomeScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Text(
-                                modifier = Modifier.padding(top = 10.dp),
+                                modifier = Modifier.padding(top = 10.dp, start = 28.dp),
 
-                                text = "30",
+                                text = "32",
                                 style = TextStyle(
                                     fontSize = 58.sp,
-                                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
                                     fontWeight = FontWeight(400),
                                     color = Color(0xFF000000)
                                 )
@@ -202,7 +203,6 @@ fun HomeScreen(
                     }
                 }
             }
-
 
             Column {
                 var isLoading by remember {

@@ -57,7 +57,6 @@ fun RewardItem(
                 modifier = Modifier
                     .fillMaxWidth(1f)
                     .padding(start = 8.dp)
-                    .padding(start = 0.dp)
             ){
                 Text(
                     text = title.substring(0, 30) + "...",
@@ -68,7 +67,7 @@ fun RewardItem(
                         fontWeight = FontWeight.ExtraBold,
                     ),
                 )
-                Spacer(modifier = Modifier.height(3.dp))
+                Spacer(modifier = Modifier.height(1.dp))
                 Text(
                     text = description.substring(0, 82) + "..." + "  Read More",
                     style = MaterialTheme.typography.titleSmall,

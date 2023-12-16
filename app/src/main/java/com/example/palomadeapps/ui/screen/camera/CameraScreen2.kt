@@ -111,16 +111,7 @@ fun CameraScreen2(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xff008857)
             ),
-            onClick = {
-                val permissionCheckResult =
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
-
-                if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-                    cameraLauncher.launch(uri)
-                } else {
-                    permissionLauncher.launch(Manifest.permission.CAMERA)
-                }
-            },
+            onClick = {/*Todo*/},
             shape = RoundedCornerShape(10.dp),
 
             ) {

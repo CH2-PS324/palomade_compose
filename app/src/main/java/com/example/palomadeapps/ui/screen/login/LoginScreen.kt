@@ -358,7 +358,7 @@ fun LoginScreen (
                                     (context as? ComponentActivity)?.finish()
                                 },
                                 colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = colorResource(id = R.color.Yellow)
+                                    containerColor = colorResource(id = R.color.Warna_button)
                                 )
                             ) {
                                 Text("Yes")

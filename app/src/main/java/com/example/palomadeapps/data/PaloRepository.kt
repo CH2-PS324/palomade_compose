@@ -14,6 +14,12 @@ import com.google.gson.Gson
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.HttpException
+import java.io.File
 
 class PaloRepository (
     private val userPreference: UserPref,
@@ -32,6 +38,7 @@ class PaloRepository (
     fun getHeroes(): List<ArticelModel> {
         return ArticelData.dummyArticel
     }
+
     fun getAllRewards(): Flow<List<OrderReward>> {
         return flowOf(orderRewards)
     }
@@ -73,13 +80,24 @@ class PaloRepository (
         }
     }
 
-    suspend fun prediction(classType: String, presentace: String) = liveData{
+    //PREDICTION API RESPONSE
+    fun prediction(imageFile: File, type: String) = liveData{
         emit(UiState.Loading)
+        val requestBody = type.toRequestBody("text/plain".toMediaType())
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val multipartBody = MultipartBody.Part.createFormData(
+            "photo",
+            imageFile.name,
+            requestImageFile
+        )
+
         try {
-            val successResponse = apiService.predict(classType,presentace)
+            val successResponse =
+                apiService.predict(multipartBody, requestBody)
             emit(UiState.Success(successResponse))
-        }  catch (e: retrofit2.HttpException){
+        } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
+
             val errorResponse = Gson().fromJson(errorBody, PredictResponse::class.java)
             emit(UiState.Error(errorResponse.toString()))
         } catch (e: Exception) {

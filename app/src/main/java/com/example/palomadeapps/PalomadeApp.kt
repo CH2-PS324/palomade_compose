@@ -158,7 +158,7 @@ private fun BottomBar(
                 )
                 clip = true
             },
-            containerColor = colorResource(id = R.color.Gray)
+            containerColor = colorResource(id = R.color.btm_nav)
     ){
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route

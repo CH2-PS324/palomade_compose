@@ -15,6 +15,6 @@ object Injection {
         val pref = UserPref.getInstance(context.dataStore)
         val user = runBlocking { pref.getSession().first() }
         val apiService = ApiConfig.getApiService(user.token)
-        return PaloRepository.getInstance(pref,apiService)
+        return PaloRepository.getInstance(pref, apiService)
     }
 }

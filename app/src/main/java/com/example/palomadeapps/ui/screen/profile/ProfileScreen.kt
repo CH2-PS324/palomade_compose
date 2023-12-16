@@ -16,6 +16,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import android.provider.Settings
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,6 +42,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -60,6 +67,7 @@ fun ProfileScreen(
     var showDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
+    val sessionData by viewModel.getSession().observeAsState()
 
     Box(contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -94,22 +102,34 @@ fun ProfileScreen(
                     .padding(top = 20.dp),
                 horizontalArrangement = Arrangement.Center
             ){
-                Text(
-                    text = stringResource(R.string.name),
-                    style = TextStyle(
+//                Text(
+//                    text = stringResource(R.string.name),
+//                    style = TextStyle(
+//                        fontSize = 24.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        fontStyle = FontStyle.Italic,
+//                        textAlign = TextAlign.Center,
+//                    ),
+//                )
+                sessionData?.let {
+                    Text(
+                        it.name,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
-                        fontStyle = FontStyle.Italic,
+                        fontStyle = FontStyle.Normal,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         textAlign = TextAlign.Center,
-                    ),
+                    )
+                }
+            }
+
+            sessionData?.let {
+                Text(text = it.role,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular))
                 )
             }
-            Text(
-                text = stringResource(R.string.role),
-                style = TextStyle(
-                    fontSize = 16.sp,
-                )
-            )
 
             Row (
                 modifier = Modifier
@@ -152,7 +172,9 @@ fun ProfileScreen(
                             ){
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_settings),
-                                    contentDescription = "Email Icon"
+                                    contentDescription = "Email Icon",
+                                    Modifier
+                                        .size(24.dp)
                                 )
                             }
                         }
@@ -217,11 +239,18 @@ fun ProfileScreen(
                             // Handle dialog dismissal if needed
                             showDialog = false
                         },
-                        title = {
-                            Text("Login Berhasil")
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Dangerous,
+                                contentDescription = "Dangerous",
+                                modifier = Modifier.size(24.dp)
+                            )
                         },
+//                        title = {
+//                            Text(text = stringResource(R.string.yakin))
+//                        },
                         text = {
-                            Text("Yuk lanjutin ke halaman selanjutnya")
+                            Text(text = stringResource(R.string.yakin))
                         },
                         confirmButton = {
                             Button(
@@ -235,7 +264,7 @@ fun ProfileScreen(
                                     (context as? ComponentActivity)?.finish()
                                 },
                                 colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = colorResource(id = R.color.Red)
+                                    containerColor = colorResource(id = R.color.Warna_button)
                                 )
                             ) {
                                 Text("Yes", color = Color.White)
@@ -247,10 +276,10 @@ fun ProfileScreen(
                                     showDialog = false
                                 },
                                 colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = Color.Gray
+                                    containerColor = colorResource(id = R.color.Gray)
                                 )
                             ) {
-                                Text("No")
+                                Text("No", color = Color.White)
                             }
                         }
                     )
