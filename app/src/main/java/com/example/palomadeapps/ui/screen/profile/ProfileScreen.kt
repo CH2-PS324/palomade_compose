@@ -16,9 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import android.provider.Settings
-import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -36,12 +34,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -50,6 +49,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.palomadeapps.MainActivity
 import com.example.palomadeapps.R
 import com.example.palomadeapps.ViewModelFactory
@@ -61,7 +61,7 @@ fun ProfileScreen(
         factory = ViewModelFactory(Injection.provideRepository(LocalContext.current))
     ),
     activity: ComponentActivity,
-
+    navigate: NavHostController,
     modifier: Modifier = Modifier
 ){
     var showDialog by remember { mutableStateOf(false) }
@@ -142,7 +142,7 @@ fun ProfileScreen(
                 val buttonColor = remember {
                     mutableStateOf(Color.Blue)
                 }
-                Button(
+                ElevatedButton(
                     modifier = Modifier
                         .fillMaxWidth(1f)
                         .width(320.dp)
@@ -158,36 +158,82 @@ fun ProfileScreen(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
                     )
+
                 ) {
-                        Row (
-                            horizontalArrangement = Arrangement.Start
-                        ){
-                            Column (
 
-                                verticalArrangement = Arrangement.Top,
-                                horizontalAlignment = Alignment.Start,
-                                modifier = Modifier
-                                    .padding(start = 0.dp)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_language),
+                    contentDescription = "Language Icon",
+                    Modifier
+                        .size(24.dp)
+                )
+                Row (
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                ){
+                    Text(
+                        text = stringResource(R.string.btn_settings),
+                        color = Color(0xFFFFFFFF)
+                    )
+                }
 
-                            ){
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_settings),
-                                    contentDescription = "Email Icon",
-                                    Modifier
-                                        .size(24.dp)
-                                )
-                            }
-                        }
-                        Row (
-                            modifier = Modifier
-                                .padding(start = 3.dp)
-                        ){
-                            Text(
-                                text = stringResource(R.string.btn_settings)
-                            )
-                        }
                 }
             }
+
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 0.dp),
+                horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically,
+
+                ){
+                ElevatedButton(
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .width(320.dp)
+                        .height(56.dp)
+                        .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
+
+                    onClick = {
+                        navigate.navigate("FAQ")
+                    },
+
+                    shape = RoundedCornerShape(10.dp),
+
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xff008857)
+                    )
+                ) {
+
+                    Column (
+
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier
+                            .padding(start = 0.dp)
+
+                    ){
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_faq),
+                            contentDescription = "Email Icon",
+                            Modifier
+                                .size(24.dp)
+                        )
+                    }
+
+                    Row (
+                        modifier = Modifier
+                            .padding(start = 5.dp)
+                    ){
+                        Text(
+                            text = stringResource(R.string.btn_FAQ)
+                        )
+                    }
+                }
+            }
+
+
             Row (
                 modifier = Modifier
                     .fillMaxWidth(1f)

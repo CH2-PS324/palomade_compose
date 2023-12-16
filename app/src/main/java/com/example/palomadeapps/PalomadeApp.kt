@@ -33,6 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.palomadeapps.data.di.Injection
+import com.example.palomadeapps.ui.screen.FAQ.FAQScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen2
 import com.example.palomadeapps.ui.screen.detail.DetailScreen
@@ -68,7 +69,8 @@ fun PalomadeApp (
                 currentRoute != Screen.Login.route &&
                 currentRoute != Screen.Register.route &&
                 currentRoute != Screen.Camera.route &&
-                currentRoute != Screen.Camera2.route
+                currentRoute != Screen.Camera2.route &&
+                currentRoute != Screen.FAQ.route
                 ){
                 BottomBar(navController)
             }
@@ -103,6 +105,11 @@ fun PalomadeApp (
             // Composable function for registration screen
             RegisterScreen(navigate = navController)
             }
+
+            composable(Screen.FAQ.route){
+                FAQScreen(navigate = navController)
+            }
+
             composable(Screen.Camera2.route){
                 CameraScreen2(navigate = navController)
             }
@@ -121,11 +128,12 @@ fun PalomadeApp (
                 TrackScreen()
             }
 
+
             composable(Screen.Camera.route) {
                 CameraScreen(navigate = navController)
             }
             composable(Screen.Profile.route) {
-                ProfileScreen(activity = MainActivity())
+                ProfileScreen(activity = MainActivity(), navigate = navController)
             }
             composable(
                 route = Screen.DetailReward.route,
@@ -166,8 +174,8 @@ private fun BottomBar(
         val navigationItems = listOf(
             NavigationItem(
                 title = stringResource(R.string.menu_home),
-                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_gome),
-                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_gome),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_home),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_home),
                 hasNews = true,
                 screen = Screen.Home,
             ),
@@ -187,8 +195,8 @@ private fun BottomBar(
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_profile),
-                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_account),
-                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_account),
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_profile),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_profile),
                 hasNews = true,
                 screen = Screen.Profile
             ),

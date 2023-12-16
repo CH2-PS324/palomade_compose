@@ -28,6 +28,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -40,9 +41,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.palomadeapps.R
+import com.example.palomadeapps.ViewModelFactory
+import com.example.palomadeapps.data.di.Injection
+import com.example.palomadeapps.model.Predict
+import com.example.palomadeapps.ui.common.UiState
+import com.example.palomadeapps.ui.screen.login.LoginViewModel
+import com.example.palomadeapps.ui.uriToFile
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -51,7 +59,11 @@ import java.util.Objects
 
 @Composable
 fun CameraScreen2(
-    navigate: NavHostController
+    navigate: NavHostController,
+    context: Context = LocalContext.current,
+    viewModel: CameraViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository(context))
+    )
 ) {
 
     var currentImageUri by remember {
@@ -63,14 +75,18 @@ fun CameraScreen2(
         mutableStateOf<Bitmap?>(null)
     }
 
+    val uploadState by viewModel.upload.observeAsState()
+
     val Gallerylauncher = rememberLauncherForActivityResult(contract =
 
     ActivityResultContracts.GetContent()) { uri: Uri? ->
         if (currentImageUri != Uri.EMPTY) currentImageUri = Uri.EMPTY
         currentImageUri = uri
     }
+    var showLoading by remember { mutableStateOf(false) }
 
     val file = context.createImageFile()
+
     var uri = FileProvider.getUriForFile(
         Objects.requireNonNull(context),
         context.packageName + ".provider", file
@@ -96,6 +112,7 @@ fun CameraScreen2(
         }
     }
 
+
     Column(
         Modifier
             .fillMaxWidth(1f)
@@ -111,7 +128,11 @@ fun CameraScreen2(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xff008857)
             ),
-            onClick = {/*Todo*/},
+            onClick = {
+
+                      Toast.makeText(context, "Prediction", Toast.LENGTH_SHORT).show()
+//                  viewModel.prediction(imageFile, "bongkahan")
+            },
             shape = RoundedCornerShape(10.dp),
 
             ) {
