@@ -40,7 +40,7 @@ fun Shipping() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, top = 10.dp)
+                .padding(start = 15.dp, top = 10.dp, bottom = 10.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.shipping),
@@ -115,6 +115,6 @@ fun Shipping() {
 
 @Preview
 @Composable
-fun StatelessCardPreview() {
+fun ShippingCardPreview() {
     Shipping()
 }
