@@ -17,7 +17,7 @@ import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 @Composable
 fun CategoryItem(
     category: String,
-onExecuteSearch: (String) -> Unit,
+    onExecuteSearch: (String) -> Unit,
 ){
     Surface(
         modifier = Modifier.padding(end = 8.dp),

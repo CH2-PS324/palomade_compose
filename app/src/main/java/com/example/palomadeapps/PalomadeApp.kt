@@ -125,7 +125,7 @@ fun PalomadeApp (
             }
 
             composable(Screen.Track.route){
-                TrackScreen()
+                TrackScreen(navigate = navController)
             }
 
 
