@@ -23,12 +23,14 @@
     <string name="yakin">Are you sure you want to Log out?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="btn_FAQ">FAQ</string>
+    <string name="btn_FAQ">Frequently Asked Questions</string>
     <string name="all">All</string>
     <string name="progress">In Progress</string>
     <string name="shipping">Shipped</string>
     <string name="end">Completed</string>
     <string name="add_shipping">New Shipping</string>
     <string name="track_shipping">Tracking</string>
-
+    <string name="label_shipping">processed</string>
+    <string name="proses">In Process</string>
+    <string name="btn_detail_ship">Finish</string>
 </resources>

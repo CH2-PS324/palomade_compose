@@ -37,6 +37,7 @@ import com.example.palomadeapps.ui.screen.FAQ.FAQScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen2
 import com.example.palomadeapps.ui.screen.detail.DetailScreen
+import com.example.palomadeapps.ui.screen.detailShipping.DetailShipScreen
 import com.example.palomadeapps.ui.screen.login.LoginScreen
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
@@ -70,7 +71,8 @@ fun PalomadeApp (
                 currentRoute != Screen.Register.route &&
                 currentRoute != Screen.Camera.route &&
                 currentRoute != Screen.Camera2.route &&
-                currentRoute != Screen.FAQ.route
+                currentRoute != Screen.FAQ.route &&
+                currentRoute != Screen.DetailShip.route
                 ){
                 BottomBar(navController)
             }
@@ -116,6 +118,10 @@ fun PalomadeApp (
 
             composable(Screen.Scan.route){
                 ScanScreen(navigate = navController)
+            }
+
+            composable(Screen.DetailShip.route){
+                DetailShipScreen(navigate = navController)
             }
 
             composable(Screen.Home.route){

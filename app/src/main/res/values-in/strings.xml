@@ -28,7 +28,10 @@
     <string name="yakin">Apakah Anda yakin ingin Keluar?</string>
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
-    <string name="btn_FAQ">FAQ</string>
+    <string name="btn_FAQ">Pertanyaan yang Sering Diajukan</string>
     <string name="add_shipping">Pengiriman Baru</string>
-    <string name="track_shipping">Pelacakans</string>
+    <string name="track_shipping">Pelacakan</string>
+    <string name="label_shipping">Diproses</string>
+    <string name="proses">Dalam Proses</string>
+    <string name="btn_detail_ship">Selesai</string>
 </resources>

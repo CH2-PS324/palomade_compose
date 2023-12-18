@@ -2,6 +2,11 @@ package com.example.palomadeapps.ui.screen.track
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
@@ -28,12 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.palomadeapps.R
+import com.example.palomadeapps.ui.components.Shipping
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TrackScreen(
     navigate: NavHostController,
 //    navigate: () -> Unit
+    listState: LazyListState = rememberLazyListState()
 ) {
     var selectedFilter by remember { mutableStateOf<Filter?>(null) }
 
@@ -61,8 +68,9 @@ fun TrackScreen(
                 modifier = Modifier
                     .padding(top = 10.dp, start = 10.dp),
                 text = stringResource(R.string.track_shipping),
+                fontSize = 24.sp,
                 style = TextStyle(
-                    fontSize = 17.sp,
+                    fontSize = 19.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontWeight = FontWeight(600),
                     color = Color(0xFF000000)
@@ -102,13 +110,13 @@ fun TrackScreen(
         )
 
         // Baris chip untuk menampilkan filter
-        Row(
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 8.dp)
                 .selectableGroup()
-                .padding(top = 13.dp)
         ) {
-            filters.forEach { filter ->
+            this.items(filters) { filter ->
                 FilterChip(
                     filter = filter,
                     selectedFilter = selectedFilter,
@@ -117,7 +125,22 @@ fun TrackScreen(
             }
         }
 
+        Text(
+            text = stringResource(R.string.proses),
+            fontSize = 16.sp,
+            modifier = Modifier
+                .padding(top = 20.dp, bottom = 8.dp)
+        )
+
         // Tampilkan daftar item atau konten aplikasi di sini
+        LazyColumn(
+            state = listState,
+            contentPadding = PaddingValues(bottom = 10.dp)
+        ) {
+            items(10) {
+                Shipping(navigate = navigate)
+            }
+        }
     }
 }
 

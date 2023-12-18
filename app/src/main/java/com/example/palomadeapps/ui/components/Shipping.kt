@@ -22,20 +22,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.palomadeapps.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Shipping() {
+fun Shipping(
+    navigate: NavHostController,
+) {
     Card(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth(),
-        onClick = { /* Handle card click */ },
+        onClick = {
+            navigate.navigate("detailship")
+        },
     ) {
         Row(
             modifier = Modifier
@@ -58,11 +64,11 @@ fun Shipping() {
             Column(
                 modifier = Modifier
                     .padding(start = 16.dp, bottom = 10.dp)
-                    .width(225.dp)
+                    .width(213.dp)
             ) {
                 Text(
-                    text = "Diproses",
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = stringResource(id = R.string.label_shipping),
+                    style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier
                         .padding(bottom = 8.dp)
                         .border(
@@ -70,17 +76,18 @@ fun Shipping() {
                             color = Color(0xFF686868),
                             shape = RoundedCornerShape(size = 4.dp)
                         )
-                        .width(75.dp)
+                        .width(80.dp)
                         .height(19.dp)
                         .background(
                             color = Color(0xFFEBEBEB),
                             shape = RoundedCornerShape(size = 4.dp)
                         )
-                        .padding(start = 8.dp, end = 8.dp)
+                        .padding(start = 8.dp)
                 )
                 Text(
-                    text = "Card Description",
-                    style = MaterialTheme.typography.bodyMedium
+                    text = "Jakarta - Yogyakarta",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
                 )
                 Text(
                     text = "22 November 2023",
@@ -103,7 +110,7 @@ fun Shipping() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, top = 8.dp)
+                .padding(start = 15.dp, top = 8.dp, bottom = 8.dp)
         ){
             Text(
                 text = "Estimasi tiba: 24 November 2023",
@@ -113,8 +120,8 @@ fun Shipping() {
     }
 }
 
-@Preview
-@Composable
-fun ShippingCardPreview() {
-    Shipping()
-}
+//@Preview
+//@Composable
+//fun ShippingCardPreview() {
+//    Shipping()
+//}

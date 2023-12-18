@@ -112,7 +112,6 @@ fun CameraScreen2(
         }
     }
 
-
     Column(
         Modifier
             .fillMaxWidth(1f)
