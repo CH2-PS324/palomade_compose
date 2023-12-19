@@ -1,5 +1,6 @@
 package com.example.palomadeapps.api
 
+import com.example.palomadeapps.response.Prediction.Data
 import com.example.palomadeapps.response.Prediction.PredictResponse
 import com.example.palomadeapps.response.auth.LoginResponse
 import com.example.palomadeapps.response.auth.RegisterResponse
@@ -7,6 +8,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 
@@ -27,10 +29,11 @@ interface ApiService {
         @Field("password") password: String,
     ) : LoginResponse
 
-    @FormUrlEncoded
+    //    @FormUrlEncoded
+    @Multipart
     @POST("https://palomade-ml-api-cc5ff2qgca-uc.a.run.app/predict")
     suspend fun predict(
-        @Part file: MultipartBody.Part,
+        @Part image: MultipartBody.Part,
         @Part("type") type: RequestBody
-    ): PredictResponse
+    ): Data
 }

@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -37,7 +38,7 @@ fun Shipping(
 ) {
     Card(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(bottom = 16.dp)
             .fillMaxWidth(),
         onClick = {
             navigate.navigate("detailship")
@@ -64,7 +65,7 @@ fun Shipping(
             Column(
                 modifier = Modifier
                     .padding(start = 16.dp, bottom = 10.dp)
-                    .width(213.dp)
+                    .width(248.dp)
             ) {
                 Text(
                     text = stringResource(id = R.string.label_shipping),
@@ -76,13 +77,13 @@ fun Shipping(
                             color = Color(0xFF686868),
                             shape = RoundedCornerShape(size = 4.dp)
                         )
-                        .width(80.dp)
-                        .height(19.dp)
+                        .width(75.dp)
+                        .height(21.dp)
                         .background(
                             color = Color(0xFFEBEBEB),
                             shape = RoundedCornerShape(size = 4.dp)
                         )
-                        .padding(start = 8.dp)
+                        .padding(start = 4.dp, bottom = 2.dp)
                 )
                 Text(
                     text = "Jakarta - Yogyakarta",

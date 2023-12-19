@@ -191,7 +191,6 @@ fun DetailShipContent(
                                 shape = RoundedCornerShape(size = 8.dp)
                             )
                             .fillMaxWidth(),
-                        onClick = { /* Handle card click */ },
                     ) {
                         Column(
                             modifier = Modifier
