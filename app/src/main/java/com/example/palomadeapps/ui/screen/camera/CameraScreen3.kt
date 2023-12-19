@@ -50,16 +50,16 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.NavHostController
 import com.example.palomadeapps.R
 import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
-import java.io.File
 
 private const val TAG = "ScanScreen"
 
 @Composable
 fun CameraScreen3(
-
+    navigate: NavHostController
 ) {
 
     val context = LocalContext.current
@@ -122,12 +122,8 @@ fun CameraScreen3(
                 viewModel = viewModel
             )
         }
-
     }
-
 }
-
-
 
 @Composable
 fun ImagePreviewSection(
@@ -197,6 +193,7 @@ fun ActionButtonsSection(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(bottom = 30.dp)
 //            .border(width = 1.dp, color = Color.Black)
 
     ) {
@@ -381,11 +378,11 @@ private fun Uri.getBitmapFromUri(context: Context): Bitmap {
 }
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun ScanScreenPreview() {
-//    ImagePreviewSection()
-    PalomadeAppsTheme {
-        CameraScreen3()
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun ScanScreenPreview() {
+////    ImagePreviewSection()
+//    PalomadeAppsTheme {
+//        CameraScreen3()
+//    }
+//}

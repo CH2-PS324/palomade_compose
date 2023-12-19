@@ -41,7 +41,6 @@ import com.example.palomadeapps.ui.screen.login.LoginScreen
 import com.example.palomadeapps.ui.screen.register.RegisterScreen
 import com.example.palomadeapps.ui.screen.home.HomeScreen
 import com.example.palomadeapps.ui.screen.profile.ProfileScreen
-import com.example.palomadeapps.ui.screen.scan.ScanScreen
 import com.example.palomadeapps.ui.screen.track.TrackScreen
 import com.example.palomadeapps.ui.screen.welcome.OnBoardingScreen
 import com.example.palomadeapps.views.main.MainViewModel
@@ -68,8 +67,6 @@ fun PalomadeApp (
                 currentRoute != Screen.Onboarding.route &&
                 currentRoute != Screen.Login.route &&
                 currentRoute != Screen.Register.route &&
-                currentRoute != Screen.Camera.route &&
-                currentRoute != Screen.Camera2.route &&
                 currentRoute != Screen.FAQ.route &&
                 currentRoute != Screen.DetailShip.route
                 ){
@@ -111,11 +108,6 @@ fun PalomadeApp (
                 FAQScreen(navigate = navController)
             }
 
-
-            composable(Screen.Scan.route){
-                ScanScreen(navigate = navController)
-            }
-
             composable(Screen.DetailShip.route){
                 DetailShipScreen(navigate = navController)
             }
@@ -134,7 +126,7 @@ fun PalomadeApp (
             composable(Screen.Camera.route) {
 
 //                CameraScreen(navigate = navController)
-                CameraScreen3()
+                CameraScreen3(navigate = navController)
             }
             composable(Screen.Profile.route) {
                 ProfileScreen(activity = MainActivity(), navigate = navController)
@@ -188,7 +180,7 @@ private fun BottomBar(
                 selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_scan),
                 unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_scan),
                 hasNews = true,
-                screen = Screen.Scan
+                screen = Screen.Camera
             ),
             NavigationItem(
                 title = stringResource(R.string.track),

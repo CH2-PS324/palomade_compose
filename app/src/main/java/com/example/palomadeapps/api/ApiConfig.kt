@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    var base_url = "https://palomade-test-mmsmf3nctq-uc.a.run.app/api/"
+    var base_url = "https://palomade-api-cc5ff2qgca-uc.a.run.app/api/"
     private var prediction_base_url = "https://palomade-ml-api-cc5ff2qgca-uc.a.run.app/"
     fun getApiService(token : String): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
