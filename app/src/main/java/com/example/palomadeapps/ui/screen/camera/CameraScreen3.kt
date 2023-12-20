@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -136,7 +137,6 @@ fun ImagePreviewSection(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-//            .border(width = 1.dp, color = Color.Black)
         ,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -225,6 +225,7 @@ fun ActionButtonsSection(
             Text(text = "Brondolan")
         }
     }
+
     ScanTypeMenu(
         expanded = expanded,
         onDismiss = {
@@ -266,6 +267,7 @@ fun ScanTypeMenu(
     LaunchedEffect(key1 = bitmap, block = {
         bitmap?.let { bitmap ->
             viewModel.prediction(bitmap, if (index == 0) "bongkahan" else "brondolan")
+            viewModel.predictionBrondolan(bitmap, if (index == 0) "bongkahan" else "brondolan")
         }
     })
 

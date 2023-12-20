@@ -10,13 +10,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiConfig {
     var base_url = "https://palomade-api-cc5ff2qgca-uc.a.run.app/api/"
     private var prediction_base_url = "https://palomade-ml-api-cc5ff2qgca-uc.a.run.app/"
+
     fun getApiService(token : String): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         val authInterceptor = Interceptor { chain ->
             val req = chain.request()
             val requestHeaders = req.newBuilder()
                 .addHeader("Authorization", "Bearer $token")
-//                .addHeader("x-access-token", "$token")
                 .build()
             chain.proceed(requestHeaders)
         }

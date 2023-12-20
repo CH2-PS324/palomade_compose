@@ -30,6 +30,7 @@ fun ShippingScreen(
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(singapore, 10f)
     }
+
     val locationState = rememberMarkerState(
         position = singapore,
     )

@@ -54,6 +54,31 @@ class PredictionRepository(
         }
     }
 
+    suspend fun runPredictionBrondolan(imageBitmap: Bitmap, type: String): Flow<ResponseState<Prediction>> {
+        return flow {
+            emit(value = ResponseState.Loading(isLoading = true))
+            try {
+                val file = createTemporaryFile(imageBitmap)
+                val reqImageFile = file.asRequestBody(contentType = "image/*".toMediaType())
+                val reqType = type.toRequestBody(contentType = "text/plain".toMediaType())
+                val formData = MultipartBody.Part.createFormData(
+                    "image",
+                    file.name,
+                    reqImageFile)
+
+                val response = predictionService.runPredictionBrondolan(formData, reqType)
+                Log.i(TAG, "runPrediction: $response")
+                emit(ResponseState.Success(ModelMapper.toPrediction(response)))
+            } catch (e: Exception) {
+                emit(ResponseState.Error(message = e.message.toString()))
+                if (e is HttpException) {
+                    Log.e(TAG, "runPrediction yahaha: ${e.response()?.message().toString()}")
+                }
+                Log.e(TAG, "runPrediction yahaha: ${e.message.toString()}")
+            }
+        }
+    }
+
     private fun createTemporaryFile(bitmap: Bitmap): File {
 
         val file = File(
