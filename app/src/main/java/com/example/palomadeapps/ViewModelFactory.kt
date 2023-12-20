@@ -23,12 +23,6 @@ class ViewModelFactory(private val repository: PaloRepository) : ViewModelProvid
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(repository) as T
             }
-            modelClass.isAssignableFrom(CameraViewModel::class.java) -> {
-                CameraViewModel(repository) as T
-            }
-//            modelClass.isAssignableFrom(InventoryViewModel::class.java) -> {
-//                InventoryViewModel(repository) as T
-//            }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
             }
@@ -38,27 +32,12 @@ class ViewModelFactory(private val repository: PaloRepository) : ViewModelProvid
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(repository) as T
             }
-//            modelClass.isAssignableFrom(AddViewModel::class.java) -> {
-//                AddViewModel(repository) as T
-//            }
-//            modelClass.isAssignableFrom(AccountViewModel::class.java) -> {
-//                AccountViewModel(repository) as T
-//            }
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 DetailViewModel(repository) as T
             }
-//            modelClass.isAssignableFrom(TransactionsViewModel::class.java) -> {
-//                TransactionsViewModel(repository) as T
-//            }
-
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
-//    companion object{
-//        fun getInstance(context: Context): ViewModelFactory = synchronized(this) {
-//            ViewModelFactory(Injection.provideRepository(context))
-//        }
-//    }
 
     companion object {
         @Volatile

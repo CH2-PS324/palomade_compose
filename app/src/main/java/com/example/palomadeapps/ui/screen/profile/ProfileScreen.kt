@@ -16,12 +16,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import android.provider.Settings
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -160,23 +163,27 @@ fun ProfileScreen(
                     )
 
                 ) {
-
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_language),
-                    contentDescription = "Language Icon",
-                    Modifier
-                        .size(24.dp)
-                )
-                Row (
-                    modifier = Modifier
-                        .padding(start = 5.dp)
-                ){
-                    Text(
-                        text = stringResource(R.string.btn_settings),
-                        color = Color(0xFFFFFFFF)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_language),
+                        contentDescription = "Language Icon",
+                        Modifier
+                            .size(24.dp)
                     )
-                }
 
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 13.dp)
+                            .width(250.dp)
+                            .offset(y = (0.15).dp), //offset for positioning
+                        text = stringResource(R.string.btn_settings),
+                        color = Color(0xFFFFFFFF),
+                    )
+
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_end),
+                        contentDescription = "arrow icon",
+                        Modifier
+                        .size(24.dp))
                 }
             }
 
@@ -184,26 +191,25 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth(1f)
                     .padding(top = 0.dp),
-                horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
+                horizontalArrangement = Arrangement.spacedBy(60.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically,
 
                 ){
                 ElevatedButton(
-                    modifier = Modifier
+                    {
+                        navigate.navigate("FAQ")
+                    },
+                    Modifier
                         .fillMaxWidth(1f)
                         .width(320.dp)
                         .height(56.dp)
                         .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 8.dp),
 
-                    onClick = {
-                        navigate.navigate("FAQ")
-                    },
-
                     shape = RoundedCornerShape(10.dp),
 
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xff008857)
-                    )
+                    ),
                 ) {
 
                     Column (
@@ -224,15 +230,18 @@ fun ProfileScreen(
 
                     Row (
                         modifier = Modifier
-                            .padding(start = 5.dp)
+                            .padding(start = 13.dp)
                     ){
                         Text(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .offset(y = (0.15).dp), //offset for positioning
                             text = stringResource(R.string.btn_FAQ)
                         )
                     }
+
                 }
             }
-
 
             Row (
                 modifier = Modifier
@@ -264,10 +273,10 @@ fun ProfileScreen(
                                 .padding(start = 0.dp)
 
                         ){
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_logout),
-                                contentDescription = "Email Icon"
-                            )
+//                            Icon(
+//                                painter = painterResource(id = R.drawable.ic_logout),
+//                                contentDescription = "Email Icon"
+//                            )
                         }
                     }
                     Row (
@@ -275,7 +284,9 @@ fun ProfileScreen(
                             .padding(start = 3.dp)
                     ){
                         Text(
-                            text = stringResource(R.string.btn_logout)
+                            text = stringResource(R.string.btn_logout),
+                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                            fontSize = 15.sp,
                         )
                     }
                 }

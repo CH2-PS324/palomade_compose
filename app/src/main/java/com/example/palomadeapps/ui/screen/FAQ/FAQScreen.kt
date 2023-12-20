@@ -74,22 +74,36 @@ fun BottomText(
     }
 }
 
-
 @Composable
 fun FAQSection() {
     Column() {
         ExpandableFAQCard(
-            "What is Malware ?", "Malware is intrusive software that is " +
+            "Berapa lama waktu yang dibutuhkan buah sawit untuk mencapai kematangan ideal?", "Malware is intrusive software that is " +
                     "designed to damage and destroy computers and computer systems. " +
                     "Malware is a contraction for “malicious software" +
                     "."
         )
         ExpandableFAQCard(
-            "How do I contact customer service ?", "You may write us at abcd@ab.com" +
+            "Apakah ada perbedaan tingkat kematangan buah sawit antara varietas yang satu dengan yang lain?", "You may write us at abcd@ab.com" +
                     " with your query/concern and we'll get back to you as soon as possible."
         )
         ExpandableFAQCard(
-            "What will be the duration of the service ?",
+            "Bagaimana pengaruh cuaca terhadap tingkat kematangan buah sawit?",
+            "The members can be admitted under the policy at well defined date for full " +
+                    "Cover term (1 Year) from their scheme joining date."
+        )
+        ExpandableFAQCard(
+            "Apakah ada praktik terbaik untuk memanen buah sawit yang telah mencapai kematangan optimal?",
+            "The members can be admitted under the policy at well defined date for full " +
+                    "Cover term (1 Year) from their scheme joining date."
+        )
+        ExpandableFAQCard(
+            "Bagaimana pengaruh musim hujan dan kemarau terhadap siklus kematangan buah sawit?",
+            "The members can be admitted under the policy at well defined date for full " +
+                    "Cover term (1 Year) from their scheme joining date."
+        )
+        ExpandableFAQCard(
+            "Apakah ada peraturan atau standar industri yang harus diikuti terkait kematangan buah sawit?",
             "The members can be admitted under the policy at well defined date for full " +
                     "Cover term (1 Year) from their scheme joining date."
         )
@@ -113,7 +127,7 @@ fun ExpandableFAQCard(title: String, description: String) {
             ),
         shape = Shapes.small,
         onClick = {
-
+            expandedState = !expandedState
         },
     ) {
 
