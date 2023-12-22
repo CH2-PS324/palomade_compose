@@ -25,9 +25,9 @@ class CameraViewModel(private val repository: PredictionRepository) : ViewModel(
 
 
 
-    fun prediction(imageBitmap: Bitmap, description: String) {
+    fun prediction(imageBitmap: Bitmap) {
         viewModelScope.launch {
-            repository.runPrediction(imageBitmap, description).collect {
+            repository.runPrediction(imageBitmap).collect {
                 when(it) {
                     is ResponseState.Loading -> {
                         _uiState.value = _uiState.value.copy(isLoading = true)
@@ -45,9 +45,9 @@ class CameraViewModel(private val repository: PredictionRepository) : ViewModel(
         }
     }
 
-    fun predictionBrondolan(imageBitmap: Bitmap, description: String) {
+    fun predictionBrondolan(imageBitmap: Bitmap) {
         viewModelScope.launch {
-            repository.runPredictionBrondolan(imageBitmap, description).collect {
+            repository.runPredictionBrondolan(imageBitmap).collect {
                 when(it) {
                     is ResponseState.Loading -> {
                         _uiState.value = _uiState.value.copy(isLoading = true)

@@ -60,7 +60,7 @@ fun DetailShipContent(
     ){
         Box(
             modifier = Modifier
-                .border(width = 1.dp, color = Color(0xFFD5D5D5))
+//                .border(width = 1.dp, color = Color(0xFFD5D5D5))
                 .fillMaxWidth()
                 .height(53.dp)
                 .background(color = Color(0xFFFFFFFF))
@@ -77,7 +77,7 @@ fun DetailShipContent(
                     }
             )
             Text(
-                text = "Detail Pengiriman",
+                text = stringResource(id = R.string.title_detail_ship),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.align(Alignment.Center)
             )

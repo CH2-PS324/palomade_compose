@@ -1,6 +1,8 @@
 package com.example.palomadeapps
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
@@ -19,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -34,6 +37,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.palomadeapps.data.di.Injection
 import com.example.palomadeapps.ui.screen.FAQ.FAQScreen
+import com.example.palomadeapps.ui.screen.Shipping.Shipping2
+import com.example.palomadeapps.ui.screen.Shipping.ShippingScreen
 import com.example.palomadeapps.ui.screen.camera.CameraScreen3
 import com.example.palomadeapps.ui.screen.detail.DetailScreen
 import com.example.palomadeapps.ui.screen.detailShipping.DetailShipScreen
@@ -68,6 +73,8 @@ fun PalomadeApp (
                 currentRoute != Screen.Login.route &&
                 currentRoute != Screen.Register.route &&
                 currentRoute != Screen.FAQ.route &&
+                currentRoute != Screen.Shipping.route &&
+                currentRoute != Screen.Shipping2.route &&
                 currentRoute != Screen.DetailShip.route
                 ){
                 BottomBar(navController)
@@ -122,6 +129,13 @@ fun PalomadeApp (
                 TrackScreen(navigate = navController)
             }
 
+            composable(Screen.Shipping.route){
+                ShippingScreen(navigate = navController)
+            }
+
+            composable(Screen.Shipping2.route){
+                Shipping2(navigate = navController)
+            }
 
             composable(Screen.Camera.route) {
 
@@ -155,14 +169,14 @@ private fun BottomBar(
 ){
     NavigationBar (
         modifier = modifier
+            .border(
+                width = 1.dp,
+                color = Color(0xFFD5D5D5),
+            )
             .graphicsLayer {
-                shape = RoundedCornerShape(
-                    topStart = 22.dp,
-                    topEnd = 22.dp
-                )
                 clip = true
             },
-            containerColor = colorResource(id = R.color.btm_nav)
+            containerColor = colorResource(id = R.color.white)
     ){
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -228,7 +242,6 @@ private fun BottomBar(
 
             )
         }
-
     }
 }
 

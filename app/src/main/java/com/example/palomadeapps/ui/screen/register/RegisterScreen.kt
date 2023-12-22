@@ -305,31 +305,31 @@ fun RegisterScreen(
                 },
             )
 
-            OutlinedTextField(
-                value = viewModel.role,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.People,
-                        contentDescription = "Email Icon"
-                    )
-                },
-
-                label = { Text(text = "Role") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                singleLine = true,
-                onValueChange = { newInput ->
-                    viewModel.role = newInput
-                },
-                shape = RoundedCornerShape(size = 15.dp),
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .height(60.dp)
-                    .width(320.dp)
-                    .focusRequester(focusRequester)
-                    .onFocusChanged {
-                        isFocused = it.isFocused
-                    },
-            )
+//            OutlinedTextField(
+//                value = viewModel.role,
+//                leadingIcon = {
+//                    Icon(
+//                        imageVector = Icons.Default.People,
+//                        contentDescription = "Email Icon"
+//                    )
+//                },
+//
+//                label = { Text(text = "Role") },
+//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+//                singleLine = true,
+//                onValueChange = { newInput ->
+//                    viewModel.role = newInput
+//                },
+//                shape = RoundedCornerShape(size = 15.dp),
+//                modifier = Modifier
+//                    .padding(top = 8.dp)
+//                    .height(60.dp)
+//                    .width(320.dp)
+//                    .focusRequester(focusRequester)
+//                    .onFocusChanged {
+//                        isFocused = it.isFocused
+//                    },
+//            )
 
             Row (
                 modifier = Modifier

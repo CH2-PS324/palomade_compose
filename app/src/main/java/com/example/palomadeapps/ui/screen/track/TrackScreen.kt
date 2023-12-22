@@ -1,6 +1,7 @@
 package com.example.palomadeapps.ui.screen.track
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -42,103 +44,113 @@ fun TrackScreen(
 //    navigate: () -> Unit
     listState: LazyListState = rememberLazyListState()
 ) {
-    var selectedFilter by remember { mutableStateOf<Filter?>(null) }
-
-    // Daftar filter yang tersedia
-    val filters = listOf(
-        Filter.all,
-        Filter.progress,
-        Filter.shipping,
-        Filter.end
-    )
-
-    Column(
+    Column (
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        // Header dengan ikon filter
-        Row(
+            .fillMaxHeight(1f)
+            .fillMaxWidth(1f)
+            .background(color = colorResource(id = R.color.primary))
+    ){
+
+        var selectedFilter by remember { mutableStateOf<Filter?>(null) }
+
+        // Daftar filter yang tersedia
+        val filters = listOf(
+            Filter.all,
+            Filter.progress,
+            Filter.shipping,
+            Filter.end
+        )
+
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxSize()
+                .padding(16.dp)
         ) {
-            Text(
+            // Header dengan ikon filter
+            Row(
                 modifier = Modifier
-                    .padding(top = 10.dp, start = 10.dp),
-                text = stringResource(R.string.track_shipping),
-                fontSize = 24.sp,
-                style = TextStyle(
-                    fontSize = 19.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFF000000)
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(top = 10.dp, start = 10.dp),
+                    text = stringResource(R.string.track_shipping),
+                    fontSize = 24.sp,
+                    style = TextStyle(
+                        fontSize = 19.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF000000)
+                    )
                 )
+
+                ElevatedButton(
+                    modifier = Modifier
+                        .padding(end = 0.dp),
+                    onClick = {
+                        navigate.navigate("Shipping")
+                     },
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xff008857)
+                    )
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.Top,
+                            horizontalAlignment = Alignment.Start,
+                            modifier = Modifier
+                                .padding(end = 10.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_add),
+                                contentDescription = "Email Icon"
+                            )
+                        }
+                    }
+                    Text(text = stringResource(R.string.add_shipping))
+                }
+            }
+
+            Divider(
+                thickness = 1.dp, color = Color.Black
             )
 
-            ElevatedButton(
+            // Baris chip untuk menampilkan filter
+            LazyRow(
                 modifier = Modifier
-                    .padding(end = 0.dp),
-                onClick = { /*todo*/ },
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xff008857)
-                )
+                    .fillMaxWidth()
+                    .padding(top = 20.dp, bottom = 8.dp)
+                    .selectableGroup()
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    Column(
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.Start,
-                        modifier = Modifier
-                            .padding(end = 10.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_add),
-                            contentDescription = "Email Icon"
-                        )
-                    }
+                this.items(filters) { filter ->
+                    FilterChip(
+                        filter = filter,
+                        selectedFilter = selectedFilter,
+                        onFilterSelected = { selectedFilter = it }
+                    )
                 }
-                Text(text = stringResource(R.string.add_shipping))
             }
-        }
 
-        Divider(
-            thickness = 1.dp, color = Color.Black
-        )
+            Text(
+                text = stringResource(R.string.proses),
+                fontSize = 16.sp,
+                modifier = Modifier
+                    .padding(top = 20.dp, bottom = 8.dp)
+            )
 
-        // Baris chip untuk menampilkan filter
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 8.dp)
-                .selectableGroup()
-        ) {
-            this.items(filters) { filter ->
-                FilterChip(
-                    filter = filter,
-                    selectedFilter = selectedFilter,
-                    onFilterSelected = { selectedFilter = it }
-                )
-            }
-        }
-
-        Text(
-            text = stringResource(R.string.proses),
-            fontSize = 16.sp,
-            modifier = Modifier
-                .padding(top = 20.dp, bottom = 8.dp)
-        )
-
-        // Tampilkan daftar item atau konten aplikasi di sini
-        LazyColumn(
-            state = listState,
-            contentPadding = PaddingValues(bottom = 10.dp)
-        ) {
-            items(10) {
+            // Tampilkan daftar item atau konten aplikasi di sini
+            LazyColumn(
+                state = listState,
+                contentPadding = PaddingValues(bottom = 10.dp)
+            ) {
+                items(10) {
                 Shipping(navigate = navigate)
+                }
             }
         }
     }
@@ -148,7 +160,7 @@ fun TrackScreen(
 fun FilterChip(
     filter: Filter,
     selectedFilter: Filter?,
-    onFilterSelected: (Filter) -> Unit
+    onFilterSelected: (Filter) -> Unit,
 ) {
     val isSelected = filter == selectedFilter
 
@@ -159,11 +171,21 @@ fun FilterChip(
                 selected = isSelected,
                 onClick = { onFilterSelected(filter) }
             )
-            .background(
-                color = if (isSelected) {
-                    MaterialTheme.colorScheme.primary
+            .border(
+                shape = RoundedCornerShape(size = 8.dp),
+                width = 1.dp,
+                color =  if (isSelected){
+                    colorResource(id = R.color.Warna_button)
                 } else {
-                    MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                    colorResource(id = R.color.black)
+                }
+            )
+
+        .background(
+                color = if (isSelected) {
+                    colorResource(id = R.color.filter_btn)
+                } else {
+                    colorResource(id = R.color.white)
                 },
                 shape = CircleShape
             )
@@ -173,7 +195,7 @@ fun FilterChip(
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = stringResource(id = filter.stringRes),
-            color = if (isSelected) Color.White else MaterialTheme.colorScheme.primary
+            color = if (isSelected) colorResource(id = R.color.black) else colorResource(id = R.color.black)
         )
     }
 }
@@ -189,5 +211,5 @@ enum class Filter(val stringRes: Int) {
 //@Preview(showBackground = true)
 //@Composable
 //fun TrackScreenPreview() {
-//    TrackScreen({})
+//    TrackScreen()
 //}

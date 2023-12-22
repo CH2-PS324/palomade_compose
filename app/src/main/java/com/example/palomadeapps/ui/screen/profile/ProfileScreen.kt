@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import android.provider.Settings
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material.icons.Icons
@@ -75,6 +76,7 @@ fun ProfileScreen(
     Box(contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxHeight(1f)
+            .background(color = colorResource(id = R.color.primary))
     ){
         Column(
             modifier = Modifier
@@ -90,7 +92,7 @@ fun ProfileScreen(
                 horizontalArrangement = Arrangement.Center
             ){
                     Image(
-                        painter = painterResource(R.drawable.potoku),
+                        painter = painterResource(R.drawable.img),
                         contentDescription = "Photo Profile",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -105,15 +107,6 @@ fun ProfileScreen(
                     .padding(top = 20.dp),
                 horizontalArrangement = Arrangement.Center
             ){
-//                Text(
-//                    text = stringResource(R.string.name),
-//                    style = TextStyle(
-//                        fontSize = 24.sp,
-//                        fontWeight = FontWeight.Bold,
-//                        fontStyle = FontStyle.Italic,
-//                        textAlign = TextAlign.Center,
-//                    ),
-//                )
                 sessionData?.let {
                     Text(
                         it.name,
@@ -124,14 +117,6 @@ fun ProfileScreen(
                         textAlign = TextAlign.Center,
                     )
                 }
-            }
-
-            sessionData?.let {
-                Text(text = it.role,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular))
-                )
             }
 
             Row (
@@ -163,12 +148,19 @@ fun ProfileScreen(
                     )
 
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_language),
-                        contentDescription = "Language Icon",
-                        Modifier
-                            .size(24.dp)
-                    )
+                    Column(
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier
+                            .padding(start = 0.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_language),
+                            contentDescription = "Language Icon",
+                            Modifier
+                                .size(24.dp)
+                        )
+                    }
 
                     Text(
                         modifier = Modifier
@@ -179,11 +171,6 @@ fun ProfileScreen(
                         color = Color(0xFFFFFFFF),
                     )
 
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_end),
-                        contentDescription = "arrow icon",
-                        Modifier
-                        .size(24.dp))
                 }
             }
 
@@ -217,7 +204,7 @@ fun ProfileScreen(
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.Start,
                         modifier = Modifier
-                            .padding(start = 0.dp)
+                            .padding(start = 6.dp)
 
                     ){
                         Icon(
@@ -250,6 +237,7 @@ fun ProfileScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically,
 
+
                 ){
                 ElevatedButton(
                     modifier = Modifier
@@ -270,20 +258,26 @@ fun ProfileScreen(
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.Start,
                             modifier = Modifier
-                                .padding(start = 0.dp)
+                                .padding(start = 6.dp)
 
                         ){
-//                            Icon(
-//                                painter = painterResource(id = R.drawable.ic_logout),
-//                                contentDescription = "Email Icon"
-//                            )
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_logout),
+                                contentDescription = "Email Icon",
+                                Modifier
+                                    .size(24.dp)
+
+                            )
                         }
                     }
                     Row (
                         modifier = Modifier
-                            .padding(start = 3.dp)
+                            .padding(start = 13.dp)
                     ){
                         Text(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .offset(y = (0.15).dp), //offset for positioning
                             text = stringResource(R.string.btn_logout),
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             fontSize = 15.sp,
