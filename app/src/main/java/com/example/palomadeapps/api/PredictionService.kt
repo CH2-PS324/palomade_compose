@@ -11,14 +11,12 @@ interface PredictionService {
     @Multipart
     @POST("predict-bongkahan")
     suspend fun runPrediction(
-        @Part image: MultipartBody.Part,
-        @Part("type") type: RequestBody
+        @Part image: MultipartBody.Part
     ) : PredictResponse
 
     @Multipart
     @POST("predict-brondolan")
     suspend fun runPredictionBrondolan(
-        @Part image: MultipartBody.Part,
-        @Part("type") type: RequestBody
+        @Part image: MultipartBody.Part
     ) : PredictResponse
 }

@@ -29,19 +29,18 @@ class PredictionRepository(
     val context: Context,
     private val predictionService: PredictionService
 ) {
-    suspend fun runPrediction(imageBitmap: Bitmap, type: String): Flow<ResponseState<Prediction>> {
+    suspend fun runPrediction(imageBitmap: Bitmap): Flow<ResponseState<Prediction>> {
         return flow {
             emit(value = ResponseState.Loading(isLoading = true))
             try {
                 val file = createTemporaryFile(imageBitmap)
                 val reqImageFile = file.asRequestBody(contentType = "image/*".toMediaType())
-                val reqType = type.toRequestBody(contentType = "text/plain".toMediaType())
                 val formData = MultipartBody.Part.createFormData(
                     "image",
                     file.name,
                     reqImageFile)
 
-                val response = predictionService.runPrediction(formData, reqType)
+                val response = predictionService.runPrediction(formData)
                 Log.i(TAG, "runPrediction: $response")
                 emit(ResponseState.Success(ModelMapper.toPrediction(response)))
             } catch (e: Exception) {
@@ -54,19 +53,18 @@ class PredictionRepository(
         }
     }
 
-    suspend fun runPredictionBrondolan(imageBitmap: Bitmap, type: String): Flow<ResponseState<Prediction>> {
+    suspend fun runPredictionBrondolan(imageBitmap: Bitmap): Flow<ResponseState<Prediction>> {
         return flow {
             emit(value = ResponseState.Loading(isLoading = true))
             try {
                 val file = createTemporaryFile(imageBitmap)
                 val reqImageFile = file.asRequestBody(contentType = "image/*".toMediaType())
-                val reqType = type.toRequestBody(contentType = "text/plain".toMediaType())
                 val formData = MultipartBody.Part.createFormData(
                     "image",
                     file.name,
                     reqImageFile)
 
-                val response = predictionService.runPredictionBrondolan(formData, reqType)
+                val response = predictionService.runPredictionBrondolan(formData)
                 Log.i(TAG, "runPrediction: $response")
                 emit(ResponseState.Success(ModelMapper.toPrediction(response)))
             } catch (e: Exception) {

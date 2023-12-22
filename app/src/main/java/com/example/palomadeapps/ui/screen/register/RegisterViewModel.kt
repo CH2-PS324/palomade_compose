@@ -17,8 +17,7 @@ class RegisterViewModel(private val repository: PaloRepository): ViewModel() {
     var name by mutableStateOf("")
     var email by mutableStateOf("")
     var password by mutableStateOf("")
-    var role by mutableStateOf("")
-//    var confirmPassword by mutableStateOf("")
+    var role by mutableStateOf("user")
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading

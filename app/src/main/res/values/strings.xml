@@ -33,4 +33,7 @@
     <string name="label_shipping">processed</string>
     <string name="proses">In Process</string>
     <string name="btn_detail_ship">Finish</string>
+    <string name="title_detail_ship">Detail Shipping</string>
+    <string name="title_new_shipping">New Shipping</string>
+    <string name="btn_next">Next</string>
 </resources>

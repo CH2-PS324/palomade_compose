@@ -34,4 +34,7 @@
     <string name="label_shipping">Diproses</string>
     <string name="proses">Dalam Proses</string>
     <string name="btn_detail_ship">Selesai</string>
+    <string name="title_detail_ship">Detail Pengiriman</string>
+    <string name="title_new_shipping">Pengiriman Baru</string>
+    <string name="btn_next">Selanjutnya</string>
 </resources>

@@ -6,13 +6,14 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FAFAFA</color>
+    <color name="primary">#FAFAFA</color>
     <color name="black40">#3B3B3C</color>
-    <color name="lavender">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="btm_nav">#DEE4DF</color>
     <color name="Yellow">#FFCA0E</color>
     <color name="Red">#BA0000</color>
     <color name="Gray">#ABC1AC</color>
     <color name="Warna_button">#FF008857</color>
+    <color name="filter_btn">#F4FFFB</color>
 
 </resources>

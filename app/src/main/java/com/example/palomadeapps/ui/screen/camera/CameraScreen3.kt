@@ -15,7 +15,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -42,8 +42,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
@@ -54,13 +54,13 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavHostController
 import com.example.palomadeapps.R
 import com.example.palomadeapps.data.di.Injection
-import com.example.palomadeapps.ui.theme.PalomadeAppsTheme
 
 private const val TAG = "ScanScreen"
 
 @Composable
 fun CameraScreen3(
     navigate: NavHostController
+
 ) {
 
     val context = LocalContext.current
@@ -73,10 +73,6 @@ fun CameraScreen3(
         mutableStateOf<Uri?>(null)
     }
 
-    var type by remember {
-        mutableStateOf("")
-    }
-
     val viewModel: CameraViewModel = viewModel(
         factory = viewModelFactory {
             addInitializer(CameraViewModel::class) {
@@ -87,10 +83,10 @@ fun CameraScreen3(
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = colorResource(id = R.color.primary))
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -114,10 +110,10 @@ fun CameraScreen3(
                     currentImageUri = uri
                 },
                 selectedIndex = {
-                    type = if(it == 0) {
-                        "Bongkahan"
+                    if(it == 0) {
+                        Log.d(TAG, "CameraScreen3: $it")
                     } else {
-                        "Brondolan"
+                        Log.d(TAG, "CameraScreen3: $it")
                     }
                 },
                 viewModel = viewModel
@@ -137,6 +133,8 @@ fun ImagePreviewSection(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
+            .background(color = colorResource(id = R.color.primary))
+//            .border(width = 1.dp, color = Color.Black)
         ,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -163,6 +161,7 @@ fun ImagePreviewSection(
 
         Text(
             text = "Category: $classType",
+//            text = "Category: ${if (percentage?.toInt()!! < 50) "Sawit Mentah" else "Sawit Matang"}",
             style = MaterialTheme.typography.titleMedium
         )
     }
@@ -184,9 +183,9 @@ fun ActionButtonsSection(
         mutableIntStateOf(value = 0)
     }
 
-    var selectedImageType by remember {
-        mutableStateOf(value = "")
-    }
+//    var selectedImageType by remember {
+//        mutableStateOf(value = "")
+//    }
 
     Log.i(TAG, "ActionButtonsSection: $selectedImageSourceIndex")
 
@@ -200,7 +199,8 @@ fun ActionButtonsSection(
         ElevatedButton(
             onClick = {
                 expanded = !expanded
-                selectedImageType = "Bongkahan"
+                selectedImageSourceIndex = 0
+
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
@@ -214,7 +214,7 @@ fun ActionButtonsSection(
         ElevatedButton(
             onClick = {
                 expanded = !expanded
-                selectedImageType = "Brondolan"
+                selectedImageSourceIndex = 1
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
@@ -233,7 +233,7 @@ fun ActionButtonsSection(
         },
         selectedIndex = {
             selectedImageSourceIndex = it
-            selectedIndex(selectedImageSourceIndex)
+//            selectedIndex(selectedImageSourceIndex)
         },
         imageCaptured = { bitmap, uri ->
             imageCaptured(bitmap, uri)
@@ -253,7 +253,7 @@ fun ScanTypeMenu(
 
     val context = LocalContext.current
     var index by remember {
-        mutableIntStateOf(value = 0)
+        mutableIntStateOf(value = 1)
     }
 
     var imageUri by remember {
@@ -266,12 +266,19 @@ fun ScanTypeMenu(
 
     LaunchedEffect(key1 = bitmap, block = {
         bitmap?.let { bitmap ->
-            viewModel.prediction(bitmap, if (index == 0) "bongkahan" else "brondolan")
-            viewModel.predictionBrondolan(bitmap, if (index == 0) "bongkahan" else "brondolan")
+            if (index == 0) {
+                viewModel.prediction(bitmap)
+            } else {
+                viewModel.predictionBrondolan(bitmap)
+            }
+
+//            viewModel.prediction(bitmap)
+//            viewModel.predictionBrondolan(bitmap)
+
         }
     })
 
-
+    Log.d(TAG, "ScanTypeMenu: $index")
 
     val runtimePermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
